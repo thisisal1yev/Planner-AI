@@ -14,7 +14,7 @@ async function bootstrap() {
 
   // Swagger documentation
   const config = new DocumentBuilder()
-    .setTitle('Plannex API')
+    .setTitle('Planner AI API')
     .setDescription(
       'Marketplace for event organization in Uzbekistan — events, venues, services, tickets, payments.',
     )
@@ -28,7 +28,7 @@ async function bootstrap() {
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
 
-  console.log(`🚀 Plannex API running on http://localhost:${port}`);
+  console.log(`🚀 Planner AI API running on http://localhost:${port}`);
   console.log(`📖 Swagger docs: http://localhost:${port}/api/docs`);
 }
 
