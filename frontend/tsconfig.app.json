@@ -27,7 +27,9 @@
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@shared/*": ["src/shared/*"],
+      "@shared/lib/*": ["src/shared/lib/*"],
       "@entities/*": ["src/entities/*"],
       "@features/*": ["src/features/*"],
       "@widgets/*": ["src/widgets/*"],

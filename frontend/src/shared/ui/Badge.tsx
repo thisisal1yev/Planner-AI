@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { cn } from '@/shared/lib/utils'
 
 interface BadgeProps {
   children: ReactNode
@@ -16,7 +17,7 @@ const colors = {
 
 export function Badge({ children, color = 'gray' }: BadgeProps) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${colors[color]}`}>
+    <span className={cn('inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium', colors[color])}>
       {children}
     </span>
   )
