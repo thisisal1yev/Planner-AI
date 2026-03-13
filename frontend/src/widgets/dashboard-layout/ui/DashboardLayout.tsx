@@ -1,6 +1,8 @@
 import { Outlet, NavLink, useNavigate } from 'react-router'
 import { useMutation } from '@tanstack/react-query'
+import { Sun, Moon } from 'lucide-react'
 import { useAuthStore } from '@shared/model/auth.store'
+import { useThemeStore } from '@shared/model/theme.store'
 import { authApi } from '@entities/user'
 import { Button } from '@shared/ui/Button'
 
@@ -36,6 +38,7 @@ const adminNav: NavItem[] = [
 
 export function DashboardLayout() {
   const { user, logout } = useAuthStore()
+  const { theme, toggle } = useThemeStore()
   const navigate = useNavigate()
 
   const logoutMutation = useMutation({
@@ -46,11 +49,11 @@ export function DashboardLayout() {
   const nav = user?.role === 'ORGANIZER' ? organizerNav : user?.role === 'ADMIN' ? adminNav : vendorNav
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-muted/30 flex">
       {/* Sidebar */}
-      <aside className="w-56 bg-white border-r border-gray-200 flex flex-col">
-        <div className="h-14 flex items-center px-4 border-b border-gray-200">
-          <span className="font-bold text-indigo-600 text-lg">Planner AI</span>
+      <aside className="w-56 bg-card border-r border-border flex flex-col">
+        <div className="h-14 flex items-center px-4 border-b border-border">
+          <span className="font-bold text-primary text-lg">Planner AI</span>
         </div>
         <nav className="flex-1 p-3 flex flex-col gap-1">
           {nav.map((item) => (
@@ -59,7 +62,9 @@ export function DashboardLayout() {
               to={item.to}
               className={({ isActive }) =>
                 `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
-                  isActive ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-gray-600 hover:bg-gray-50'
+                  isActive
+                    ? 'bg-primary/10 text-primary font-medium'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                 }`
               }
             >
@@ -68,10 +73,10 @@ export function DashboardLayout() {
             </NavLink>
           ))}
         </nav>
-        <div className="p-3 border-t border-gray-200">
+        <div className="p-3 border-t border-border">
           <NavLink
             to="/profile"
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 mb-1"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-muted hover:text-foreground mb-1 transition-colors"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -95,8 +100,17 @@ export function DashboardLayout() {
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center px-6">
-          <div className="ml-auto text-sm text-gray-500">{user?.email}</div>
+        <header className="h-14 bg-card border-b border-border flex items-center px-6 gap-3">
+          <div className="ml-auto flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">{user?.email}</span>
+            <button
+              onClick={toggle}
+              className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              aria-label="Переключить тему"
+            >
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          </div>
         </header>
         <main className="flex-1 p-6 overflow-auto">
           <Outlet />

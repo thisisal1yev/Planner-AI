@@ -7,11 +7,10 @@ import { Input } from '@shared/ui/Input'
 import { Select } from '@shared/ui/Select'
 import { Button } from '@shared/ui/Button'
 import type { RegisterDto } from '@entities/user'
-import type { AuthUser } from '@shared/types'
 
 export function RegisterForm() {
   const navigate = useNavigate()
-  const setTokens = useAuthStore((s) => s.setTokens)
+  const { setTokens, setUser } = useAuthStore()
 
   const {
     register,
@@ -25,10 +24,13 @@ export function RegisterForm() {
       const tokens = await authApi.register(dto)
       setTokens(tokens)
       const user = await usersApi.me()
-      setTokens(tokens, user as unknown as AuthUser)
+      setUser(user)
       return user
     },
-    onSuccess: () => navigate('/'),
+    onSuccess: (user) => {
+      if (user.role === 'ORGANIZER') navigate('/dashboard')
+      else navigate('/')
+    },
     onError: () => {
       setError('email', { message: 'Email уже используется или ошибка сервера' })
     },
@@ -81,9 +83,9 @@ export function RegisterForm() {
       <Button type="submit" loading={mutation.isPending} className="w-full">
         Создать аккаунт
       </Button>
-      <p className="text-sm text-center text-gray-500">
+      <p className="text-sm text-center text-muted-foreground">
         Уже есть аккаунт?{' '}
-        <Link to="/login" className="text-indigo-600 hover:underline">
+        <Link to="/login" className="text-primary hover:underline">
           Войти
         </Link>
       </p>

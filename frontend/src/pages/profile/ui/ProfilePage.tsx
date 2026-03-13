@@ -29,7 +29,7 @@ export function ProfilePage() {
     mutationFn: usersApi.updateMe,
     onSuccess: (updated) => {
       queryClient.setQueryData(['me'], updated)
-      if (user) setUser({ id: user.id, email: user.email, role: user.role })
+      if (user) setUser({ ...user, ...updated })
     },
   })
 
@@ -37,15 +37,15 @@ export function ProfilePage() {
 
   return (
     <div className="max-w-lg">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Профиль</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Профиль</h1>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-4">
-        <p className="text-sm text-gray-500 mb-1">Email</p>
-        <p className="font-medium text-gray-900">{data?.email}</p>
+      <div className="bg-card rounded-xl border border-border p-6 mb-4">
+        <p className="text-sm text-muted-foreground mb-1">Email</p>
+        <p className="font-medium text-foreground">{data?.email}</p>
       </div>
 
-      <form onSubmit={handleSubmit((d) => mutation.mutate(d))} className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-4">
-        <h2 className="font-semibold text-gray-900">Редактировать данные</h2>
+      <form onSubmit={handleSubmit((d) => mutation.mutate(d))} className="bg-card rounded-xl border border-border p-6 flex flex-col gap-4">
+        <h2 className="font-semibold text-foreground">Редактировать данные</h2>
         <Input
           label="Имя"
           error={errors.firstName?.message}
@@ -58,7 +58,7 @@ export function ProfilePage() {
         />
         <Input label="Телефон" {...register('phone')} />
         {mutation.isSuccess && <p className="text-sm text-green-600">Данные сохранены</p>}
-        {mutation.isError && <p className="text-sm text-red-500">Ошибка при сохранении</p>}
+        {mutation.isError && <p className="text-sm text-destructive">Ошибка при сохранении</p>}
         <Button type="submit" loading={mutation.isPending}>Сохранить</Button>
       </form>
     </div>

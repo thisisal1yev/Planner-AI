@@ -1,17 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { useMutation } from '@tanstack/react-query'
-import { authApi } from '@entities/user'
-import { usersApi } from '@entities/user'
+import { authApi, usersApi } from '@entities/user'
 import { useAuthStore } from '@shared/model/auth.store'
 import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
 import type { LoginDto } from '@entities/user'
-import type { AuthUser } from '@shared/types'
 
 export function LoginForm() {
   const navigate = useNavigate()
-  const setTokens = useAuthStore((s) => s.setTokens)
+  const { setTokens, setUser } = useAuthStore()
 
   const {
     register,
@@ -23,15 +21,15 @@ export function LoginForm() {
   const mutation = useMutation({
     mutationFn: async (dto: LoginDto) => {
       const tokens = await authApi.login(dto)
-      setTokens(tokens)
+      setTokens(tokens) // сначала сохраняем токен, чтобы /users/me прошёл с авторизацией
       const user = await usersApi.me()
-      setTokens(tokens, user as unknown as AuthUser)
+      setUser(user)
       return user
     },
     onSuccess: (user) => {
-      const role = (user as { role: string }).role
-      if (role === 'ORGANIZER') navigate('/dashboard')
-      else if (role === 'ADMIN') navigate('/admin/users')
+      if (user.role === 'ORGANIZER') navigate('/dashboard')
+      else if (user.role === 'ADMIN') navigate('/admin/users')
+      else if (user.role === 'VENDOR') navigate('/my-venues')
       else navigate('/')
     },
     onError: () => {
@@ -58,9 +56,9 @@ export function LoginForm() {
       <Button type="submit" loading={mutation.isPending} className="w-full">
         Войти
       </Button>
-      <p className="text-sm text-center text-gray-500">
+      <p className="text-sm text-center text-muted-foreground">
         Нет аккаунта?{' '}
-        <Link to="/register" className="text-indigo-600 hover:underline">
+        <Link to="/register" className="text-primary hover:underline">
           Зарегистрироваться
         </Link>
       </p>

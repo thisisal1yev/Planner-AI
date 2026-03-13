@@ -51,7 +51,7 @@ export function AppRouter() {
   return (
     <Routes>
       {/* ── Auth layout ── */}
-      <Route element={<AuthLayout />}>
+      <Route element={isAuth ? <Navigate to="/" replace /> : <AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Route>
