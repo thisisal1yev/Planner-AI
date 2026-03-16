@@ -1,6 +1,6 @@
 # Planner AI — Frontend
 
-> React-based frontend for the Event Organization Marketplace
+> React frontend for the Event Organization Marketplace
 
 [![React](https://img.shields.io/badge/React-v19-61dafb?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-v5.9-3178c6?logo=typescript)](https://www.typescriptlang.org/)
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
@@ -22,242 +22,210 @@
 - [Styling](#styling)
 - [Environment Variables](#environment-variables)
 - [Build & Deployment](#build--deployment)
-- [Linting & Formatting](#linting--formatting)
 
 ---
 
-## 🎯 Overview
+## Overview
 
-This is the frontend application for **Planner AI** — a marketplace for event organization in Uzbekistan. Built with React 19, TypeScript, and Vite, it provides a modern, fast, and type-safe user interface for:
+The frontend for **Planner AI** — an event organization marketplace in Uzbekistan. Built with React 19, TypeScript, and Vite, it provides a modern, type-safe UI for:
 
 - Browsing and creating events
-- Booking venues and services
+- Searching and booking venues
 - Purchasing and managing tickets
+- Hiring event services
 - Processing payments
 - Managing user profiles and applications
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| [React](https://react.dev/) | 19 | UI library |
-| [TypeScript](https://www.typescriptlang.org/) | 5.9 | Type safety |
-| [Vite](https://vite.dev/) | 8 | Build tool & dev server |
-| [TailwindCSS](https://tailwindcss.com/) | 4 | Utility-first CSS |
-| [React Query](https://tanstack.com/query) | 5 | Server state management |
-| [Zustand](https://zustand-demo.pmnd.rs/) | 5 | Client state management |
-| [React Router](https://reactrouter.com/) | 7 | Client-side routing |
-| [React Hook Form](https://react-hook-form.com/) | 7 | Form handling |
-| [Axios](https://axios-http.com/) | 1 | HTTP client |
+| [React](https://react.dev/) | v19 | UI library |
+| [TypeScript](https://www.typescriptlang.org/) | v5.9 | Type safety |
+| [Vite](https://vite.dev/) | v8 | Build tool & dev server |
+| [TailwindCSS](https://tailwindcss.com/) | v4 | Utility-first CSS |
+| [TanStack Query](https://tanstack.com/query) | v5 | Server state management |
+| [Zustand](https://zustand-demo.pmnd.rs/) | v5 | Client state management |
+| [React Router](https://reactrouter.com/) | v7 | Client-side routing |
+| [React Hook Form](https://react-hook-form.com/) | v7 | Form handling |
+| [Axios](https://axios-http.com/) | v1 | HTTP client with interceptors |
+| [shadcn/ui](https://ui.shadcn.com/) | — | UI component primitives |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 frontend/
 ├── src/
-│   ├── app/                # App initialization & configuration
-│   │   ├── providers.tsx   # Context providers wrapper
-│   │   └── router.tsx      # Route definitions
+│   ├── app/
+│   │   ├── App.tsx                  # QueryClient + BrowserRouter root
+│   │   ├── router/
+│   │   │   ├── AppRouter.tsx        # Routes + Route definitions
+│   │   │   ├── public.routes.tsx    # Public route configs
+│   │   │   └── private.routes.tsx   # Protected route configs
+│   │   └── provider/
+│   │       └── Provider.tsx         # App-level providers
 │   │
-│   ├── pages/              # Page components (route-level)
+│   ├── pages/                       # Page compositions (route level)
 │   │   ├── HomePage/
 │   │   ├── EventsPage/
 │   │   ├── VenuePage/
 │   │   ├── ProfilePage/
 │   │   └── ...
 │   │
-│   ├── widgets/            # Composite UI blocks
+│   ├── widgets/                     # Composite UI blocks
 │   │   ├── Header/
-│   │   ├── Footer/
-│   │   ├── Sidebar/
+│   │   ├── PublicLayout/
+│   │   ├── DashboardLayout/
+│   │   ├── AuthLayout/
 │   │   └── ...
 │   │
-│   ├── features/           # User interactions & actions
-│   │   ├── auth/           # Login, register, logout
-│   │   ├── eventCreation/  # Create/edit event forms
-│   │   ├── ticketPurchase/ # Buy tickets flow
-│   │   ├── payment/        # Payment processing
+│   ├── features/                    # User interactions & actions
+│   │   ├── LoginForm/
+│   │   ├── RegisterForm/
+│   │   ├── PublishEventButton/
+│   │   ├── PurchaseTicketForm/
 │   │   └── ...
 │   │
-│   ├── entities/           # Business entities (domain models)
-│   │   ├── event/          # Event entity (types, API, UI)
-│   │   ├── user/           # User entity
-│   │   ├── venue/          # Venue entity
-│   │   ├── ticket/         # Ticket entity
-│   │   ├── service/        # Service entity
-│   │   ├── review/         # Review entity
-│   │   ├── analytics/      # Analytics entity
-│   │   └── volunteer/      # Volunteer entity
+│   ├── entities/                    # Business domain entities
+│   │   ├── event/
+│   │   ├── user/
+│   │   ├── venue/
+│   │   ├── ticket/
+│   │   ├── service/
+│   │   ├── review/
+│   │   ├── analytics/
+│   │   └── volunteer/
 │   │
-│   ├── shared/             # Reusable utilities
-│   │   ├── api/            # API client & HTTP utilities
-│   │   │   ├── apiClient.ts
-│   │   │   ├── endpoints.ts
-│   │   │   └── index.ts
-│   │   ├── model/          # Shared data models
-│   │   ├── types/          # TypeScript type definitions
-│   │   └── ui/             # Reusable UI components
-│   │       ├── Button/
-│   │       ├── Input/
-│   │       ├── Modal/
-│   │       ├── Card/
-│   │       └── ...
+│   ├── shared/                      # Reusable utilities
+│   │   ├── api/
+│   │   │   └── client.ts            # Axios instance with interceptors
+│   │   ├── model/
+│   │   │   └── auth.store.ts        # Zustand auth store (localStorage persist)
+│   │   ├── types/                   # Global TypeScript types
+│   │   ├── lib/
+│   │   │   └── utils.ts             # cn() and shared utilities
+│   │   └── ui/
+│   │       ├── primitives/          # shadcn-generated components
+│   │       │   ├── button.tsx
+│   │       │   ├── input.tsx
+│   │       │   ├── dialog.tsx
+│   │       │   └── badge.tsx
+│   │       ├── Button.tsx           # Project wrappers around primitives
+│   │       ├── Input.tsx
+│   │       ├── Modal.tsx
+│   │       ├── Badge.tsx
+│   │       └── Select.tsx
 │   │
-│   ├── assets/             # Static assets
-│   │   ├── images/
-│   │   ├── icons/
-│   │   └── fonts/
-│   │
-│   ├── index.css           # Global styles
-│   ├── main.tsx            # React entry point
-│   └── App.tsx             # Root component
+│   ├── index.css                    # Global styles & TailwindCSS import
+│   ├── main.tsx                     # React entry point
+│   └── App.tsx                      # Root component
 │
-├── public/                 # Static public assets
-│   ├── favicon.svg
-│   └── icons.svg
-│
-├── index.html              # HTML template
-├── package.json
+├── public/
+│   └── favicon.svg
+├── index.html
 ├── vite.config.ts
 ├── tsconfig.json
 ├── tsconfig.app.json
-├── tsconfig.node.json
+├── components.json                  # shadcn/ui config
 └── eslint.config.js
 ```
 
-### Architecture: Feature-Sliced Design
-
-This project follows **Feature-Sliced Design (FSD)** methodology:
-
-| Layer | Purpose | Dependencies |
-|-------|---------|--------------|
-| **app** | App initialization, routing, providers | All layers |
-| **pages** | Page compositions for routes | widgets, features |
-| **widgets** | Composite UI blocks | features, entities |
-| **features** | User actions & interactions | entities, shared |
-| **entities** | Business domain entities | shared |
-| **shared** | Reusable utilities & UI | None |
-
-**Rule:** Lower layers cannot depend on higher layers.
-
 ---
 
-## ✨ Features
-
-### User Features
-
-- **Event Discovery**: Browse events with advanced filters (date, location, category, price)
-- **Event Creation**: Create and manage events with multiple ticket tiers
-- **Venue Booking**: Search and book venues with real-time availability
-- **Service Marketplace**: Hire event services (catering, decoration, photography, security)
-- **Ticket Purchasing**: Buy tickets with secure payment processing
-- **Digital Tickets**: QR-coded tickets delivered to your email
-- **Payment Integration**: Pay with Click, Payme, or other payment providers
-- **Profile Management**: Manage your profile, events, and purchase history
-- **Reviews & Ratings**: Leave reviews for events, venues, and services
-- **Volunteer Applications**: Apply for volunteer positions at events
-
-### Technical Features
-
-- **Feature-Sliced Design (FSD)**: Scalable architecture with clear layer separation
-- **Type-Safe Development**: Full TypeScript support with strict typing
-- **Dual State Management**: React Query for server state, Zustand for client state
-- **Hot Module Replacement**: Fast development with Vite HMR
-- **Responsive Design**: Mobile-first UI with TailwindCSS v4
-- **Form Validation**: React Hook Form with built-in validation
-- **API Interceptors**: Automatic JWT token handling and error processing
-- **Code Splitting**: Optimized bundle size with automatic code splitting
-- **SEO Friendly**: Server-side rendering ready architecture
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js** v18 or higher ([download](https://nodejs.org/))
-- **Bun** (recommended) or **npm** ([install Bun](https://bun.sh/))
+- **Node.js** v18 or higher
+- **Bun** (recommended) or npm
 
 ### Installation
 
-1. **Navigate to the frontend directory**
-   ```bash
-   cd frontend
-   ```
+```bash
+# From the project root
+cd frontend
+bun install
+```
 
-2. **Install dependencies**
-   ```bash
-   bun install
-   ```
-
-3. **Create environment file (optional)**
-   ```bash
-   echo "VITE_API_URL=http://localhost:3000" > .env
-   ```
-
-4. **Start development server**
-   ```bash
-   bun run dev
-   ```
-
-The application will be available at: **http://localhost:5173**
-
-### Connecting to Backend
-
-Make sure the backend server is running on `http://localhost:3000` or update the API URL:
+### Environment Setup
 
 ```bash
-# Create .env file with your backend URL
+# Create a .env file
 echo "VITE_API_URL=http://localhost:3000" > .env
 ```
 
+Make sure the [backend](../backend/README.md) is running on `http://localhost:3000`.
+
+### Start Development Server
+
+```bash
+bun run dev
+```
+
+App available at: **http://localhost:5173**
+
 ---
 
-## 📝 Available Scripts
+## Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `bun run dev` | Start development server with Hot Module Replacement (HMR) |
-| `bun run build` | Build for production (optimizes and bundles with Vite) |
-| `bun run preview` | Preview production build locally on port 4173 |
-| `bun run lint` | Run ESLint to check code quality |
-
-### Development Tips
-
-```bash
-# Run dev server with forced port
-bun run dev --port 3001
-
-# Open browser automatically
-bun run dev --open
-
-# Build with sourcemaps for debugging
-bun run build --sourcemap
-```
+| `bun run dev` | Start dev server with Hot Module Replacement |
+| `bun run build` | Production build (outputs to `dist/`) |
+| `bun run preview` | Preview production build locally |
+| `bun run lint` | Run ESLint |
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
-### State Management
+This project follows **Feature-Sliced Design (FSD)** — a methodology for organizing large React applications into well-defined, isolated layers.
 
-The application uses a **dual state management** approach:
+### Layer Overview
+
+| Layer | Purpose | Can import from |
+|-------|---------|-----------------|
+| **app** | App init, routing, global providers | All layers |
+| **pages** | Page-level compositions | widgets, features, entities, shared |
+| **widgets** | Composite UI blocks | features, entities, shared |
+| **features** | User actions & interactions | entities, shared |
+| **entities** | Business domain models | shared |
+| **shared** | Reusable utilities, UI, API | Nothing |
+
+**Rule:** lower layers cannot import from higher layers.
+
+### Path Aliases
+
+| Alias | Resolves to |
+|-------|-------------|
+| `@/*` | `src/*` |
+| `@shared/*` | `src/shared/*` |
+| `@entities/*` | `src/entities/*` |
+| `@features/*` | `src/features/*` |
+| `@widgets/*` | `src/widgets/*` |
+| `@pages/*` | `src/pages/*` |
+| `@app/*` | `src/app/*` |
+
+---
+
+## State Management
+
+The app uses a **dual state management** approach:
 
 | Library | Use Case | Location |
 |---------|----------|----------|
-| **React Query** | Server state (API data) | `entities/*/api/` |
-| **Zustand** | Client state (UI, auth, filters) | `shared/model/` |
+| **TanStack Query** | Server state (API data, caching, refetching) | `entities/*/api/` |
+| **Zustand** | Client state (auth, UI state) | `shared/model/` |
 
-#### React Query (Server State)
+### TanStack Query — Server State
 
 ```typescript
-// Example: Fetching events
 import { useQuery } from '@tanstack/react-query'
-import { eventApi } from '@/entities/event/api'
+import { eventApi } from '@entities/event/api'
 
 export function useEvents() {
   return useQuery({
@@ -267,132 +235,98 @@ export function useEvents() {
 }
 ```
 
-#### Zustand (Client State)
+### Zustand — Auth Store
+
+The auth store is persisted to `localStorage` automatically.
 
 ```typescript
-// Example: Auth store
-import { create } from 'zustand'
+import { useAuthStore } from '@shared/model/auth.store'
 
-interface AuthState {
-  user: User | null
-  isAuthenticated: boolean
-  login: (user: User) => void
-  logout: () => void
-}
-
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: (user) => set({ user, isAuthenticated: true }),
-  logout: () => set({ user: null, isAuthenticated: false }),
-}))
+const { user, isAuthenticated, login, logout } = useAuthStore()
 ```
 
 ---
 
-## 🌐 API Integration
+## API Integration
 
-### API Client
+### Axios Client
 
-The API client is configured in `shared/api/`:
+The HTTP client is configured in `shared/api/client.ts` with:
+- Base URL from `VITE_API_URL`
+- Request interceptor that attaches the JWT `Authorization` header
+- Response interceptor for handling 401 errors and token refresh
 
 ```typescript
-// shared/api/apiClient.ts
-import axios from 'axios'
+import { apiClient } from '@shared/api/client'
 
-export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-
-// Request interceptor for auth token
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-  return config
-})
+// All requests automatically include the Bearer token
+const response = await apiClient.get('/events')
 ```
 
-### Entity-based API Structure
+### Entity API Pattern
 
-Each entity has its own API module:
+Each entity encapsulates its own API calls:
 
 ```
-entities/
-└── event/
-    ├── api/
-    │   ├── eventApi.ts      # API calls
-    │   └── index.ts         # Exports
-    ├── model/
-    │   ├── types.ts         # TypeScript types
-    │   └── selectors.ts     # Data selectors
-    └── ui/
-        ├── EventCard.tsx    # UI components
-        └── EventList.tsx
+entities/event/
+├── api/
+│   └── event.api.ts     # API functions (getAll, getById, create...)
+├── model/
+│   ├── types.ts         # TypeScript types
+│   └── event.queries.ts # TanStack Query hooks
+└── ui/
+    └── EventCard.tsx    # Entity UI components
 ```
 
 ---
 
-## 🎨 Styling
+## Styling
 
 ### TailwindCSS v4
 
-This project uses **TailwindCSS v4** with the new Vite plugin:
+This project uses TailwindCSS v4 via the `@tailwindcss/vite` plugin — no `tailwind.config.ts` needed.
 
 ```typescript
 // vite.config.ts
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  plugins: [react(), tailwindcss()],
 })
 ```
 
-### Usage
-
-```tsx
-// Utility-first CSS classes
-<button className="btn-primary">
-  Click me
-</button>
-
-// With custom CSS in index.css
+```css
+/* src/index.css */
 @import "tailwindcss";
-
-@theme {
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-}
 ```
 
-### Global Styles
+### shadcn/ui
 
-Edit `src/index.css` for global styles and custom theme configuration.
+UI primitives are installed via shadcn and live in `src/shared/ui/primitives/`. Project-level wrappers with our API sit in `src/shared/ui/`.
+
+```bash
+# Add a new shadcn component
+bunx shadcn@latest add <component>
+```
+
+The `cn()` utility is available at `@shared/lib/utils`:
+
+```typescript
+import { cn } from '@shared/lib/utils'
+
+<div className={cn('base-class', condition && 'conditional-class')} />
+```
 
 ---
 
-## ⚙️ Environment Variables
-
-Create a `.env` file in the `frontend` directory:
+## Environment Variables
 
 ```env
-# Backend API URL
+# Backend API base URL (required)
 VITE_API_URL=http://localhost:3000
-
-# Optional: Feature flags, analytics keys, etc.
-VITE_ENABLE_ANALYTICS=true
-VITE_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
 ```
 
-### Accessing Variables
+Access in code:
 
 ```typescript
 const apiUrl = import.meta.env.VITE_API_URL
@@ -400,31 +334,34 @@ const apiUrl = import.meta.env.VITE_API_URL
 
 ---
 
-## 📦 Build & Deployment
+## Build & Deployment
 
 ### Production Build
 
 ```bash
-# Build for production
 bun run build
-
-# Preview production build
-bun run preview
+# Output: dist/
 ```
 
-### Deployment
+### Preview
 
-The `dist/` folder contains the production build and can be deployed to any static hosting:
+```bash
+bun run preview
+# Runs at http://localhost:4173
+```
 
-- **Vercel** — Automatic deployments from Git
-- **Netlify** — Drag & drop or Git integration
-- **Docker** — Use a multi-stage Dockerfile
-- **Traditional server** — Serve with Nginx or Apache
+### Deployment Options
 
-### Docker Deployment (Example)
+| Platform | Method |
+|----------|--------|
+| **Vercel** | Automatic deploy from Git |
+| **Netlify** | Git integration or drag & drop |
+| **Nginx** | Serve the `dist/` folder as static files |
+| **Docker** | Multi-stage Dockerfile (see below) |
+
+### Docker
 
 ```dockerfile
-# Build stage
 FROM oven/bun:1 AS builder
 WORKDIR /app
 COPY package.json bun.lock ./
@@ -432,50 +369,14 @@ RUN bun install --frozen-lockfile
 COPY . .
 RUN bun run build
 
-# Production stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
 ---
 
-## 🔍 Linting & Formatting
-
-### ESLint Configuration
-
-This project uses ESLint with TypeScript and React-specific rules:
-
-```bash
-# Run ESLint
-bun run lint
-
-# Fix auto-fixable issues
-bun run lint -- --fix
-```
-
-### Recommended VS Code Extensions
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-
----
-
-## 📚 Resources
-
-- [React Documentation](https://react.dev/)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Vite Docs](https://vite.dev/)
-- [TailwindCSS Docs](https://tailwindcss.com/)
-- [React Query Docs](https://tanstack.com/query/latest/docs/react/overview)
-- [Zustand Docs](https://github.com/pmndrs/zustand)
-- [Feature-Sliced Design](https://feature-sliced.design/)
-
----
-
 <p align="center">
-  <strong>Part of</strong> <a href="../README.md">Planner AI</a>
+  Part of <a href="../README.md">Planner AI</a>
 </p>
