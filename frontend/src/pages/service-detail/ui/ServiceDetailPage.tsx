@@ -52,7 +52,7 @@ export function ServiceDetailPage() {
   if (!service) return <div className="text-center py-16 text-muted-foreground">Xizmat topilmadi</div>
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-6">
       <Link to="/services">
         <Button variant="ghost" size="sm">← Barcha xizmatlar</Button>
       </Link>

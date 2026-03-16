@@ -113,9 +113,9 @@ export const VENUES = [
   {
     name: 'Tashkent City Hall',
     description:
-      'Премиальная площадка в сердце Ташкента с современным оборудованием и вместимостью до 500 человек.',
-    address: 'Амира Темура пр-т, 1',
-    city: 'Ташкент',
+      'Toshkentning markazida zamonaviy jihozlangan premium maydon. 500 kishigacha sig\'imi bor.',
+    address: 'Amir Temur shoh ko\'chasi, 1',
+    city: 'Toshkent',
     latitude: 41.3115,
     longitude: 69.2401,
     capacity: 500,
@@ -135,9 +135,9 @@ export const VENUES = [
   {
     name: 'Samarkand Garden',
     description:
-      'Живописная открытая площадка с видом на исторические памятники Самарканда. Идеально для outdoor-мероприятий.',
-    address: 'ул. Регистан, 15',
-    city: 'Самарканд',
+      'Samarqandning tarixiy yodgorliklariga qarab turadigan manzarali ochiq maydon. Outdoor tadbirlar uchun ideal.',
+    address: 'Registon ko\'chasi, 15',
+    city: 'Samarqand',
     latitude: 39.627,
     longitude: 66.975,
     capacity: 300,
@@ -156,9 +156,9 @@ export const VENUES = [
   {
     name: 'Bukhara Conference Hall',
     description:
-      'Современный конференц-центр с традиционной архитектурой в историческом центре Бухары.',
-    address: 'ул. По-и-Калон, 8',
-    city: 'Бухара',
+      'Buxoroning tarixiy markazida an\'anaviy me\'morchilik uslubidagi zamonaviy konferens-markaz.',
+    address: 'Po-i-Kalon ko\'chasi, 8',
+    city: 'Buxoro',
     latitude: 39.7747,
     longitude: 64.4286,
     capacity: 200,
@@ -177,9 +177,9 @@ export const VENUES = [
   {
     name: 'Navoi Palace',
     description:
-      'Роскошный дворец для торжественных мероприятий, свадеб и корпоративных гала-вечеров.',
-    address: 'ул. Навои, 30',
-    city: 'Ташкент',
+      'Tantanali tadbirlar, to\'ylar va korporativ gala-kechalar uchun hashamatli saroy.',
+    address: 'Navoiy ko\'chasi, 30',
+    city: 'Toshkent',
     latitude: 41.3205,
     longitude: 69.2654,
     capacity: 800,
@@ -198,9 +198,9 @@ export const VENUES = [
   {
     name: 'Andijan Expo Center',
     description:
-      'Просторный выставочный центр с гибкой планировкой. Подходит для выставок, ярмарок и массовых мероприятий.',
-    address: 'пр-т Бабура, 55',
-    city: 'Андижан',
+      'Ko\'rgazmalar, yarmarkalar va ommaviy tadbirlar uchun moslashuvchan rejalashtirish imkoniyatli keng ko\'rgazma markazi.',
+    address: 'Bobur prospekti, 55',
+    city: 'Andijon',
     latitude: 40.7829,
     longitude: 72.3442,
     capacity: 1000,
@@ -223,10 +223,10 @@ export const PUBLISHED_EVENTS = [
   {
     title: 'Marketing Forum 2026',
     description:
-      'Ежегодная маркетинговая конференция в Ташкенте с участием лидеров индустрии. Нетворкинг, мастер-классы и презентации от ведущих брендов Центральной Азии.',
+      'Toshkentda sanoat yetakchilarining ishtirokidagi yillik marketing konferensiyasi. Networking, masterklaslar va Markaziy Osiyoning yetakchi brendlaridan taqdimotlar.',
     startDate: new Date('2026-05-20T10:00:00Z'),
     endDate: new Date('2026-05-20T18:00:00Z'),
-    eventType: 'Конференция',
+    eventType: 'Konferensiya',
     capacity: 300,
     bannerUrl:
       'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1400&auto=format&fit=crop&q=80',
@@ -236,10 +236,10 @@ export const PUBLISHED_EVENTS = [
   {
     title: 'Tech Startup Meetup',
     description:
-      'Нетворкинг-встреча для технологических предпринимателей и инвесторов. Питч-сессии, менторство и обмен опытом.',
+      'Texnologiya tadbirkorlari va investorlar uchun networking uchrashuvi. Pitch-sessiyalar, mentorlik va tajriba almashish.',
     startDate: new Date('2026-06-15T18:00:00Z'),
     endDate: new Date('2026-06-15T22:00:00Z'),
-    eventType: 'Митап',
+    eventType: 'Mitap',
     capacity: 100,
     bannerUrl:
       'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=1400&auto=format&fit=crop&q=80',
@@ -249,10 +249,10 @@ export const PUBLISHED_EVENTS = [
   {
     title: 'Tashkent Jazz Festival',
     description:
-      'Ежегодный джазовый фестиваль под открытым небом. 15 групп из Узбекистана, России и Европы. Три сцены, food-зона и арт-инсталляции.',
+      'Ochiq havoda o\'tkaziladigan yillik jazz festivali. O\'zbekiston, Rossiya va Yevropadan 15 ta guruh. Uch sahna, food-zona va art-installatsiyalar.',
     startDate: new Date('2026-07-10T17:00:00Z'),
     endDate: new Date('2026-07-12T23:00:00Z'),
-    eventType: 'Фестиваль',
+    eventType: 'Festival',
     capacity: 500,
     bannerUrl:
       'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&auto=format&fit=crop&q=80',
@@ -262,10 +262,10 @@ export const PUBLISHED_EVENTS = [
   {
     title: 'UX/UI Design Workshop',
     description:
-      'Практический двухдневный воркшоп по дизайну продукта. Figma, пользовательские исследования, прототипирование и критический разбор кейсов.',
+      'Mahsulot dizayni bo\'yicha ikki kunlik amaliy workshop. Figma, foydalanuvchi tadqiqotlari, prototiplash va keyslarni tanqidiy tahlil.',
     startDate: new Date('2026-04-25T09:00:00Z'),
     endDate: new Date('2026-04-26T18:00:00Z'),
-    eventType: 'Тренинг',
+    eventType: 'Trening',
     capacity: 50,
     bannerUrl:
       'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1400&auto=format&fit=crop&q=80',
@@ -273,12 +273,12 @@ export const PUBLISHED_EVENTS = [
     organizerKey: 'organizer2@planner.ai',
   },
   {
-    title: 'Выставка «Шёлковый путь»',
+    title: 'Ko\'rgazma «Ipak yo\'li»',
     description:
-      'Групповая выставка 30 художников из стран Центральной Азии. Живопись, скульптура, инсталляции и цифровое искусство.',
+      'Markaziy Osiyo mamlakatlaridan 30 ta rassomning guruh ko\'rgazmasi. Rasm, haykaltaroshlik, installatsiyalar va raqamli san\'at.',
     startDate: new Date('2026-05-01T10:00:00Z'),
     endDate: new Date('2026-05-15T20:00:00Z'),
-    eventType: 'Выставка',
+    eventType: 'Ko\'rgazma',
     capacity: 200,
     bannerUrl:
       'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1400&auto=format&fit=crop&q=80',
@@ -292,10 +292,10 @@ export const DRAFT_EVENTS = [
   {
     title: 'AI & Data Science Conference',
     description:
-      'Международная конференция по искусственному интеллекту и анализу данных. Доклады от ведущих исследователей и практиков.',
+      'Sun\'iy intellekt va ma\'lumotlar tahlili bo\'yicha xalqaro konferensiya. Yetakchi tadqiqotchilar va amaliyotchilardan ma\'ruzalar.',
     startDate: new Date('2026-09-10T09:00:00Z'),
     endDate: new Date('2026-09-11T18:00:00Z'),
-    eventType: 'Конференция',
+    eventType: 'Konferensiya',
     capacity: 400,
     bannerUrl:
       'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&auto=format&fit=crop&q=80',
@@ -304,10 +304,10 @@ export const DRAFT_EVENTS = [
   {
     title: 'Startup Demo Day',
     description:
-      'День демонстрации стартапов перед инвесторами. 20 команд представят свои продукты и бизнес-модели.',
+      'Startaplarni investorlar oldida namoyish qilish kuni. 20 ta jamoa o\'z mahsulotlari va biznes-modellarini taqdim etadi.',
     startDate: new Date('2026-08-05T10:00:00Z'),
     endDate: new Date('2026-08-05T19:00:00Z'),
-    eventType: 'Митап',
+    eventType: 'Mitap',
     capacity: 150,
     bannerUrl:
       'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1400&auto=format&fit=crop&q=80',
@@ -316,10 +316,10 @@ export const DRAFT_EVENTS = [
   {
     title: 'Fashion Week Tashkent 2026',
     description:
-      'Неделя моды в Ташкенте: показы коллекций от 40 дизайнеров Узбекистана и гостей из Европы.',
+      'Toshkentda moda haftasi: O\'zbekistondan 40 ta dizayner va Yevropadan mehmonlarning kolleksiya namoyishlari.',
     startDate: new Date('2026-10-01T12:00:00Z'),
     endDate: new Date('2026-10-07T22:00:00Z'),
-    eventType: 'Показ',
+    eventType: 'Namoyish',
     capacity: 600,
     bannerUrl:
       'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1400&auto=format&fit=crop&q=80',
@@ -328,10 +328,10 @@ export const DRAFT_EVENTS = [
   {
     title: 'Corporate Team Building',
     description:
-      'Профессиональный тимбилдинг для корпоративных команд. Квесты, деловые игры и командные тренинги.',
+      'Korporativ jamoalar uchun professional team building. Kvestlar, ishbilarmon o\'yinlar va jamoa treninglari.',
     startDate: new Date('2026-07-20T09:00:00Z'),
     endDate: new Date('2026-07-20T18:00:00Z'),
-    eventType: 'Тренинг',
+    eventType: 'Trening',
     capacity: 80,
     bannerUrl:
       'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&auto=format&fit=crop&q=80',
@@ -344,10 +344,10 @@ export const COMPLETED_EVENTS = [
   {
     title: 'New Year Tech Party 2025',
     description:
-      'Праздничная вечеринка IT-сообщества Ташкента. DJ set, технологические активации и нетворкинг.',
+      'Toshkent IT-hamjamiyatining bayram kechasi. DJ set, texnologik aktivatsiyalar va networking.',
     startDate: new Date('2025-12-27T20:00:00Z'),
     endDate: new Date('2025-12-28T03:00:00Z'),
-    eventType: 'Вечеринка',
+    eventType: 'Kecha',
     capacity: 200,
     bannerUrl:
       'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1400&auto=format&fit=crop&q=80',
@@ -357,10 +357,10 @@ export const COMPLETED_EVENTS = [
   {
     title: 'Silk Road Cuisine Fair',
     description:
-      'Гастрономическая ярмарка национальных кухонь Центральной Азии. 50 ресторанов, мастер-классы шеф-поваров.',
+      'Markaziy Osiyo milliy oshxonalarining gastro-yarmarkasi. 50 ta restoran, oshpazlardan masterklaslar.',
     startDate: new Date('2026-01-15T11:00:00Z'),
     endDate: new Date('2026-01-17T21:00:00Z'),
-    eventType: 'Фестиваль',
+    eventType: 'Festival',
     capacity: 800,
     bannerUrl:
       'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&auto=format&fit=crop&q=80',
@@ -373,10 +373,10 @@ export const COMPLETED_EVENTS = [
 export const CANCELLED_EVENTS = [
   {
     title: 'Winter Music Fest',
-    description: 'Зимний музыкальный фестиваль — отменён в связи с погодными условиями.',
+    description: 'Qishki musiqa festivali — ob-havo sharoiti tufayli bekor qilindi.',
     startDate: new Date('2026-02-10T17:00:00Z'),
     endDate: new Date('2026-02-10T23:00:00Z'),
-    eventType: 'Фестиваль',
+    eventType: 'Festival',
     capacity: 300,
     bannerUrl:
       'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&auto=format&fit=crop&q=80',
@@ -384,10 +384,10 @@ export const CANCELLED_EVENTS = [
   },
   {
     title: 'Photography Masterclass',
-    description: 'Мастер-класс по профессиональной фотографии — перенесён на следующий квартал.',
+    description: 'Professional fotografiya bo\'yicha masterklas — keyingi chorakka ko\'chirildi.',
     startDate: new Date('2026-03-01T10:00:00Z'),
     endDate: new Date('2026-03-01T18:00:00Z'),
-    eventType: 'Тренинг',
+    eventType: 'Trening',
     capacity: 30,
     bannerUrl:
       'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1400&auto=format&fit=crop&q=80',
@@ -443,9 +443,9 @@ export const SERVICES = [
     name: 'Premium Catering Service',
     category: ServiceCategory.CATERING,
     description:
-      'Полный кейтеринг для мероприятий любого масштаба: банкеты, фуршеты, кофе-брейки. Команда 20+ поваров.',
+      'Har qanday miqyosdagi tadbirlar uchun to\'liq katering: banketlar, furshetlar, kofe-tanaffuslar. 20+ oshpazdan iborat jamoa.',
     priceFrom: 15000000,
-    city: 'Ташкент',
+    city: 'Toshkent',
     rating: 4.8,
     imageUrls: [
       'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=80',
@@ -457,9 +457,9 @@ export const SERVICES = [
     name: 'Elite Sound & Light',
     category: ServiceCategory.SOUND,
     description:
-      'Профессиональное звуковое и световое оборудование в аренду с техником на мероприятии.',
+      'Tadbirda texnik bilan professional ovoz va yorug\'lik jihozlarini ijaraga berish.',
     priceFrom: 8000000,
-    city: 'Ташкент',
+    city: 'Toshkent',
     rating: 4.5,
     imageUrls: [
       'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&auto=format&fit=crop&q=80',
@@ -471,9 +471,9 @@ export const SERVICES = [
     name: 'Capture Moments Photography',
     category: ServiceCategory.PHOTO,
     description:
-      'Профессиональная фото- и видеосъёмка мероприятий. Репортаж, портреты, aerial-съёмка дроном.',
+      'Tadbirlarni professional foto va video suratga olish. Reportaj, portretlar, dron orqali aerial suratga olish.',
     priceFrom: 3000000,
-    city: 'Ташкент',
+    city: 'Toshkent',
     rating: 4.9,
     imageUrls: [
       'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&auto=format&fit=crop&q=80',
@@ -485,9 +485,9 @@ export const SERVICES = [
     name: 'Elegant Decor Studio',
     category: ServiceCategory.DECORATION,
     description:
-      'Авторский декор и флористика для любого формата: свадьбы, конференции, выставки. Полный цикл.',
+      'Har qanday format uchun mualliflik dekori va floristika: to\'ylar, konferensiyalar, ko\'rgazmalar. To\'liq tsikl.',
     priceFrom: 5000000,
-    city: 'Ташкент',
+    city: 'Toshkent',
     rating: 4.6,
     imageUrls: [
       'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&auto=format&fit=crop&q=80',
@@ -499,9 +499,9 @@ export const SERVICES = [
     name: 'SecureGuard Services',
     category: ServiceCategory.SECURITY,
     description:
-      'Профессиональная охрана мероприятий: контроль доступа, VIP-сопровождение, видеонаблюдение.',
+      'Tadbirlarni professional qo\'riqlash: kirish nazorati, VIP-hamrohlik, videokuzatuv.',
     priceFrom: 2000000,
-    city: 'Ташкент',
+    city: 'Toshkent',
     rating: 3.8,
     imageUrls: [
       'https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=1200&auto=format&fit=crop&q=80',
@@ -512,9 +512,9 @@ export const SERVICES = [
     name: 'Samarkand Catering House',
     category: ServiceCategory.CATERING,
     description:
-      'Узбекская национальная кухня на вашем мероприятии. Плов, самса, мясные блюда и десерты.',
+      'Tadbiringizda o\'zbek milliy taomlari. Palov, samsa, go\'shtli taomlar va shirinliklar.',
     priceFrom: 8000000,
-    city: 'Самарканд',
+    city: 'Samarqand',
     rating: 4.7,
     imageUrls: [
       'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1200&auto=format&fit=crop&q=80',
@@ -526,9 +526,9 @@ export const SERVICES = [
     name: 'Bukhara Photo & Video',
     category: ServiceCategory.PHOTO,
     description:
-      'Студия фото и видеопроизводства в Бухаре. Документальная съёмка, интервью, мастер-классы.',
+      'Buxoradagi foto va video ishlab chiqarish studiyasi. Hujjatli suratga olish, intervyu, masterklaslar.',
     priceFrom: 2000000,
-    city: 'Бухара',
+    city: 'Buxoro',
     rating: 4.3,
     imageUrls: [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&auto=format&fit=crop&q=80',
@@ -539,9 +539,9 @@ export const SERVICES = [
     name: 'Event Decor Andijan',
     category: ServiceCategory.DECORATION,
     description:
-      'Декоративное оформление площадок в Андижане. Ширмы, цветочные арки, баннеры, тематический декор.',
+      'Andijonda maydonlarni dekorativ bezash. Pardalar, gul arkalari, bannerlar, tematik dekor.',
     priceFrom: 3000000,
-    city: 'Андижан',
+    city: 'Andijon',
     rating: 4.1,
     imageUrls: [
       'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&auto=format&fit=crop&q=80',

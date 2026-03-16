@@ -39,7 +39,7 @@ export function EventsListPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-foreground">Tadbirlar</h1>
         <span className="text-sm text-muted-foreground">{data?.meta.total ?? 0} topildi</span>

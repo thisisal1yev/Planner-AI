@@ -4,94 +4,234 @@ import { eventsApi } from '@entities/event'
 import { venuesApi } from '@entities/venue'
 import { EventCard } from '@entities/event'
 import { VenueCard } from '@entities/venue'
-import { Button } from '@shared/ui/Button'
 import { Spinner } from '@shared/ui/Spinner'
 import { eventKeys, venueKeys } from '@shared/api/queryKeys'
 
-// ─── Icons ───────────────────────────────────────────────────────────────────
+// ─── Theme ────────────────────────────────────────────────────────────────────
 
-function IconCalendar() {
-  return (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-  )
-}
-function IconBuilding() {
-  return (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
-    </svg>
-  )
-}
-function IconTicket() {
-  return (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-    </svg>
-  )
-}
-function IconStar() {
-  return (
-    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-    </svg>
-  )
-}
-function IconSearch() {
-  return (
-    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-  )
-}
-function IconArrow() {
-  return (
-    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-    </svg>
-  )
+const C = {
+  bg:     '#0C1520',
+  bg2:    '#101B28',
+  bg3:    '#0F1925',
+  gold:   '#C9963A',
+  goldL:  '#E8C06A',
+  cream:  '#F0E8D4',
+  muted:  '#7A6D59',
+  border: 'rgba(201,150,58,0.15)',
+} as const
+
+// ─── Styles ───────────────────────────────────────────────────────────────────
+
+const LP_CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+
+.lp-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+@keyframes lp-up   { from { opacity:0; transform:translateY(28px) } to { opacity:1; transform:translateY(0) } }
+@keyframes lp-spin { from { transform:rotate(0deg) } to { transform:rotate(360deg) } }
+@keyframes lp-float { 0%,100% { transform:translateY(0) } 50% { transform:translateY(-14px) } }
+@keyframes lp-marquee { from { transform:translateX(0) } to { transform:translateX(-50%) } }
+@keyframes lp-shimmer {
+  0%   { background-position: 200% center }
+  100% { background-position: -200% center }
 }
 
-// ─── Steps ────────────────────────────────────────────────────────────────────
+.lp-a  { animation: lp-up 0.75s ease-out forwards; opacity:0; }
+.lp-d1 { animation-delay: 0.08s }
+.lp-d2 { animation-delay: 0.22s }
+.lp-d3 { animation-delay: 0.36s }
+.lp-d4 { animation-delay: 0.50s }
+.lp-d5 { animation-delay: 0.64s }
 
-const steps = [
+.lp-spin  { animation: lp-spin  48s linear infinite }
+.lp-float { animation: lp-float  7s ease-in-out infinite }
+.lp-mq    { animation: lp-marquee 28s linear infinite; display:flex; width:max-content; }
+
+.lp-gold-text {
+  background: linear-gradient(120deg, #E8C06A 0%, #C9963A 35%, #E8C06A 70%, #C9963A 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: lp-shimmer 5s linear infinite;
+}
+
+.lp-btn-gold {
+  display: inline-block;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #C9963A 0%, #9E7220 100%);
+  color: #0C1520;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(201,150,58,0.28);
+}
+.lp-btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,150,58,0.42);
+}
+
+.lp-btn-outline {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  color: #F0E8D4;
+  border: 1px solid rgba(201,150,58,0.22);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.lp-btn-outline:hover {
+  border-color: #C9963A;
+  color: #E8C06A;
+}
+
+.lp-card {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+}
+.lp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,150,58,0.25);
+}
+
+.lp-cat {
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.lp-cat:hover {
+  background: rgba(201,150,58,0.1) !important;
+  border-color: rgba(201,150,58,0.45) !important;
+  transform: translateY(-3px);
+}
+
+.lp-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lp-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,150,58,0.15);
+  border-radius: 8px;
+  color: #F0E8D4;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.lp-input:focus { border-color: rgba(201,150,58,0.5); }
+.lp-input::placeholder { color: #5A4F3E; }
+`
+
+// ─── Ornament SVG ─────────────────────────────────────────────────────────────
+
+function Ornament({ size = 380, op = 0.13 }: { size?: number; op?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 240 240" fill="none" style={{ opacity: op }}>
+      {/* Outer dashed ring */}
+      <circle cx="120" cy="120" r="115" stroke="#C9963A" strokeWidth="0.6" strokeDasharray="5 5" />
+      {/* 12-pointed star */}
+      <polygon
+        points="120,8 136,48 172,26 158,64 198,64 174,96 210,120 174,144 198,176 158,176 172,214 136,192 120,232 104,192 68,214 82,176 42,176 66,144 30,120 66,96 42,64 82,64 68,26 104,48"
+        stroke="#C9963A" strokeWidth="0.9" fill="rgba(201,150,58,0.04)"
+      />
+      {/* Inner hexagon */}
+      <polygon
+        points="120,58 148,74 148,106 120,122 92,106 92,74"
+        stroke="#C9963A" strokeWidth="0.7" fill="rgba(201,150,58,0.03)"
+      />
+      {/* 6-pointed star inside */}
+      <polygon
+        points="120,70 130,95 157,95 135,111 143,136 120,121 97,136 105,111 83,95 110,95"
+        stroke="#C9963A" strokeWidth="0.6" fill="rgba(201,150,58,0.05)"
+      />
+      <circle cx="120" cy="120" r="5" fill="#C9963A" opacity="0.5" />
+      {/* Diagonal lines */}
+      <line x1="5" y1="120" x2="235" y2="120" stroke="#C9963A" strokeWidth="0.35" opacity="0.4" />
+      <line x1="120" y1="5" x2="120" y2="235" stroke="#C9963A" strokeWidth="0.35" opacity="0.4" />
+      <line x1="37" y1="37" x2="203" y2="203" stroke="#C9963A" strokeWidth="0.3" opacity="0.25" />
+      <line x1="203" y1="37" x2="37" y2="203" stroke="#C9963A" strokeWidth="0.3" opacity="0.25" />
+    </svg>
+  )
+}
+
+// ─── Section label ─────────────────────────────────────────────────────────────
+
+function Label({ text }: { text: string }) {
+  return (
+    <p style={{ fontSize: '11px', color: C.gold, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '10px', fontWeight: 500 }}>
+      {text}
+    </p>
+  )
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const STATS = [
+  { v: '500+', l: 'Tadbirlar' },
+  { v: '120+', l: 'Maydonlar' },
+  { v: '80+',  l: "Ta'minotchilar" },
+  { v: '10K+', l: 'Ishtirokchilar' },
+]
+
+const CATS = [
+  { l: 'Konsertlar',     e: '🎵', to: '/events?type=Konsert' },
+  { l: 'Konferensiyalar',e: '🎤', to: '/events?type=Konferensiya' },
+  { l: "Ko'rgazmalar",   e: '🖼️', to: "/events?type=Ko'rgazma" },
+  { l: 'Treninglar',     e: '📚', to: '/events?type=Trening' },
+  { l: 'Festivallar',    e: '🎪', to: '/events?type=Festival' },
+  { l: 'Ziyofatlar',     e: '🎉', to: '/events?type=Ziyofat' },
+]
+
+const STEPS = [
+  { n: '01', t: 'Maydon tanlang',     d: "Butun O'zbekiston bo'ylab yuzlab tekshirilgan maydonlardan tadbiringiz uchun ideal joyni toping." },
+  { n: '02', t: "Xizmatlar qo'shing", d: "Katering, bezak, ovoz, foto — tekshirilgan ta'minotchilardan hamma zarur narsalarni bir joyda buyurtma qiling." },
+  { n: '03', t: 'Chiptalar soting',   d: "Chipta sotuvini ishga tushiring, ishtirokchilarni boshqaring va real vaqtda analitikani kuzating." },
+]
+
+const FEATS = [
+  { e: '📅', t: 'Tadbirlarni boshqarish', d: 'Bir necha bosish bilan tadbirlarni yarating, tahrirlang va nashr eting.' },
+  { e: '🏛️', t: 'Maydonlar bazasi',        d: "O'zbekistonning yirik shaharlarida 120 dan ortiq tekshirilgan maydonlar." },
+  { e: '🎫', t: 'Chipta sotish',           d: "Click va Payme qo'llab-quvvatlaydigan o'rnatilgan sotuv tizimi." },
+  { e: '⭐', t: 'Reytinglar va sharhlar',  d: "Ishtirokchilarning haqiqiy sharhlari eng yaxshi ta'minotchilarni tanlashga yordam beradi." },
+]
+
+const PLANS = [
   {
-    num: '01',
-    title: 'Maydon tanlang',
-    desc: "Butun O'zbekiston bo'ylab yuzlab tekshirilgan maydonlardan tadbiringiz uchun ideal joyni toping.",
+    n: 'Bepul', p: '0', per: '',            desc: "Boshlang'ichlar uchun",
+    fs: ["Tadbirlarni ko'rish", 'Chipta sotib olish', 'Shaxsiy kabinet', 'Sharhlar'],
+    cta: 'Bepul boshlash', hot: false,
   },
   {
-    num: '02',
-    title: 'Xizmatlar qo\'shing',
-    desc: "Katering, bezak, ovoz, foto — tekshirilgan ta'minotchilardan hamma zarur narsalarni bir joyda buyurtma qiling.",
+    n: 'Pro',    p: '99 000', per: " so'm/oy", desc: 'Tashkilotchilar uchun',
+    fs: ['Oyiga 10 tadbir', 'Chipta sotish', 'Analitika', 'Volontyorlar', "Ustuvor yordam"],
+    cta: "14 kun sinab ko'ring", hot: true,
   },
   {
-    num: '03',
-    title: 'Chiptalar soting',
-    desc: "Chipta sotuvini ishga tushiring, ishtirokchilarni boshqaring va real vaqtda analitikani kuzating.",
+    n: 'Biznes', p: '299 000', per: " so'm/oy", desc: 'Kompaniyalar uchun',
+    fs: ['Cheksiz tadbirlar', 'Multi-akkaunt', 'API kirish', 'Brending', 'Menejer'],
+    cta: "Biz bilan bog'laning", hot: false,
   },
 ]
 
-// ─── Categories ───────────────────────────────────────────────────────────────
-
-const categories = [
-  { label: 'Konsertlar', emoji: '🎵', to: '/events?type=Konsert', color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400' },
-  { label: 'Konferensiyalar', emoji: '🎤', to: '/events?type=Konferensiya', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400' },
-  { label: "Ko'rgazmalar", emoji: '🖼️', to: "/events?type=Ko'rgazma", color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400' },
-  { label: 'Treninglar', emoji: '📚', to: '/events?type=Trening', color: 'bg-green-500/10 text-green-600 dark:text-green-400' },
-  { label: 'Festivallar', emoji: '🎪', to: '/events?type=Festival', color: 'bg-pink-500/10 text-pink-600 dark:text-pink-400' },
-  { label: 'Ziyofatlar', emoji: '🎉', to: '/events?type=Ziyofat', color: 'bg-orange-500/10 text-orange-600 dark:text-orange-400' },
-]
-
-// ─── Stats ────────────────────────────────────────────────────────────────────
-
-const stats = [
-  { value: '500+', label: 'Tadbirlar' },
-  { value: '120+', label: 'Maydonlar' },
-  { value: '80+', label: "Ta'minotchilar" },
-  { value: '10K+', label: 'Ishtirokchilar' },
-]
+const MQ = ['Konsertlar', 'Konferensiyalar', "Ko'rgazmalar", 'Treninglar', 'Festivallar', 'Ziyofatlar', 'Mitaplar', 'Namoyishlar']
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -100,362 +240,505 @@ export function HomePage() {
     queryKey: eventKeys.list({ status: 'PUBLISHED', limit: 3 }),
     queryFn: () => eventsApi.list({ status: 'PUBLISHED', limit: 3 }),
   })
-
   const { data: venuesData, isLoading: venuesLoading } = useQuery({
     queryKey: venueKeys.list({ limit: 3 }),
     queryFn: () => venuesApi.list({ limit: 3 }),
   })
 
   return (
-    <div className="flex flex-col">
+    <>
+      <style dangerouslySetInnerHTML={{ __html: LP_CSS }} />
+      <div style={{ background: C.bg, color: C.cream }}>
 
-      {/* ── Hero ── */}
-      <section className="relative py-20 md:py-28 overflow-hidden">
-        {/* Gradient blob */}
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/8 rounded-full blur-3xl" />
-        </div>
+        {/* ════════════════════════════════ HERO ════════════════════════════════ */}
+        <section
+          className="lp-noise relative overflow-hidden"
+          style={{
+            background: `radial-gradient(ellipse 90% 55% at 50% -5%, rgba(201,150,58,0.09) 0%, transparent 68%), ${C.bg}`,
+            minHeight: 'calc(100vh - 64px)',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {/* top line */}
+          <div className="absolute top-0 left-0 right-0" style={{ height: '1px', background: `linear-gradient(90deg, transparent, ${C.gold}, transparent)`, opacity: 0.35 }} />
 
-        <div className="text-center max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            O'zbekistondagi №1 tadbirlar marketi
+          {/* Spinning ornament — top right */}
+          <div className="lp-spin absolute pointer-events-none" style={{ top: -90, right: -90, zIndex: 0 }}>
+            <Ornament size={480} op={0.1} />
+          </div>
+          {/* Floating ornament — bottom left */}
+          <div className="lp-float absolute pointer-events-none" style={{ bottom: -70, left: -110, zIndex: 0 }}>
+            <Ornament size={300} op={0.06} />
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight mb-6">
-            Tadbirlarni{' '}
-            <span className="text-primary">muammosiz</span>
-            {' '}tashkil eting
-          </h1>
+          <div className="relative z-10 max-w-5xl mx-auto px-6 py-28 text-center w-full">
 
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
-            Maydonlar, xizmatlar, chiptalar — hammasi bir joyda. Planner AI tashkilotchilarga tadbirlarni tez va samarali ishga tushirishga yordam beradi.
-          </p>
+            {/* Badge */}
+            <div
+              className="lp-a lp-d1 inline-flex items-center gap-2 mb-8"
+              style={{
+                border: `1px solid ${C.border}`,
+                borderRadius: '100px',
+                padding: '6px 18px',
+                background: 'rgba(201,150,58,0.06)',
+                fontSize: '12px',
+                color: C.goldL,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+              }}
+            >
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: C.gold, flexShrink: 0, display: 'inline-block' }} />
+              O'zbekistondagi №1 tadbirlar marketi
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
-            <Link to="/events">
-              <Button size="lg" className="w-full sm:w-auto gap-2">
-                <IconSearch />
-                Tadbirlarni ko'rish
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                Tadbir yaratish
-              </Button>
-            </Link>
+            {/* Headline */}
+            <h1
+              className="lp-serif lp-a lp-d2"
+              style={{
+                fontSize: 'clamp(52px, 9vw, 96px)',
+                fontWeight: 700,
+                lineHeight: 1.03,
+                letterSpacing: '-0.02em',
+                marginBottom: '24px',
+                color: C.cream,
+              }}
+            >
+              Tadbirlarni{' '}
+              <em className="lp-serif lp-gold-text">muammosiz</em>
+              <br />
+              tashkil eting
+            </h1>
+
+            {/* Sub */}
+            <p
+              className="lp-a lp-d3"
+              style={{ fontSize: '18px', lineHeight: 1.75, color: C.muted, maxWidth: '520px', margin: '0 auto 44px' }}
+            >
+              Maydonlar, xizmatlar, chiptalar — hammasi bir joyda. Planner AI tashkilotchilarga tadbirlarni tez va samarali ishga tushirishga yordam beradi.
+            </p>
+
+            {/* CTAs */}
+            <div className="lp-a lp-d4 flex flex-col sm:flex-row gap-3 justify-center" style={{ marginBottom: '68px' }}>
+              <Link to="/events" className="lp-btn-gold">Tadbirlarni ko'rish →</Link>
+              <Link to="/register" className="lp-btn-outline">Tadbir yaratish</Link>
+            </div>
+
+            {/* Stats */}
+            <div
+              className="lp-a lp-d5 grid grid-cols-2 sm:grid-cols-4 gap-3"
+              style={{ maxWidth: '580px', margin: '0 auto' }}
+            >
+              {STATS.map((s) => (
+                <div
+                  key={s.l}
+                  style={{
+                    padding: '18px 12px',
+                    border: `1px solid ${C.border}`,
+                    borderRadius: '12px',
+                    background: 'rgba(201,150,58,0.04)',
+                  }}
+                >
+                  <div className="lp-serif" style={{ fontSize: '30px', fontWeight: 700, color: C.goldL, lineHeight: 1 }}>
+                    {s.v}
+                  </div>
+                  <div style={{ fontSize: '12px', color: C.muted, marginTop: '5px', letterSpacing: '0.04em' }}>
+                    {s.l}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Stats bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            {stats.map((s) => (
-              <div key={s.label} className="bg-card border border-border rounded-xl py-3 px-4">
-                <div className="text-2xl font-bold text-foreground">{s.value}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">{s.label}</div>
-              </div>
+          {/* bottom fade */}
+          <div className="absolute bottom-0 left-0 right-0 pointer-events-none" style={{ height: '100px', background: `linear-gradient(to bottom, transparent, ${C.bg})` }} />
+        </section>
+
+        {/* ════════════════════════════════ MARQUEE ════════════════════════════ */}
+        <div style={{ borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: '13px 0', overflow: 'hidden', background: 'rgba(201,150,58,0.025)' }}>
+          <div className="lp-mq">
+            {[...MQ, ...MQ, ...MQ, ...MQ].map((item, i) => (
+              <span
+                key={i}
+                style={{ fontSize: '12px', color: C.muted, letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '44px', marginRight: '44px' }}
+              >
+                {item}
+                <span style={{ color: C.gold, fontSize: '7px' }}>◆</span>
+              </span>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* ── Categories ── */}
-      <section className="py-14 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-foreground">Tadbir turlari</h2>
-            <Link to="/events" className="text-sm text-primary hover:underline flex items-center gap-1">
-              Barcha tadbirlar <IconArrow />
-            </Link>
-          </div>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-            {categories.map((cat) => (
-              <Link
-                key={cat.label}
-                to={cat.to}
-                className={`flex flex-col items-center gap-2 p-4 rounded-xl ${cat.color} hover:opacity-80 transition-opacity cursor-pointer`}
-              >
-                <span className="text-2xl">{cat.emoji}</span>
-                <span className="text-xs font-medium text-center leading-tight">{cat.label}</span>
+        {/* ════════════════════════════════ CATEGORIES ════════════════════════ */}
+        <section style={{ padding: '88px 24px', background: C.bg2 }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div className="flex items-end justify-between flex-wrap gap-4" style={{ marginBottom: '48px' }}>
+              <div>
+                <Label text="Kategoriyalar" />
+                <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,46px)', fontWeight: 700, color: C.cream, lineHeight: 1.1 }}>
+                  Tadbir turini tanlang
+                </h2>
+              </div>
+              <Link to="/events" style={{ color: C.gold, fontSize: '14px', textDecoration: 'none', transition: 'opacity 0.2s' }}>
+                Barcha tadbirlar →
               </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Featured Events ── */}
-      <section className="py-14 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground">Yaqinlashayotgan tadbirlar</h2>
-              <p className="text-muted-foreground text-sm mt-1">O'zbekistonning dolzarb tadbirlari</p>
             </div>
-            <Link to="/events" className="text-sm text-primary hover:underline hidden sm:flex items-center gap-1">
-              Barcha tadbirlar <IconArrow />
-            </Link>
-          </div>
-          {eventsLoading ? (
-            <Spinner />
-          ) : eventsData?.data.length === 0 ? (
-            <p className="text-center text-muted-foreground py-12">Mavjud tadbirlar yo'q</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {eventsData?.data.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-            </div>
-          )}
-          <div className="mt-6 text-center sm:hidden">
-            <Link to="/events">
-              <Button variant="secondary">Barcha tadbirlar</Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── How it works ── */}
-      <section id="how-it-works" className="py-14 border-t border-border bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Bu qanday ishlaydi</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Uch oddiy qadam — va tadbiringiz ishga tushishga tayyor
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {steps.map((step, i) => (
-              <div key={step.num} className="relative bg-card border border-border rounded-2xl p-6">
-                {i < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 -right-3 z-10 text-muted-foreground/30">
-                    <IconArrow />
-                  </div>
-                )}
-                <div className="text-4xl font-black text-primary/15 mb-4 leading-none">{step.num}</div>
-                <h3 className="font-semibold text-foreground mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Featured Venues ── */}
-      <section className="py-14 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground">Mashhur maydonlar</h2>
-              <p className="text-muted-foreground text-sm mt-1">Tadbirlaringiz uchun eng yaxshi joylar</p>
-            </div>
-            <Link to="/venues" className="text-sm text-primary hover:underline hidden sm:flex items-center gap-1">
-              Barcha maydonlar <IconArrow />
-            </Link>
-          </div>
-          {venuesLoading ? (
-            <Spinner />
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {venuesData?.data.map((venue) => (
-                <VenueCard key={venue.id} venue={venue} />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ── Features Grid ── */}
-      <section id="features" className="py-14 border-t border-border bg-muted/20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Tashkilotchi uchun hamma narsa</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Professional tadbirlarni tashkil etish uchun to'liq vositalar to'plami
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { icon: <IconCalendar />, title: 'Tadbirlarni boshqarish', desc: 'Bir necha bosish bilan tadbirlarni yarating, tahrirlang va nashr eting', color: 'text-primary bg-primary/10' },
-              { icon: <IconBuilding />, title: 'Maydonlar bazasi', desc: "O'zbekistonning yirik shaharlarida 120 dan ortiq tekshirilgan maydonlar", color: 'text-emerald-600 bg-emerald-500/10' },
-              { icon: <IconTicket />, title: 'Chipta sotish', desc: "Click va Payme qo'llab-quvvatlaydigan o'rnatilgan sotuv tizimi", color: 'text-amber-600 bg-amber-500/10' },
-              { icon: <IconStar />, title: 'Reytinglar va sharhlar', desc: "Ishtirokchilarning haqiqiy sharhlari eng yaxshi ta'minotchilarni tanlashga yordam beradi", color: 'text-purple-600 bg-purple-500/10' },
-            ].map((f) => (
-              <div key={f.title} className="bg-card border border-border rounded-2xl p-5">
-                <div className={`inline-flex items-center justify-center h-10 w-10 rounded-xl mb-4 ${f.color}`}>
-                  {f.icon}
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">{f.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Pricing ── */}
-      <section id="pricing" className="py-14 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Tariflar</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Bepul boshlang va o'sishingiz bilan kengaytiring
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[
-              {
-                name: 'Bepul',
-                price: '0',
-                desc: 'Ishtirokchilar va boshlang\'ichlar uchun',
-                features: ['Tadbirlarni ko\'rish', 'Chipta sotib olish', 'Shaxsiy kabinet', 'Sharhlar va reytinglar'],
-                cta: 'Bepul boshlash',
-                highlight: false,
-              },
-              {
-                name: 'Pro',
-                price: '99 000',
-                desc: 'Tadbir tashkilotchilari uchun',
-                features: ['Oyiga 10 tagacha tadbir', 'Chipta sotish', 'Analitika va hisobotlar', 'Volontyorlarni boshqarish', 'Ustuvor qo\'llab-quvvatlash'],
-                cta: '14 kun sinab ko\'ring',
-                highlight: true,
-              },
-              {
-                name: 'Biznes',
-                price: '299 000',
-                desc: 'Agentliklar va kompaniyalar uchun',
-                features: ['Cheksiz tadbirlar', 'Multi-akkaunt', 'API kirish', 'Maxsus brending', 'Ajratilgan menejer'],
-                cta: 'Biz bilan bog\'laning',
-                highlight: false,
-              },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-2xl border p-6 flex flex-col gap-5 ${
-                  plan.highlight
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-card border-border'
-                }`}
-              >
-                <div>
-                  <p className={`text-sm font-medium mb-1 ${plan.highlight ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                    {plan.name}
-                  </p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold">{plan.price}</span>
-                    <span className={`text-sm ${plan.highlight ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                      {plan.price === '0' ? '' : " so'm/oy"}
-                    </span>
-                  </div>
-                  <p className={`text-sm mt-1 ${plan.highlight ? 'text-primary-foreground/70' : 'text-muted-foreground'}`}>
-                    {plan.desc}
-                  </p>
-                </div>
-                <ul className="flex flex-col gap-2 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
-                      <span className={`text-xs ${plan.highlight ? 'text-primary-foreground/80' : 'text-primary'}`}>✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/register">
-                  <Button
-                    variant={plan.highlight ? 'secondary' : 'primary'}
-                    className="w-full"
-                  >
-                    {plan.cta}
-                  </Button>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              {CATS.map((c) => (
+                <Link
+                  key={c.l}
+                  to={c.to}
+                  className="lp-cat"
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
+                    padding: '22px 10px',
+                    border: `1px solid ${C.border}`,
+                    borderRadius: '12px',
+                    background: 'rgba(255,255,255,0.018)',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <span style={{ fontSize: '26px' }}>{c.e}</span>
+                  <span style={{ fontSize: '12px', fontWeight: 500, color: C.cream, textAlign: 'center', lineHeight: 1.3 }}>{c.l}</span>
                 </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Contact ── */}
-      <section id="contact" className="py-14 border-t border-border bg-muted/20">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-3">Aloqa</h2>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Savollaringiz bormi? Bizga yozing — ish kuni davomida javob beramiz
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Contact info */}
-            <div className="flex flex-col gap-5">
-              {[
-                { emoji: '📍', title: 'Manzil', text: 'Toshkent sh., Amir Temur ko\'chasi, 107B' },
-                { emoji: '📞', title: 'Telefon', text: '+998 71 200 00 00' },
-                { emoji: '✉️', title: 'Email', text: 'hello@plannerai.uz' },
-                { emoji: '🕐', title: 'Ish vaqti', text: 'Du–Ju, 9:00–18:00' },
-              ].map(({ emoji, title, text }) => (
-                <div key={title} className="flex items-start gap-4 bg-card border border-border rounded-xl p-4">
-                  <span className="text-2xl">{emoji}</span>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{title}</p>
-                    <p className="text-sm text-muted-foreground">{text}</p>
-                  </div>
-                </div>
               ))}
             </div>
-            {/* Contact form */}
-            <form className="bg-card border border-border rounded-2xl p-6 flex flex-col gap-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-medium text-muted-foreground">Ism</label>
-                  <input className="px-3 py-2.5 border border-border bg-background text-foreground rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground" placeholder="Ismingiz" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-medium text-muted-foreground">Email</label>
-                  <input type="email" className="px-3 py-2.5 border border-border bg-background text-foreground rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground" placeholder="email@example.com" />
-                </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Mavzu</label>
-                <input className="px-3 py-2.5 border border-border bg-background text-foreground rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground" placeholder="Qanday yordam bera olamiz?" />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-muted-foreground">Xabar</label>
-                <textarea rows={4} className="px-3 py-2.5 border border-border bg-background text-foreground rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 placeholder:text-muted-foreground resize-none" placeholder="Savolingizni tasvirlab bering..." />
-              </div>
-              <Button className="w-full">Xabar yuborish</Button>
-            </form>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── CTA ── */}
-      <section className="py-14 border-t border-border">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="relative bg-primary rounded-3xl p-10 md:p-16 text-center overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full" />
-              <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-white/5 rounded-full" />
+        {/* ════════════════════════════════ EVENTS ════════════════════════════ */}
+        <section style={{ padding: '88px 24px', background: C.bg }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div className="flex items-end justify-between flex-wrap gap-4" style={{ marginBottom: '48px' }}>
+              <div>
+                <Label text="Tadbirlar" />
+                <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,46px)', fontWeight: 700, color: C.cream, lineHeight: 1.1 }}>
+                  Yaqinlashayotgan tadbirlar
+                </h2>
+                <p style={{ fontSize: '15px', color: C.muted, marginTop: '8px' }}>O'zbekistonning dolzarb tadbirlari</p>
+              </div>
+              <Link to="/events" style={{ color: C.gold, fontSize: '14px', textDecoration: 'none' }}>Barcha tadbirlar →</Link>
             </div>
-            <div className="relative">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-                Tadbir boshlashga tayyormisiz?
+            {eventsLoading
+              ? <Spinner />
+              : eventsData?.data.length === 0
+                ? <p style={{ textAlign: 'center', color: C.muted, padding: '48px 0' }}>Mavjud tadbirlar yo'q</p>
+                : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {eventsData?.data.map((e) => <EventCard key={e.id} event={e} />)}
+                  </div>
+                )
+            }
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ HOW IT WORKS ══════════════════════ */}
+        <section id="how-it-works" style={{ padding: '88px 24px', background: C.bg3, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+              <Label text="Jarayon" />
+              <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 700, color: C.cream }}>
+                Bu qanday ishlaydi
               </h2>
-              <p className="text-primary-foreground/70 text-lg mb-8 max-w-lg mx-auto">
-                Planner AI orqali muvaffaqiyatli tadbirlarni allaqachon o'tkazayotgan yuzlab tashkilotchilarga qo'shiling
+              <p style={{ fontSize: '15px', color: C.muted, marginTop: '12px', maxWidth: '380px', margin: '12px auto 0' }}>
+                Uch oddiy qadam — va tadbiringiz ishga tushishga tayyor
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Link to="/register">
-                  <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                    Bepul boshlash
-                  </Button>
-                </Link>
-                <Link to="/events">
-                  <Button variant="ghost" size="lg" className="w-full sm:w-auto text-primary-foreground hover:bg-white/10">
-                    Tadbirlarni ko'rish
-                  </Button>
-                </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {STEPS.map((s, i) => (
+                <div key={s.n} style={{ position: 'relative' }}>
+                  {/* Step number */}
+                  <div
+                    className="lp-serif"
+                    style={{
+                      fontSize: '88px', fontWeight: 700, lineHeight: 1,
+                      color: 'transparent',
+                      WebkitTextStroke: '1px rgba(201,150,58,0.18)',
+                      marginBottom: '12px',
+                      userSelect: 'none',
+                    }}
+                  >{s.n}</div>
+                  {/* Arrow between steps (desktop) */}
+                  {i < 2 && (
+                    <div
+                      className="hidden md:block absolute"
+                      style={{ top: '32px', right: '-28px', color: C.border, fontSize: '22px', zIndex: 10 }}
+                    >→</div>
+                  )}
+                  <div style={{ width: '36px', height: '2px', background: C.gold, opacity: 0.55, marginBottom: '16px' }} />
+                  <h3 style={{ fontSize: '19px', fontWeight: 600, color: C.cream, marginBottom: '10px' }}>{s.t}</h3>
+                  <p style={{ fontSize: '14px', color: C.muted, lineHeight: 1.75 }}>{s.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ VENUES ════════════════════════════ */}
+        <section style={{ padding: '88px 24px', background: C.bg2 }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div className="flex items-end justify-between flex-wrap gap-4" style={{ marginBottom: '48px' }}>
+              <div>
+                <Label text="Maydonlar" />
+                <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,46px)', fontWeight: 700, color: C.cream, lineHeight: 1.1 }}>
+                  Mashhur maydonlar
+                </h2>
+                <p style={{ fontSize: '15px', color: C.muted, marginTop: '8px' }}>Tadbirlaringiz uchun eng yaxshi joylar</p>
+              </div>
+              <Link to="/venues" style={{ color: C.gold, fontSize: '14px', textDecoration: 'none' }}>Barcha maydonlar →</Link>
+            </div>
+            {venuesLoading
+              ? <Spinner />
+              : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {venuesData?.data.map((v) => <VenueCard key={v.id} venue={v} />)}
+                </div>
+              )
+            }
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ FEATURES ══════════════════════════ */}
+        <section id="features" style={{ padding: '88px 24px', background: C.bg }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+              <Label text="Imkoniyatlar" />
+              <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 700, color: C.cream }}>
+                Tashkilotchi uchun hamma narsa
+              </h2>
+              <p style={{ fontSize: '15px', color: C.muted, marginTop: '12px' }}>
+                Professional tadbirlarni tashkil etish uchun to'liq vositalar to'plami
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {FEATS.map((f) => (
+                <div
+                  key={f.t}
+                  className="lp-card"
+                  style={{
+                    padding: '28px 22px',
+                    border: `1px solid ${C.border}`,
+                    borderRadius: '16px',
+                    background: 'rgba(201,150,58,0.025)',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: '26px', marginBottom: '18px',
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: '52px', height: '52px',
+                      border: `1px solid ${C.border}`,
+                      borderRadius: '12px',
+                      background: 'rgba(201,150,58,0.06)',
+                    }}
+                  >{f.e}</div>
+                  <h3 style={{ fontSize: '16px', fontWeight: 600, color: C.cream, marginBottom: '8px' }}>{f.t}</h3>
+                  <p style={{ fontSize: '14px', color: C.muted, lineHeight: 1.65 }}>{f.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ PRICING ═══════════════════════════ */}
+        <section id="pricing" style={{ padding: '88px 24px', background: C.bg3, borderTop: `1px solid ${C.border}` }}>
+          <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+              <Label text="Narxlar" />
+              <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 700, color: C.cream }}>
+                Tariflar
+              </h2>
+              <p style={{ fontSize: '15px', color: C.muted, marginTop: '12px' }}>
+                Bepul boshlang va o'sishingiz bilan kengaytiring
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {PLANS.map((p) => (
+                <div
+                  key={p.n}
+                  className="lp-card"
+                  style={{
+                    padding: '32px 24px',
+                    border: p.hot ? `1px solid ${C.gold}` : `1px solid ${C.border}`,
+                    borderRadius: '16px',
+                    background: p.hot
+                      ? 'linear-gradient(160deg, rgba(201,150,58,0.12), rgba(201,150,58,0.04))'
+                      : 'rgba(255,255,255,0.018)',
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  {p.hot && (
+                    <div style={{
+                      position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)',
+                      background: `linear-gradient(135deg, ${C.gold}, #9E7220)`,
+                      color: '#0C1520', fontSize: '11px', fontWeight: 700,
+                      padding: '4px 16px', borderRadius: '100px',
+                      letterSpacing: '0.09em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                    }}>
+                      Eng mashhur
+                    </div>
+                  )}
+                  <p style={{ fontSize: '11px', color: C.muted, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '10px' }}>{p.n}</p>
+                  <div className="flex items-baseline gap-1" style={{ marginBottom: '4px' }}>
+                    <span className="lp-serif" style={{ fontSize: '38px', fontWeight: 700, color: p.hot ? C.goldL : C.cream, lineHeight: 1 }}>{p.p}</span>
+                    {p.per && <span style={{ fontSize: '13px', color: C.muted }}>{p.per}</span>}
+                  </div>
+                  <p style={{ fontSize: '13px', color: C.muted, marginBottom: '24px' }}>{p.desc}</p>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
+                    {p.fs.map((f) => (
+                      <li key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '14px', color: C.cream }}>
+                        <span style={{ color: C.gold, fontWeight: 700, fontSize: '12px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/register"
+                    style={{
+                      display: 'block', textAlign: 'center',
+                      padding: '12px',
+                      background: p.hot ? `linear-gradient(135deg, ${C.gold}, #9E7220)` : 'transparent',
+                      border: p.hot ? 'none' : `1px solid ${C.border}`,
+                      borderRadius: '8px',
+                      color: p.hot ? '#0C1520' : C.cream,
+                      fontSize: '14px', fontWeight: 600,
+                      textDecoration: 'none',
+                      letterSpacing: '0.02em',
+                      transition: 'opacity 0.2s',
+                    }}
+                  >
+                    {p.cta}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ CONTACT ═══════════════════════════ */}
+        <section id="contact" style={{ padding: '88px 24px', background: C.bg2 }}>
+          <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+              <Label text="Aloqa" />
+              <h2 className="lp-serif" style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 700, color: C.cream }}>
+                Biz bilan bog'laning
+              </h2>
+              <p style={{ fontSize: '15px', color: C.muted, marginTop: '12px' }}>
+                Savollaringiz bormi? Ish kuni davomida javob beramiz
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Info cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {[
+                  { ic: '📍', t: 'Manzil',    v: "Toshkent, Amir Temur ko'chasi, 107B" },
+                  { ic: '📞', t: 'Telefon',   v: '+998 71 200 00 00' },
+                  { ic: '✉️', t: 'Email',     v: 'hello@plannerai.uz' },
+                  { ic: '🕐', t: 'Ish vaqti', v: 'Du–Ju, 9:00–18:00' },
+                ].map((x) => (
+                  <div
+                    key={x.t}
+                    style={{
+                      display: 'flex', alignItems: 'flex-start', gap: '16px',
+                      padding: '16px 20px',
+                      border: `1px solid ${C.border}`,
+                      borderRadius: '12px',
+                      background: 'rgba(201,150,58,0.025)',
+                    }}
+                  >
+                    <span style={{ fontSize: '22px', flexShrink: 0 }}>{x.ic}</span>
+                    <div>
+                      <p style={{ fontSize: '12px', fontWeight: 600, color: C.goldL, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>{x.t}</p>
+                      <p style={{ fontSize: '14px', color: C.muted }}>{x.v}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Form */}
+              <form
+                style={{
+                  border: `1px solid ${C.border}`,
+                  borderRadius: '16px',
+                  padding: '28px 24px',
+                  background: 'rgba(201,150,58,0.025)',
+                  display: 'flex', flexDirection: 'column', gap: '16px',
+                }}
+              >
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label style={{ display: 'block', fontSize: '11px', color: C.gold, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '7px' }}>Ism</label>
+                    <input className="lp-input" type="text" placeholder="Ismingiz" />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '11px', color: C.gold, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '7px' }}>Email</label>
+                    <input className="lp-input" type="email" placeholder="email@example.com" />
+                  </div>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '11px', color: C.gold, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '7px' }}>Mavzu</label>
+                  <input className="lp-input" type="text" placeholder="Qanday yordam bera olamiz?" />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '11px', color: C.gold, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '7px' }}>Xabar</label>
+                  <textarea className="lp-input" rows={4} placeholder="Savolingizni tasvirlab bering..." style={{ resize: 'none' }} />
+                </div>
+                <button
+                  type="submit"
+                  className="lp-btn-gold"
+                  style={{ width: '100%', textAlign: 'center' }}
+                >
+                  Xabar yuborish
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════ CTA ═══════════════════════════════ */}
+        <section style={{ padding: '80px 24px', background: C.bg }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+            <div
+              className="lp-noise relative overflow-hidden"
+              style={{
+                borderRadius: '24px',
+                padding: 'clamp(48px, 8vw, 88px) clamp(24px, 5vw, 80px)',
+                textAlign: 'center',
+                border: `1px solid rgba(201,150,58,0.28)`,
+                background: `radial-gradient(ellipse 80% 80% at 50% 50%, rgba(201,150,58,0.07), transparent 70%)`,
+              }}
+            >
+              {/* corner ornaments */}
+              <div style={{ position: 'absolute', top: -30, right: -30, opacity: 0.06, pointerEvents: 'none' }}>
+                <Ornament size={200} op={1} />
+              </div>
+              <div style={{ position: 'absolute', bottom: -30, left: -30, opacity: 0.05, pointerEvents: 'none' }}>
+                <Ornament size={160} op={1} />
+              </div>
+
+              <div className="relative z-10">
+                <Label text="Hoziroq boshlang" />
+                <h2
+                  className="lp-serif"
+                  style={{ fontSize: 'clamp(34px, 6vw, 62px)', fontWeight: 700, color: C.cream, marginBottom: '16px', lineHeight: 1.08 }}
+                >
+                  Tadbir boshlashga{' '}
+                  <em className="lp-serif lp-gold-text">tayyormisiz?</em>
+                </h2>
+                <p style={{ fontSize: '17px', color: C.muted, maxWidth: '480px', margin: '0 auto 44px', lineHeight: 1.75 }}>
+                  Planner AI orqali muvaffaqiyatli tadbirlarni allaqachon o'tkazayotgan yuzlab tashkilotchilarga qo'shiling
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link to="/register" className="lp-btn-gold">Bepul boshlash →</Link>
+                  <Link to="/events" className="lp-btn-outline">Tadbirlarni ko'rish</Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-    </div>
+      </div>
+    </>
   )
 }

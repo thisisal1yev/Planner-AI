@@ -29,8 +29,9 @@ export function formatDateDefault(date: string | Date): string {
 }
 
 export function formatUZS(amount: number): string {
-  if (amount >= 1_000_000_000) return `${(amount / 1_000_000_000).toFixed(1)} mlrd so'm`
-  if (amount >= 1_000_000) return `${(amount / 1_000_000).toFixed(1)} mln so'm`
-  if (amount >= 1_000) return `${(amount / 1_000).toFixed(0)} ming so'm`
-  return `${amount} so'm`
+  return new Intl.NumberFormat('uz-UZ', {
+    style: 'currency',
+    currency: 'UZS',
+    maximumFractionDigits: 0,
+  }).format(amount)
 }

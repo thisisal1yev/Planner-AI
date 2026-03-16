@@ -40,7 +40,7 @@ export function EventDetailPage() {
   const end = formatDateTime(event.endDate)
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col gap-6">
       <Link to="/events">
         <Button variant="ghost" size="sm">← Barcha tadbirlar</Button>
       </Link>

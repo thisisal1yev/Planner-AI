@@ -10,6 +10,10 @@ import { AppLayout } from '@widgets/app-layout'
 
 // Public pages
 import { HomePage } from '@pages/home'
+import { AboutPage } from '@pages/about'
+import { BlogPage } from '@pages/blog'
+import { PrivacyPage } from '@pages/privacy'
+import { TermsPage } from '@pages/terms'
 
 // Auth pages
 import { AuthPage } from '@pages/auth'
@@ -56,6 +60,10 @@ export function AppRouter() {
       {/* ── Landing (public, minimal header) ── */}
       <Route element={<PublicLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
       </Route>
 
       {/* ── Auth pages (redirect to /events if already logged in) ── */}

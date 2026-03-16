@@ -7,6 +7,10 @@ import { VenueDetailPage } from '@pages/venue-detail'
 import { ServicesListPage } from '@pages/services-list'
 import { ServiceDetailPage } from '@pages/service-detail'
 import { AuthPage } from '@pages/auth'
+import { AboutPage } from '@pages/about'
+import { BlogPage } from '@pages/blog'
+import { PrivacyPage } from '@pages/privacy'
+import { TermsPage } from '@pages/terms'
 
 export const publicRoutes: RouteObject[] = [
   { path: '/', element: <HomePage /> },
@@ -18,4 +22,8 @@ export const publicRoutes: RouteObject[] = [
   { path: '/venues/:id', element: <VenueDetailPage /> },
   { path: '/services', element: <ServicesListPage /> },
   { path: '/services/:id', element: <ServiceDetailPage /> },
+  { path: '/about', element: <AboutPage /> },
+  { path: '/blog', element: <BlogPage /> },
+  { path: '/privacy', element: <PrivacyPage /> },
+  { path: '/terms', element: <TermsPage /> },
 ]
