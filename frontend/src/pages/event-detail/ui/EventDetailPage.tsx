@@ -394,7 +394,7 @@ export function EventDetailPage() {
                 </div>
                 <button
                   onClick={() => setVolunteerModal(true)}
-                  className="w-full h-9 rounded-lg border border-emerald-500/12 text-[11px] tracking-[0.1em] uppercase font-medium text-emerald-600/60 dark:text-emerald-400/60 hover:border-emerald-500/28 hover:bg-emerald-500/5 hover:text-emerald-500 transition-all duration-200"
+                  className="w-full h-9 rounded-lg border border-emerald-500/12 text-[11px] tracking-widest uppercase font-medium text-emerald-600/60 dark:text-emerald-400/60 hover:border-emerald-500/28 hover:bg-emerald-500/5 hover:text-emerald-500 transition-all duration-200"
                 >
                   Ariza topshirish
                 </button>
