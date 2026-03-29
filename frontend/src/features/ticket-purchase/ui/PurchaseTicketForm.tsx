@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Check, AlertCircle, CheckCircle2, Ticket } from 'lucide-react'
+import { Check, AlertCircle, CheckCircle2, Ticket, ExternalLink } from 'lucide-react'
 import { ticketsApi } from '@entities/ticket'
 import type { TicketTier } from '@entities/event'
 import type { PaymentProvider } from '@shared/types'
@@ -167,9 +168,18 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
         </div>
       )}
       {mutation.isSuccess && (
-        <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/6 px-4 py-3">
-          <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
-          <p className="text-[12px] text-emerald-500/80">Chipta muvaffaqiyatli sotib olindi!</p>
+        <div className="flex flex-col gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/6 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
+            <p className="text-[12px] text-emerald-500/80">Chipta muvaffaqiyatli sotib olindi!</p>
+          </div>
+          <Link
+            to="/tickets"
+            className="inline-flex items-center gap-1 text-[12px] font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+          >
+            <ExternalLink className="size-3" />
+            Mening chiptalarim →
+          </Link>
         </div>
       )}
 

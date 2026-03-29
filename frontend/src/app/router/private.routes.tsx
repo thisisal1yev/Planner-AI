@@ -23,6 +23,8 @@ import { EditServicePage } from '@pages/edit-service'
 // Admin
 import { AdminUsersPage } from '@pages/admin-users'
 import { AdminDashboardPage } from '@pages/admin-dashboard'
+import { AdminEventsPage } from '@pages/admin-events'
+import { AdminVenuesPage } from '@pages/admin-venues'
 
 export const privateRoutes: RouteObject[] = [
   // Common
@@ -50,4 +52,6 @@ export const privateRoutes: RouteObject[] = [
   // Admin
   { path: '/admin/dashboard', element: <AdminDashboardPage /> },
   { path: '/admin/users', element: <AdminUsersPage /> },
+  { path: '/admin/events', element: <AdminEventsPage /> },
+  { path: '/admin/venues', element: <AdminVenuesPage /> },
 ]

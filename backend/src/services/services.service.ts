@@ -103,4 +103,26 @@ export class ServicesService {
       include: { service: true },
     });
   }
+
+  /**
+   * Updates the booking status of an event service link
+   */
+  async updateEventService(eventServiceId: string, status: string) {
+    const link = await this.prisma.eventService.findUnique({ where: { id: eventServiceId } });
+    if (!link) throw new NotFoundException('Event service not found');
+    return this.prisma.eventService.update({
+      where: { id: eventServiceId },
+      data: { status: status as 'PENDING' | 'CONFIRMED' | 'CANCELLED' },
+      include: { service: true },
+    });
+  }
+
+  /**
+   * Removes a service from an event
+   */
+  async removeEventService(eventServiceId: string) {
+    const link = await this.prisma.eventService.findUnique({ where: { id: eventServiceId } });
+    if (!link) throw new NotFoundException('Event service not found');
+    await this.prisma.eventService.delete({ where: { id: eventServiceId } });
+  }
 }

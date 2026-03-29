@@ -65,6 +65,13 @@ export const eventsApi = {
     const { data } = await apiClient.post(`/events/${eventId}/services`, dto)
     return data.data
   },
+  updateEventService: async (eventId: string, eventServiceId: string, status: string): Promise<EventService> => {
+    const { data } = await apiClient.patch(`/events/${eventId}/services/${eventServiceId}`, { status })
+    return data.data
+  },
+  removeEventService: async (eventId: string, eventServiceId: string): Promise<void> => {
+    await apiClient.delete(`/events/${eventId}/services/${eventServiceId}`)
+  },
   volunteers: async (id: string): Promise<VolunteerApplication[]> => {
     const { data } = await apiClient.get(`/events/${id}/volunteers`)
     return data.data

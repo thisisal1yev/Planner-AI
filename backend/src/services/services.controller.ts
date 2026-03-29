@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -73,5 +76,25 @@ export class ServicesController {
   @ApiOperation({ summary: 'Get services attached to an event' })
   getEventServices(@Param('eventId') eventId: string) {
     return this.servicesService.getEventServices(eventId);
+  }
+
+  @Patch('events/:eventId/services/:eventServiceId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update event service booking status (organizer)' })
+  updateEventService(
+    @Param('eventServiceId') eventServiceId: string,
+    @Body('status') status: string,
+  ) {
+    return this.servicesService.updateEventService(eventServiceId, status);
+  }
+
+  @Delete('events/:eventId/services/:eventServiceId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remove a service from an event (organizer)' })
+  removeEventService(@Param('eventServiceId') eventServiceId: string) {
+    return this.servicesService.removeEventService(eventServiceId);
   }
 }

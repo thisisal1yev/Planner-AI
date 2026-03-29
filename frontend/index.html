@@ -35,15 +35,17 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     
     <!-- Theme Color -->
-    <meta name="theme-color" content="#3b82f6" />
-    <meta name="color-scheme" content="light dark" />
-    
+    <meta name="theme-color" content="#c9963a" />
+    <meta name="color-scheme" content="dark light" />
+
     <!-- Theme Script -->
     <script>
       try {
         const s = JSON.parse(localStorage.getItem('planner-theme') || '{}')
-        if (s.state?.theme === 'dark') document.documentElement.classList.add('dark')
-      } catch {}
+        if (!s.state?.theme || s.state?.theme === 'dark') document.documentElement.classList.add('dark')
+      } catch {
+        document.documentElement.classList.add('dark')
+      }
     </script>
   </head>
   <body>
