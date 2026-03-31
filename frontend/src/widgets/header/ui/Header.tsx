@@ -243,8 +243,8 @@ export function Header() {
       <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/95 backdrop-blur-md">
         <div className="h-[1.5px] bg-linear-to-r from-transparent via-gold/50 to-transparent" />
 
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 h-15 flex gap-4">
-          <Link to="/" className="no-underline shrink-0 flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-15 flex gap-4 justify-between">
+          <Link to="/" className="no-underline flex items-center">
             <span className="font-bold text-[18px] text-cream tracking-[-0.01em]">
               Planner
             </span>
@@ -253,7 +253,7 @@ export function Header() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-stretch h-full gap-5">
+          <nav className="hidden md:flex h-full gap-5">
             {BROWSE_LINKS.map((link) => (
               <DesktopNavLink key={link.to} {...link} />
             ))}

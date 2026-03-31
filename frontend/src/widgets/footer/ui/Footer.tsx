@@ -71,7 +71,7 @@ export function Footer() {
     <footer className="bg-navy-dark border-t border-t-gold/13">
       <div className="h-px bg-linear-to-r from-transparent via-gold/35 to-transparent" />
 
-      <div className="max-w-[1280px] mx-auto px-6 pt-14 pb-9">
+      <div className="max-w-7xl mx-auto px-6 pt-14 pb-9">
 
         {/* Top grid */}
         <div className="grid grid-cols-1 gap-10 mb-12 sm:grid-cols-4">
