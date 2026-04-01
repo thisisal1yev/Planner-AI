@@ -168,8 +168,8 @@ export function VenuesListPage() {
 
       {/* ── Content ── */}
       {isLoading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => <CardSkeleton key={i} />)}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 12 }).map((_, i) => <CardSkeleton key={i} />)}
         </div>
       ) : data?.data.length === 0 ? (
         <EmptyState
@@ -178,7 +178,7 @@ export function VenuesListPage() {
           action={hasFilters ? { label: 'Filtrlarni tozalash', onClick: resetFilters } : undefined}
         />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.data.map((venue) => <VenueCard key={venue.id} venue={venue} />)}
         </div>
       )}

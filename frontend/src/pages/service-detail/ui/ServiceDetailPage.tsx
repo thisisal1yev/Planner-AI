@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type {} from 'swiper/modules';
+import { Autoplay } from "swiper/modules";
+import type { Swiper as SwiperInstance } from "swiper";
 import { servicesApi } from "@entities/service";
 import { reviewsApi } from "@entities/review";
 import { ReviewCard } from "@entities/review";
@@ -16,6 +17,7 @@ import { serviceKeys } from "@shared/api/queryKeys";
 import { formatUZS } from "@shared/lib/dateUtils";
 
 import "swiper/swiper.css";
+import { ArrowLeft } from "lucide-react";
 
 const CATEGORY_LABEL: Record<string, string> = {
   CATERING: "Katering",
@@ -30,6 +32,7 @@ export function ServiceDetailPage() {
   const user = useAuthStore((s) => s.user);
   const [imgIndex, setImgIndex] = useState(0);
   const [reviewModal, setReviewModal] = useState(false);
+  const swiperRef = useRef<SwiperInstance | null>(null);
 
   const { data: service, isLoading } = useQuery({
     queryKey: serviceKeys.detail(id!),
@@ -65,29 +68,30 @@ export function ServiceDetailPage() {
       {/* Cinematic hero */}
       <div className="relative w-full h-[58vh] min-h-[380px] max-h-[560px] overflow-hidden rounded-2xl">
         {mainImage ? (
-          <Swiper   autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}>
-            <SwiperSlide>
-              {
-                service.imageUrls.map((img, i) => (
-                  <img
-                    key={i}
-                    src={img}
-                    alt={service.name}
-                    className="inset-0 w-full h-full object-cover"
-                  />
-                ))
-              }
-            </SwiperSlide>
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            loop
+            className="w-full h-full"
+            onSwiper={(s) => { swiperRef.current = s }}
+            onSlideChange={(s) => setImgIndex(s.realIndex)}
+          >
+            {service.imageUrls.map((img, i) => (
+              <SwiperSlide key={i}>
+                <img
+                  src={img}
+                  alt={service.name}
+                  className="w-full h-full object-cover"
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
         ) : (
-          <div className="absolute inset-0 bg-linear-to-br from-navy to-navy-2" />
+          <div className="absolute inset-0 bg-linear-to-br from-navy to-navy-2 z-0" />
         )}
 
         {/* Gradient overlay */}
-        {/* <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10" /> */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10 z-10" />
 
         {/* Back button */}
         <div className="absolute top-5 left-5 z-10">
@@ -95,15 +99,16 @@ export function ServiceDetailPage() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/80 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm"
+              className="text-white/80 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm flex items-center gap-2 group"
             >
-              ← Barcha xizmatlar
+              <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+              <span className="text-[10px] tracking-[0.15em] uppercase text-white/80 hover:text-white">Barcha xizmatlar</span>
             </Button>
           </Link>
         </div>
 
         {/* Title overlay */}
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 mx-auto">
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 mx-auto z-10">
           <span className="inline-flex items-center text-xs font-medium uppercase tracking-[0.18em] text-gold-light/90 mb-3 bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gold/20">
             {CATEGORY_LABEL[service.category]}
           </span>
@@ -139,11 +144,11 @@ export function ServiceDetailPage() {
 
         {/* Thumbnail strip */}
         {service.imageUrls.length > 1 && (
-          <div className="absolute bottom-6 right-6 flex gap-1.5">
+          <div className="absolute bottom-6 right-6 flex gap-1.5 z-10">
             {service.imageUrls.map((url, i) => (
               <button
                 key={i}
-                onClick={() => setImgIndex(i)}
+                onClick={() => { swiperRef.current?.slideToLoop(i); setImgIndex(i) }}
                 className={`h-12 w-16 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                   i === imgIndex
                     ? "border-gold shadow-[0_0_14px_rgba(201,150,58,0.5)]"
