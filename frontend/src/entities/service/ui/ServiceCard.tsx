@@ -42,7 +42,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
     <Link
       to={`/services/${service.id}`}
       className={`svc-card svc-fade ${fadeDelay} group relative flex flex-col rounded-2xl overflow-hidden
-        border border-white/8 bg-[#0f1925] no-underline`}
+        border border-white/8 bg-navy-3 no-underline`}
     >
       {/* Animated gold shimmer rule */}
       <div
@@ -61,7 +61,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.07]"
           />
         ) : (
-          <div className={`w-full h-full bg-gradient-to-br ${catBg} flex items-center justify-center`}>
+          <div className={`w-full h-full bg-linear-to-br ${catBg} flex items-center justify-center`}>
             {/* Large watermark glyph in empty state */}
             <span className="text-[80px] leading-none select-none opacity-[0.07]">{glyph}</span>
           </div>
@@ -114,7 +114,7 @@ export function ServiceCard({ service, index = 0 }: ServiceCardProps) {
         {/* Footer */}
         <div className="flex items-center justify-between pt-2 border-t border-white/5">
           <div>
-            <p className="text-[9px] uppercase tracking-[0.1em] text-cream/25 mb-0.5">Narxdan boshlab</p>
+            <p className="text-[9px] uppercase tracking-widest text-cream/25 mb-0.5">Narxdan boshlab</p>
             <span className="text-[14px] text-gold font-semibold leading-none">
               {formatUZS(service.priceFrom)}
             </span>
