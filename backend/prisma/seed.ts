@@ -113,7 +113,7 @@ async function seedEvents() {
 
   // Draft
   for (const e of DRAFT_EVENTS) {
-    await prisma.event.create({
+    await prisma.event.createMany({
       data: {
         title: e.title,
         description: e.description,
@@ -130,7 +130,7 @@ async function seedEvents() {
 
   // Cancelled
   for (const e of CANCELLED_EVENTS) {
-    await prisma.event.create({
+    await prisma.event.createMany({
       data: {
         title: e.title,
         description: e.description,

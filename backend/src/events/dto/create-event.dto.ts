@@ -39,10 +39,14 @@ export class CreateEventDto {
   @IsString()
   description?: string;
 
-  @ApiPropertyOptional({ example: 'https://cdn.example.com/banner.jpg' })
+  @ApiPropertyOptional({
+    example: ['https://cdn.example.com/banner1.jpg', 'https://cdn.example.com/banner2.jpg'],
+    description: 'Banner image URLs (array).',
+  })
   @IsOptional()
-  @IsString()
-  bannerUrl?: string;
+  @IsArray()
+  @IsString({ each: true })
+  bannerUrl?: string[];
 
   @ApiProperty({ example: '2026-06-15T18:00:00Z' })
   @IsDateString()

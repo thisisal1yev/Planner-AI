@@ -52,11 +52,12 @@ function RecentEventRow({ event }: { event: Event }) {
   const sold = event.ticketTiers?.reduce((s, t) => s + t.sold, 0) ?? 0
   const total = event.ticketTiers?.reduce((s, t) => s + t.quantity, 0) ?? 0
   const pct = total > 0 ? Math.round((sold / total) * 100) : 0
+  const banner = event.bannerUrl?.[0]
 
   return (
     <div className="flex items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-muted/20 transition-colors group">
-      {event.bannerUrl ? (
-        <img src={event.bannerUrl} alt="" className="w-9 h-9 rounded-lg object-cover shrink-0 border border-border" />
+      {banner ? (
+        <img src={banner} alt="" className="w-9 h-9 rounded-lg object-cover shrink-0 border border-border" />
       ) : (
         <div className="w-9 h-9 rounded-lg bg-gold/8 border border-gold/15 flex items-center justify-center shrink-0">
           <CalendarDays className="size-4 text-gold/50" />

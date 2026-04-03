@@ -14,10 +14,15 @@ import { CreateReviewForm } from '@features/review-create'
 import { Badge } from '@shared/ui/Badge'
 import { Modal } from '@shared/ui/Modal'
 import { useAuthStore } from '@shared/model/auth.store'
-import { formatDateTime, formatDateShort } from '@shared/lib/dateUtils'
+import { formatDateTime } from '@shared/lib/dateUtils'
 import { eventKeys } from '@shared/api/queryKeys'
 import { Skeleton } from '@/shared/ui/primitives/skeleton'
-
+import type { Swiper as SwiperInstance } from 'swiper'
+import { SwiperSlide } from 'swiper/react'
+import { Swiper } from 'swiper/react'
+import { Autoplay } from 'swiper/modules'
+import { Button } from '@/shared/ui/primitives/button'
+import { StarRating } from '@shared/ui/StarRating'
 
 function DetailSkeleton() {
   return (
@@ -50,6 +55,8 @@ export function EventDetailPage() {
   const user = useAuthStore((s) => s.user)
   const [volunteerModal, setVolunteerModal] = useState(false)
   const [reviewModal, setReviewModal]       = useState(false)
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const [imgIndex, setImgIndex] = useState(0);
 
   const { data: event, isLoading } = useQuery({
     queryKey: eventKeys.detail(id!),
@@ -85,103 +92,104 @@ export function EventDetailPage() {
   const start    = formatDateTime(event.startDate)
   const end      = formatDateTime(event.endDate)
   const avgRating = reviews?.data.length
-    ? (reviews.data.reduce((s, r) => s + r.rating, 0) / reviews.data.length).toFixed(1)
+    ? reviews.data.reduce((s, r) => s + r.rating, 0) / reviews.data.length
     : null
   const reviewCount = reviews?.data.length ?? 0
 
   return (
     <div className="flex flex-col pb-16">
+      {/* Cinematic hero */}
+      <div className="relative w-full h-[58vh] min-h-[380px] max-h-[560px] overflow-hidden rounded-2xl">
+        {event.bannerUrl && event.bannerUrl.length > 0 ? (
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            loop
+            className="w-full h-full"
+            onSwiper={(s) => { setSwiper(s) }}
+            onSlideChange={(s) => setImgIndex(s.realIndex)}
+          >
+            {event.bannerUrl.map((url, idx) => (
+              <SwiperSlide key={`${url}-${idx}`}>
+                <img src={url} alt={event.title} className="w-full h-full object-cover" />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="absolute inset-0 bg-linear-to-br from-navy to-navy-2 z-0" />
+        )}
 
-      {/* ── Back nav ── */}
-      <Link
-        to="/events"
-        className="inline-flex items-center gap-2 text-[10px] tracking-[0.15em] uppercase text-muted-foreground/35 hover:text-gold/70 transition-colors w-fit group mb-7"
-      >
-        <ArrowLeft className="size-3 transition-transform group-hover:-translate-x-0.5" />
-        Barcha tadbirlar
-      </Link>
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10 z-10" />
 
-      {/* ── Cinematic hero ── */}
-      <div
-        className="relative w-full overflow-hidden rounded-2xl"
-        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 93%, 0 100%)' }}
-      >
-        <div className="relative w-full h-[480px]">
-          {event.bannerUrl ? (
-            <>
-              <img
-                src={event.bannerUrl}
-                alt={event.title}
-                className="w-full h-full object-cover"
-                style={{ filter: 'saturate(0.8) contrast(1.08)', transform: 'scale(1.04)' }}
-              />
-              {/* Cinematic multi-layer gradient */}
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, rgba(8,15,25,0.97) 0%, rgba(8,15,25,0.55) 38%, rgba(8,15,25,0.12) 65%, transparent 100%)' }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{ background: 'linear-gradient(to right, rgba(8,15,25,0.45) 0%, transparent 55%)' }}
-              />
-            </>
-          ) : (
-            <div className="w-full h-full bg-linear-to-br from-gold/6 via-card to-navy-3 flex items-center justify-center">
-              <CalendarDays className="size-24 text-gold/8" />
-            </div>
-          )}
+        {/* Back button */}
+        <div className="absolute top-5 left-5 z-10">
+          <Link to="/venues">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white/80 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm flex items-center gap-2 group"
+            >
+              <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+              <span className="text-[10px] tracking-[0.15em] uppercase text-white/80 hover:text-white">Barcha maydonlar</span>
+            </Button>
+          </Link>
+        </div>
 
-          {/* Top-right: status + rating */}
-          <div className="absolute top-5 right-5 flex items-center gap-2">
-            {avgRating && (
-              <span className="flex items-center gap-1.5 text-[10px] font-semibold text-amber-300 bg-gold/50 border border-amber-400/20 backdrop-blur-sm rounded-md px-2.5 py-1.5 tracking-wide">
-                <Star className="size-3 fill-current" />
-                {avgRating}
-              </span>
-            )}
-            <Badge color={EVENT_STATUS_COLOR[event.status]}>
-              {EVENT_STATUS_LABEL[event.status] ?? event.status}
-            </Badge>
-          </div>
-
-          {/* Bottom: date rule + title + meta */}
-          <div className="absolute bottom-0 left-0 right-0 px-8 pb-10">
-            {/* Date accent line */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-px w-10 bg-gold/50" />
-              <span className="text-[10px] tracking-[0.22em] uppercase text-gold/55 font-medium">
-                {formatDateShort(event.startDate)}
-              </span>
-              <span className="text-[10px] text-muted-foreground/30">·</span>
-              <span className="text-[10px] tracking-[0.15em] uppercase text-muted-foreground/35">
-                {event.eventType}
+        {/* Title overlay */}
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 mx-auto z-10">
+          <span className="inline-flex items-center text-xs font-medium uppercase tracking-[0.18em] text-gold-light/90 mb-3 bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gold/20">
+            {event.eventType}
+          </span>
+          
+          <h1 className="lp-serif text-4xl md:text-5xl font-bold text-white leading-tight mb-3 max-w-2xl drop-shadow-lg">
+            {event.title}
+          </h1>
+          <div className="flex items-center gap-4 text-white/80 text-sm flex-wrap">
+            <div className="flex items-center gap-1.5">
+              <StarRating rating={avgRating ?? 0} />
+              <span className="text-gold-light font-medium">
+                {avgRating?.toFixed(1)}
               </span>
             </div>
-
-            <h1 className="lp-serif text-[40px] sm:text-[54px] font-bold text-cream/95 leading-[1.03] max-w-3xl">
-              {event.title}
-            </h1>
-
-            <div className="mt-5 flex items-center gap-5 flex-wrap">
-              <div className="flex items-center gap-1.5 text-[11px] text-cream/40">
-                <Users className="size-3" />
-                <span>{event.capacity} o'rin</span>
-              </div>
-              {event.venue && (
-                <div className="flex items-center gap-1.5 text-[11px] text-cream/40">
-                  <MapPin className="size-3" />
-                  <span>{event.venue.city}</span>
-                </div>
-              )}
-              {avgRating && (
-                <div className="flex items-center gap-1.5 text-[11px] text-cream/40">
-                  <Star className="size-3" />
-                  <span>{reviewCount} ta sharh</span>
-                </div>
-              )}
+            <span className="text-white/25">·</span>
+            <div className="flex items-center gap-1">
+              <svg
+                className="h-3.5 w-3.5 text-gold/60"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+              </svg>
+              {event.venue?.city}
             </div>
           </div>
         </div>
+
+        {/* Thumbnail strip */}
+        {(event?.bannerUrl?.length ?? 0) > 1 && (
+          <div className="absolute bottom-6 right-6 flex gap-1.5 z-10">
+            {event?.bannerUrl?.map((url: string, i: number) => (
+              <button
+                key={i}
+                onClick={() => { swiper?.slideTo(i); setImgIndex(i) }}
+                className={`h-12 w-16 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
+                  i === imgIndex
+                    ? "border-gold shadow-[0_0_14px_rgba(201,150,58,0.5)]"
+                    : "border-white/20 opacity-55 hover:opacity-100"
+                }`}
+              >
+                <img src={url} alt="" className="h-full w-full object-cover" />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── Main layout ── */}
@@ -269,16 +277,16 @@ export function EventDetailPage() {
                         <Star
                           key={i}
                           className={`size-3.5 ${
-                            parseFloat(avgRating) >= i
+                            avgRating >= i
                               ? 'text-amber-400 fill-amber-400'
-                              : parseFloat(avgRating) >= i - 0.5
+                              : avgRating >= i - 0.5
                               ? 'text-amber-400 fill-amber-400/50'
                               : 'text-muted-foreground/15'
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-[13px] font-semibold text-foreground/80">{avgRating}</span>
+                    <span className="text-[13px] font-semibold text-foreground/80">{avgRating.toFixed(1)}</span>
                     <span className="text-[11px] text-muted-foreground/35">— {reviewCount} ta sharh</span>
                   </div>
                 ) : (

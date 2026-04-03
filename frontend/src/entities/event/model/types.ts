@@ -13,12 +13,13 @@ export interface TicketTier {
 }
 
 export interface Event {
+  [x: string]: any
   id: string
   organizerId: string
   organizer?: User
   title: string
   description?: string
-  bannerUrl?: string
+  bannerUrl?: string[]
   startDate: string
   endDate: string
   eventType: string

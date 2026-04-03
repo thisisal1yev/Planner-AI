@@ -11,6 +11,17 @@ import type { UpdateEventDto } from '@entities/event'
 import { eventKeys } from '@shared/api/queryKeys'
 import { Card, CardContent } from '@/shared/ui/primitives/card'
 
+function parseBannerUrls(raw?: string): string[] {
+  return (raw ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+type EditEventFormValues = Omit<UpdateEventDto, 'bannerUrl'> & {
+  bannerUrlRaw?: string
+}
+
 
 export function EditEventPage() {
   const { id } = useParams<{ id: string }>()
@@ -23,11 +34,11 @@ export function EditEventPage() {
     enabled: !!id,
   })
 
-  const { register, handleSubmit, formState: { errors } } = useForm<UpdateEventDto>({
+  const { register, handleSubmit, formState: { errors } } = useForm<EditEventFormValues>({
     values: event ? {
       title: event.title,
       description: event.description,
-      bannerUrl: event.bannerUrl,
+      bannerUrlRaw: event.bannerUrl?.join(', ') ?? '',
       startDate: event.startDate.slice(0, 16),
       endDate: event.endDate.slice(0, 16),
       eventType: event.eventType,
@@ -36,7 +47,12 @@ export function EditEventPage() {
   })
 
   const mutation = useMutation({
-    mutationFn: (dto: UpdateEventDto) => eventsApi.update(id!, dto),
+    mutationFn: (values: EditEventFormValues) => {
+      const { bannerUrlRaw, ...rest } = values
+      const bannerUrl = parseBannerUrls(bannerUrlRaw)
+      const payload: UpdateEventDto = { ...rest, bannerUrl }
+      return eventsApi.update(id!, payload)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: eventKeys.detail(id!) })
       queryClient.invalidateQueries({ queryKey: eventKeys.myList() })
@@ -69,7 +85,7 @@ export function EditEventPage() {
               {...register('eventType')}
             />
             <Input label="Sig'imi" type="number" min={1} {...register('capacity', { valueAsNumber: true })} />
-            <Input label="Banner URL" {...register('bannerUrl')} />
+            <Input label="Banner URLs (vergul bilan)" {...register('bannerUrlRaw')} />
             <div className="grid grid-cols-2 gap-4">
               <Input label="Boshlanish" type="datetime-local" {...register('startDate')} />
               <Input label="Tugash" type="datetime-local" {...register('endDate')} />

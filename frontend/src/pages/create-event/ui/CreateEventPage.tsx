@@ -11,6 +11,17 @@ import type { CreateEventDto } from '@entities/event'
 import { eventKeys } from '@shared/api/queryKeys'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/primitives/card'
 
+function parseBannerUrls(raw?: string): string[] {
+  return (raw ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
+type CreateEventFormValues = Omit<CreateEventDto, 'bannerUrl' | 'ticketTiers'> & {
+  bannerUrlRaw?: string
+}
+
 
 interface TierInput { name: string; price: number; quantity: number }
 
@@ -19,10 +30,14 @@ export function CreateEventPage() {
   const queryClient = useQueryClient()
   const [tiers, setTiers] = useState<TierInput[]>([{ name: 'Standard', price: 0, quantity: 100 }])
 
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateEventDto>()
+  const { register, handleSubmit, formState: { errors } } = useForm<CreateEventFormValues>()
 
   const mutation = useMutation({
-    mutationFn: (dto: CreateEventDto) => eventsApi.create({ ...dto, ticketTiers: tiers }),
+    mutationFn: (values: CreateEventFormValues) => {
+      const bannerUrl = parseBannerUrls(values.bannerUrlRaw)
+      const { bannerUrlRaw, ...rest } = values
+      return eventsApi.create({ ...rest, bannerUrl, ticketTiers: tiers })
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: eventKeys.myList() })
       navigate('/my-events')
@@ -68,7 +83,7 @@ export function CreateEventPage() {
               error={errors.capacity?.message}
               {...register('capacity', { required: true, valueAsNumber: true, min: 1 })}
             />
-            <Input label="Banner URL (ixtiyoriy)" {...register('bannerUrl')} />
+            <Input label="Banner URL (ixtiyoriy, vergul bilan ajrating)" {...register('bannerUrlRaw')} />
           </CardContent>
         </Card>
 

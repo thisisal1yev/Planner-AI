@@ -77,12 +77,6 @@ function DesktopNavLink({ to, label, exact }: NavItem) {
       )}
     >
       {label}
-      <span
-        className={cn(
-          "absolute bottom-0 left-0 right-0 h-[2px] rounded-t-full transition-all duration-200",
-          active ? "bg-gold" : "bg-transparent group-hover:bg-gold/25",
-        )}
-      />
     </Link>
   );
 }
@@ -175,6 +169,7 @@ function UserMenu() {
         <span className="text-[12.5px] font-medium text-foreground/80 max-w-[88px] truncate hidden sm:block">
           {user.firstName}
         </span>
+
         <ChevronDown
           className={cn(
             "size-3 text-muted-foreground/40 transition-transform",
@@ -241,13 +236,14 @@ export function Header() {
     <>
       <style dangerouslySetInnerHTML={{ __html: ANIM_CSS }} />
       <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/95 backdrop-blur-md">
-        <div className="h-[1.5px] bg-linear-to-r from-transparent via-gold/50 to-transparent" />
+        <div className="h-0.5 bg-linear-to-r from-transparent via-gold/50 to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-15 flex gap-4 justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-15 flex gap-4 items-center justify-between">
           <Link to="/" className="no-underline flex items-center">
             <span className="font-bold text-[18px] text-cream tracking-[-0.01em]">
               Planner
             </span>
+
             <span className="font-bold text-[18px] text-gold tracking-[-0.01em]">
               {" "}AI
             </span>
@@ -259,7 +255,7 @@ export function Header() {
             ))}
 
             {roleLinks.length > 0 && (
-              <div className="w-px bg-border/50 my-4 mx-1" />
+              <div className="w-px bg-border/50 mx-1" />
             )}
 
             {roleLinks.map((link) => (
@@ -267,7 +263,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 ml-auto">
+          <div className="flex items-center gap-2">
             {user ? (
               <UserMenu />
             ) : (
@@ -278,6 +274,7 @@ export function Header() {
                 >
                   Kirish
                 </Link>
+
                 <Link
                   to="/register"
                   className="inline-flex h-8 px-4 items-center text-[13px] font-semibold text-navy bg-gold hover:bg-gold-light rounded-lg shadow-[0_2px_10px_rgba(201,150,58,0.2)] hover:shadow-[0_2px_14px_rgba(201,150,58,0.3)] transition-all"
@@ -328,6 +325,7 @@ export function Header() {
                 >
                   Kirish
                 </Link>
+
                 <Link
                   to="/register"
                   onClick={closeMobile}

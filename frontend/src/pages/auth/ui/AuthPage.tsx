@@ -391,10 +391,10 @@ export function AuthPage() {
           />
 
           {/* Logo */}
-          <div className="relative z-10 flex items-center">
+          <Link to={'/'} className="relative z-10 flex items-center">
             <span className="font-bold text-[20px] text-cream tracking-[-0.01em]">Planner</span>
             <span className="font-bold text-[20px] text-gold tracking-[-0.01em]">&nbsp;AI</span>
-          </div>
+          </Link>
 
           {/* Center content */}
           <div className="relative z-10 flex flex-col gap-6">

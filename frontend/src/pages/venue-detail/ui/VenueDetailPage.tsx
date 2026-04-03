@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams, Link } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import {
-  ArrowLeft, MapPin, Users, Star,
+  ArrowLeft, MapPin, Star,
   Wifi, Car, Volume2, Music, Home, Sun,
 } from 'lucide-react'
 import { venuesApi } from '@entities/venue'
@@ -16,7 +16,6 @@ import { venueKeys } from '@shared/api/queryKeys'
 import { formatUZS } from '@shared/lib/dateUtils'
 import { Skeleton } from '@/shared/ui/primitives/skeleton'
 import { Separator } from '@/shared/ui/primitives/separator'
-import { Badge } from '@/shared/ui/primitives/badge'
 import {
   Card,
   CardContent,
@@ -30,6 +29,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/shared/ui/primitives/tooltip'
+import type { Swiper as SwiperInstance } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Button } from '@/shared/ui/primitives/button'
+import { Autoplay } from 'swiper/modules'
 
 function DetailSkeleton() {
   return (
@@ -85,6 +88,7 @@ export function VenueDetailPage() {
   const { id } = useParams<{ id: string }>()
   const user = useAuthStore((s) => s.user)
   const [imgIndex, setImgIndex] = useState(0)
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [reviewModal, setReviewModal] = useState(false)
 
   const { data: venue, isLoading } = useQuery({
@@ -139,121 +143,108 @@ export function VenueDetailPage() {
 
   return (
     <div className="flex flex-col gap-0 pb-16">
+      {/* Cinematic hero */}
+      <div className="relative w-full h-[58vh] min-h-[380px] max-h-[560px] overflow-hidden rounded-2xl">
+        {venue.imageUrls.length > 0 ? (
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            loop
+            className="w-full h-full"
+            onSwiper={(s) => { setSwiper(s) }}
+            onSlideChange={(s) => setImgIndex(s.realIndex)}
+          >
+            {venue.imageUrls.map((img, i) => (
+              <SwiperSlide key={i}>
+                <img
+                  src={img}
+                  alt={venue.name}
+                  className="w-full h-full object-cover"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="absolute inset-0 bg-linear-to-br from-navy to-navy-2 z-0" />
+        )}
 
-      {/* ── Back navigation ── */}
-      <Link
-        to="/venues"
-        className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground/45 hover:text-foreground mb-8 transition-colors w-fit"
-      >
-        <ArrowLeft className="size-3.5" />
-        Barcha maydonlar
-      </Link>
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/10 z-10" />
 
-      {/* ── Editorial header: title leads, image illustrates ── */}
-      <div className="mb-8">
-        <div className="flex items-center gap-1.5 text-[10px] text-gold/70 font-semibold tracking-[0.18em] uppercase mb-3">
-          <MapPin className="size-2.5" />
-          {venue.city}
+        {/* Back button */}
+        <div className="absolute top-5 left-5 z-10">
+          <Link to="/venues">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white/80 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm flex items-center gap-2 group"
+            >
+              <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+              <span className="text-[10px] tracking-[0.15em] uppercase text-white/80 hover:text-white">Barcha maydonlar</span>
+            </Button>
+          </Link>
         </div>
 
-        <h1
-          className="text-[48px] sm:text-[60px] font-bold leading-none text-foreground max-w-4xl mb-5"
-          style={{ fontFamily: "'lp-serif', serif" }}
-        >
-          {venue.name}
-        </h1>
-
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2">
-            <StarRating rating={avgRating} />
-            <span className="text-[14px] font-semibold text-foreground">{avgRating.toFixed(1)}</span>
-            {!!reviews?.data.length && (
-              <span className="text-[12px] text-muted-foreground/45">
-                ({reviews.data.length} sharh)
-              </span>
-            )}
-          </div>
-          <div className="h-4 w-px bg-border/60" />
-          <span className="flex items-center gap-1.5 text-[13px] text-muted-foreground/65">
-            <Users className="size-3.5" />
-            {venue.capacity} o'rin
-          </span>
-          <div className="h-4 w-px bg-border/60" />
-          <Badge variant="outline" className="text-[11px] border-border/50 text-muted-foreground/60">
+        {/* Title overlay */}
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 mx-auto z-10">
+          <span className="inline-flex items-center text-xs font-medium uppercase tracking-[0.18em] text-gold-light/90 mb-3 bg-black/45 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gold/20">
             {venue.isIndoor ? 'Yopiq zal' : 'Ochiq maydon'}
-          </Badge>
-        </div>
-      </div>
-
-      {/* ── Gallery: main image + vertical thumbnail strip (desktop) ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-[1fr_80px] gap-2 h-[320px] sm:h-[480px]">
-
-        {/* Main image */}
-        <div className="relative overflow-hidden rounded-2xl h-full">
-          {venue.imageUrls.length > 0 ? (
-            <img
-              src={venue.imageUrls[imgIndex]}
-              alt={venue.name}
-              className="w-full h-full object-cover transition-all duration-500 ease-in-out"
-            />
-          ) : (
-            <div className="w-full h-full bg-linear-to-br from-gold/8 via-muted/20 to-background flex items-center justify-center">
-              <Home className="size-20 text-gold/12" />
+          </span>
+          <h1 className="lp-serif text-4xl md:text-5xl font-bold text-white leading-tight mb-3 max-w-2xl drop-shadow-lg">
+            {venue.name}
+          </h1>
+          <div className="flex items-center gap-4 text-white/80 text-sm flex-wrap">
+            <div className="flex items-center gap-1.5">
+              <StarRating rating={venue.rating} />
+              <span className="text-gold-light font-medium">
+                {venue.rating.toFixed(1)}
+              </span>
             </div>
-          )}
-          {/* Subtle depth gradient */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,15,25,0.25)_0%,transparent_35%)] pointer-events-none rounded-2xl" />
-          {/* Rating pill */}
-          <div className="absolute top-3 right-3 flex items-center gap-1 bg-[rgba(8,15,25,0.72)] backdrop-blur-sm rounded-full px-2.5 py-1.5 border border-white/10">
-            <Star className="size-3 text-gold fill-gold" />
-            <span className="text-[12px] font-semibold text-cream/90">{avgRating.toFixed(1)}</span>
+            <span className="text-white/25">·</span>
+            <div className="flex items-center gap-1">
+              <svg
+                className="h-3.5 w-3.5 text-gold/60"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+              </svg>
+              {venue.city}
+            </div>
           </div>
         </div>
 
-        {/* Vertical thumbnail strip — desktop */}
+        {/* Thumbnail strip */}
         {venue.imageUrls.length > 1 && (
-          <div className="hidden sm:flex flex-col gap-2 overflow-y-auto scrollbar-none">
+          <div className="absolute bottom-6 right-6 flex gap-1.5 z-10">
             {venue.imageUrls.map((url, i) => (
               <button
                 key={i}
-                onClick={() => setImgIndex(i)}
-                className={`shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer w-full ${
+                onClick={() => { swiper?.slideTo(i); setImgIndex(i) }}
+                className={`h-12 w-16 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                   i === imgIndex
-                    ? 'border-gold/55 shadow-[0_0_10px_rgba(201,150,58,0.22)]'
-                    : 'border-transparent opacity-35 hover:opacity-65'
+                    ? "border-gold shadow-[0_0_14px_rgba(201,150,58,0.5)]"
+                    : "border-white/20 opacity-55 hover:opacity-100"
                 }`}
               >
-                <img src={url} alt="" className="w-full h-[120px] object-cover" />
+                <img src={url} alt="" className="h-full w-full object-cover" />
               </button>
             ))}
           </div>
         )}
       </div>
 
-      {/* Horizontal thumbnail strip — mobile */}
-      {venue.imageUrls.length > 1 && (
-        <div className="sm:hidden flex gap-2 overflow-x-auto pb-1 mt-2 scrollbar-none">
-          {venue.imageUrls.map((url, i) => (
-            <button
-              key={i}
-              onClick={() => setImgIndex(i)}
-              className={`shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
-                i === imgIndex
-                  ? 'border-gold/55'
-                  : 'border-transparent opacity-35 hover:opacity-65'
-              }`}
-            >
-              <img src={url} alt="" className="h-14 w-20 object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
-
       {/* ── Main content: two-column ── */}
       <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
 
         {/* ── Left column ── */}
-        <div className="lg:col-span-7 flex flex-col gap-10">
+        <div className="lg:col-span-7 flex flex-col gap-5">
 
           {/* Address block */}
           <div className="flex items-center gap-3 py-3 px-4 rounded-xl bg-muted/15 border border-border/35">

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -32,7 +32,7 @@ export function ServiceDetailPage() {
   const user = useAuthStore((s) => s.user);
   const [imgIndex, setImgIndex] = useState(0);
   const [reviewModal, setReviewModal] = useState(false);
-  const swiperRef = useRef<SwiperInstance | null>(null);
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
 
   const { data: service, isLoading } = useQuery({
     queryKey: serviceKeys.detail(id!),
@@ -61,19 +61,17 @@ export function ServiceDetailPage() {
       </div>
     );
 
-  const mainImage = service.imageUrls[imgIndex];
-
   return (
     <div className="flex flex-col">
       {/* Cinematic hero */}
       <div className="relative w-full h-[58vh] min-h-[380px] max-h-[560px] overflow-hidden rounded-2xl">
-        {mainImage ? (
+        {service.imageUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
             loop
             className="w-full h-full"
-            onSwiper={(s) => { swiperRef.current = s }}
+            onSwiper={(s) => { setSwiper(s) }}
             onSlideChange={(s) => setImgIndex(s.realIndex)}
           >
             {service.imageUrls.map((img, i) => (
@@ -148,7 +146,7 @@ export function ServiceDetailPage() {
             {service.imageUrls.map((url, i) => (
               <button
                 key={i}
-                onClick={() => { swiperRef.current?.slideToLoop(i); setImgIndex(i) }}
+                onClick={() => { swiper?.slideTo(i); setImgIndex(i) }}
                 className={`h-12 w-16 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                   i === imgIndex
                     ? "border-gold shadow-[0_0_14px_rgba(201,150,58,0.5)]"

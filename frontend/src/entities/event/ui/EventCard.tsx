@@ -24,6 +24,7 @@ export function EventCard({ event }: EventCardProps) {
   const start = formatDateShort(event.startDate)
   const dot   = STATUS_DOT[event.status]   ?? '#9CA3AF'
   const label = STATUS_LABEL[event.status] ?? event.status
+  const banner = event.bannerUrl?.[0]
 
   return (
     <Link
@@ -43,9 +44,9 @@ export function EventCard({ event }: EventCardProps) {
 
       {/* ── Image ── */}
       <div className="relative overflow-hidden h-52 shrink-0">
-        {event.bannerUrl ? (
+        {banner ? (
           <img
-            src={event.bannerUrl}
+            src={banner}
             alt={event.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.07]"
           />

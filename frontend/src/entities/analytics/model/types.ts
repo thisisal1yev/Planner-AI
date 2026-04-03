@@ -2,7 +2,7 @@ export interface AdminPendingEvent {
   id: string
   title: string
   eventType: string
-  bannerUrl: string | null
+  bannerUrl: string[]
   startDate: string
   status: string
   organizer: { firstName: string; lastName: string }

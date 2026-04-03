@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsDateString,
   IsInt,
   IsOptional,
@@ -22,8 +23,9 @@ export class UpdateEventDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  bannerUrl?: string;
+  @IsArray()
+  @IsString({ each: true })
+  bannerUrl?: string[];
 
   @ApiPropertyOptional()
   @IsOptional()

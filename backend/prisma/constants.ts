@@ -11,7 +11,8 @@ export const USERS = [
     firstName: 'Elon',
     lastName: 'Musk',
     role: 'ADMIN',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Elon_Musk_-_54820081119_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/5/5e/Elon_Musk_-_54820081119_%28cropped%29.jpg',
     createdAt: new Date('2025-12-01T09:00:00Z'),
   },
   {
@@ -19,7 +20,8 @@ export const USERS = [
     firstName: 'Sam',
     lastName: 'Altman',
     role: 'ORGANIZER',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped_3%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/f/f8/Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped_3%29.jpg',
     createdAt: new Date('2026-01-10T09:00:00Z'),
   },
   {
@@ -27,7 +29,8 @@ export const USERS = [
     firstName: 'Sundar',
     lastName: 'Pichai',
     role: 'ORGANIZER',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Sundar_Pichai_-_2023_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/c/c3/Sundar_Pichai_-_2023_%28cropped%29.jpg',
     createdAt: new Date('2026-01-14T09:00:00Z'),
   },
   {
@@ -35,7 +38,8 @@ export const USERS = [
     firstName: 'Linus',
     lastName: 'Torvalds',
     role: 'VENDOR',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Lc3_2018_%28263682303%29_%28cropped%29.jpeg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/e/e8/Lc3_2018_%28263682303%29_%28cropped%29.jpeg',
     createdAt: new Date('2026-01-20T09:00:00Z'),
   },
   {
@@ -43,7 +47,8 @@ export const USERS = [
     firstName: 'Tim',
     lastName: 'Cook',
     role: 'VENDOR',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Tim_Cook_March_2026_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/8/88/Tim_Cook_March_2026_%28cropped%29.jpg',
     createdAt: new Date('2026-02-04T09:00:00Z'),
   },
   // Week 1: Feb 15–22
@@ -52,7 +57,8 @@ export const USERS = [
     firstName: 'Jensen',
     lastName: 'Huang',
     role: 'VOLUNTEER',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Jen-Hsun_Huang_2025.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/e/e6/Jen-Hsun_Huang_2025.jpg',
     createdAt: new Date('2026-02-16T10:00:00Z'),
   },
   {
@@ -60,7 +66,8 @@ export const USERS = [
     firstName: 'Satya',
     lastName: 'Nadella',
     role: 'VOLUNTEER',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/78/MS-Exec-Nadella-Satya-2017-08-31-22_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/7/78/MS-Exec-Nadella-Satya-2017-08-31-22_%28cropped%29.jpg',
     createdAt: new Date('2026-02-21T10:00:00Z'),
   },
   // Week 2: Feb 22 – Mar 1
@@ -69,7 +76,8 @@ export const USERS = [
     firstName: 'Mark',
     lastName: 'Zuckerberg',
     role: 'PARTICIPANT',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Mark_Zuckerberg_in_September_2025_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/2/21/Mark_Zuckerberg_in_September_2025_%28cropped%29.jpg',
     createdAt: new Date('2026-02-24T10:00:00Z'),
   },
   {
@@ -77,7 +85,8 @@ export const USERS = [
     firstName: 'Jeff',
     lastName: 'Bezos',
     role: 'PARTICIPANT',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/03/Jeff_Bezos_visits_LAAFB_SMC_%283908618%29_%28cropped%29.jpeg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/0/03/Jeff_Bezos_visits_LAAFB_SMC_%283908618%29_%28cropped%29.jpeg',
     createdAt: new Date('2026-02-27T10:00:00Z'),
   },
   // Week 3: Mar 1–8
@@ -86,7 +95,8 @@ export const USERS = [
     firstName: 'Bill',
     lastName: 'Gates',
     role: 'PARTICIPANT',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Bill_Gates_at_the_European_Commission_-_2025_-_P067383-987995_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/8/88/Bill_Gates_at_the_European_Commission_-_2025_-_P067383-987995_%28cropped%29.jpg',
     createdAt: new Date('2026-03-03T10:00:00Z'),
   },
   {
@@ -94,7 +104,8 @@ export const USERS = [
     firstName: 'Sheryl',
     lastName: 'Sandberg',
     role: 'PARTICIPANT',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/61/Sheryl_Sandberg_WEF_2013_%28crop_by_James_Tamim%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/6/61/Sheryl_Sandberg_WEF_2013_%28crop_by_James_Tamim%29.jpg',
     createdAt: new Date('2026-03-06T10:00:00Z'),
   },
   // Week 4: Mar 8–15
@@ -103,7 +114,8 @@ export const USERS = [
     firstName: 'Reed',
     lastName: 'Hastings',
     role: 'PARTICIPANT',
-    avatarUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Re_publica_2015_-_Tag_1_%2817381870955%29_%28cropped%29.jpg',
+    avatarUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/b/b0/Re_publica_2015_-_Tag_1_%2817381870955%29_%28cropped%29.jpg',
     createdAt: new Date('2026-03-11T10:00:00Z'),
   },
 ];
@@ -113,8 +125,8 @@ export const VENUES = [
   {
     name: 'Tashkent City Hall',
     description:
-      'Toshkentning markazida zamonaviy jihozlangan premium maydon. 500 kishigacha sig\'imi bor.',
-    address: 'Amir Temur shoh ko\'chasi, 1',
+      "Toshkentning markazida zamonaviy jihozlangan premium maydon. 500 kishigacha sig'imi bor.",
+    address: "Amir Temur shoh ko'chasi, 1",
     city: 'Toshkent',
     latitude: 41.3115,
     longitude: 69.2401,
@@ -136,7 +148,7 @@ export const VENUES = [
     name: 'Samarkand Garden',
     description:
       'Samarqandning tarixiy yodgorliklariga qarab turadigan manzarali ochiq maydon. Outdoor tadbirlar uchun ideal.',
-    address: 'Registon ko\'chasi, 15',
+    address: "Registon ko'chasi, 15",
     city: 'Samarqand',
     latitude: 39.627,
     longitude: 66.975,
@@ -156,8 +168,8 @@ export const VENUES = [
   {
     name: 'Bukhara Conference Hall',
     description:
-      'Buxoroning tarixiy markazida an\'anaviy me\'morchilik uslubidagi zamonaviy konferens-markaz.',
-    address: 'Po-i-Kalon ko\'chasi, 8',
+      "Buxoroning tarixiy markazida an'anaviy me'morchilik uslubidagi zamonaviy konferens-markaz.",
+    address: "Po-i-Kalon ko'chasi, 8",
     city: 'Buxoro',
     latitude: 39.7747,
     longitude: 64.4286,
@@ -177,8 +189,8 @@ export const VENUES = [
   {
     name: 'Navoi Palace',
     description:
-      'Tantanali tadbirlar, to\'ylar va korporativ gala-kechalar uchun hashamatli saroy.',
-    address: 'Navoiy ko\'chasi, 30',
+      "Tantanali tadbirlar, to'ylar va korporativ gala-kechalar uchun hashamatli saroy.",
+    address: "Navoiy ko'chasi, 30",
     city: 'Toshkent',
     latitude: 41.3205,
     longitude: 69.2654,
@@ -198,7 +210,7 @@ export const VENUES = [
   {
     name: 'Andijan Expo Center',
     description:
-      'Ko\'rgazmalar, yarmarkalar va ommaviy tadbirlar uchun moslashuvchan rejalashtirish imkoniyatli keng ko\'rgazma markazi.',
+      "Ko'rgazmalar, yarmarkalar va ommaviy tadbirlar uchun moslashuvchan rejalashtirish imkoniyatli keng ko'rgazma markazi.",
     address: 'Bobur prospekti, 55',
     city: 'Andijon',
     latitude: 40.7829,
@@ -228,8 +240,10 @@ export const PUBLISHED_EVENTS = [
     endDate: new Date('2026-05-20T18:00:00Z'),
     eventType: 'Konferensiya',
     capacity: 300,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 0,
     organizerKey: 'organizer@planner.ai',
   },
@@ -241,47 +255,55 @@ export const PUBLISHED_EVENTS = [
     endDate: new Date('2026-06-15T22:00:00Z'),
     eventType: 'Mitap',
     capacity: 100,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 1,
     organizerKey: 'organizer2@planner.ai',
   },
   {
     title: 'Tashkent Jazz Festival',
     description:
-      'Ochiq havoda o\'tkaziladigan yillik jazz festivali. O\'zbekiston, Rossiya va Yevropadan 15 ta guruh. Uch sahna, food-zona va art-installatsiyalar.',
+      "Ochiq havoda o'tkaziladigan yillik jazz festivali. O'zbekiston, Rossiya va Yevropadan 15 ta guruh. Uch sahna, food-zona va art-installatsiyalar.",
     startDate: new Date('2026-07-10T17:00:00Z'),
     endDate: new Date('2026-07-12T23:00:00Z'),
     eventType: 'Festival',
     capacity: 500,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 3,
     organizerKey: 'organizer@planner.ai',
   },
   {
     title: 'UX/UI Design Workshop',
     description:
-      'Mahsulot dizayni bo\'yicha ikki kunlik amaliy workshop. Figma, foydalanuvchi tadqiqotlari, prototiplash va keyslarni tanqidiy tahlil.',
+      "Mahsulot dizayni bo'yicha ikki kunlik amaliy workshop. Figma, foydalanuvchi tadqiqotlari, prototiplash va keyslarni tanqidiy tahlil.",
     startDate: new Date('2026-04-25T09:00:00Z'),
     endDate: new Date('2026-04-26T18:00:00Z'),
     eventType: 'Trening',
     capacity: 50,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 2,
     organizerKey: 'organizer2@planner.ai',
   },
   {
-    title: 'Ko\'rgazma «Ipak yo\'li»',
+    title: "Ko'rgazma «Ipak yo'li»",
     description:
-      'Markaziy Osiyo mamlakatlaridan 30 ta rassomning guruh ko\'rgazmasi. Rasm, haykaltaroshlik, installatsiyalar va raqamli san\'at.',
+      "Markaziy Osiyo mamlakatlaridan 30 ta rassomning guruh ko'rgazmasi. Rasm, haykaltaroshlik, installatsiyalar va raqamli san'at.",
     startDate: new Date('2026-05-01T10:00:00Z'),
     endDate: new Date('2026-05-15T20:00:00Z'),
-    eventType: 'Ko\'rgazma',
+    eventType: "Ko'rgazma",
     capacity: 200,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 4,
     organizerKey: 'organizer@planner.ai',
   },
@@ -292,49 +314,57 @@ export const DRAFT_EVENTS = [
   {
     title: 'AI & Data Science Conference',
     description:
-      'Sun\'iy intellekt va ma\'lumotlar tahlili bo\'yicha xalqaro konferensiya. Yetakchi tadqiqotchilar va amaliyotchilardan ma\'ruzalar.',
+      "Sun'iy intellekt va ma'lumotlar tahlili bo'yicha xalqaro konferensiya. Yetakchi tadqiqotchilar va amaliyotchilardan ma'ruzalar.",
     startDate: new Date('2026-09-10T09:00:00Z'),
     endDate: new Date('2026-09-11T18:00:00Z'),
     eventType: 'Konferensiya',
     capacity: 400,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer2@planner.ai',
   },
   {
     title: 'Startup Demo Day',
     description:
-      'Startaplarni investorlar oldida namoyish qilish kuni. 20 ta jamoa o\'z mahsulotlari va biznes-modellarini taqdim etadi.',
+      "Startaplarni investorlar oldida namoyish qilish kuni. 20 ta jamoa o'z mahsulotlari va biznes-modellarini taqdim etadi.",
     startDate: new Date('2026-08-05T10:00:00Z'),
     endDate: new Date('2026-08-05T19:00:00Z'),
     eventType: 'Mitap',
     capacity: 150,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer@planner.ai',
   },
   {
     title: 'Fashion Week Tashkent 2026',
     description:
-      'Toshkentda moda haftasi: O\'zbekistondan 40 ta dizayner va Yevropadan mehmonlarning kolleksiya namoyishlari.',
+      "Toshkentda moda haftasi: O'zbekistondan 40 ta dizayner va Yevropadan mehmonlarning kolleksiya namoyishlari.",
     startDate: new Date('2026-10-01T12:00:00Z'),
     endDate: new Date('2026-10-07T22:00:00Z'),
     eventType: 'Namoyish',
     capacity: 600,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer2@planner.ai',
   },
   {
     title: 'Corporate Team Building',
     description:
-      'Korporativ jamoalar uchun professional team building. Kvestlar, ishbilarmon o\'yinlar va jamoa treninglari.',
+      "Korporativ jamoalar uchun professional team building. Kvestlar, ishbilarmon o'yinlar va jamoa treninglari.",
     startDate: new Date('2026-07-20T09:00:00Z'),
     endDate: new Date('2026-07-20T18:00:00Z'),
     eventType: 'Trening',
     capacity: 80,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer@planner.ai',
   },
 ];
@@ -349,8 +379,10 @@ export const COMPLETED_EVENTS = [
     endDate: new Date('2025-12-28T03:00:00Z'),
     eventType: 'Kecha',
     capacity: 200,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&auto=format&fit=crop&q=80',
+    ],
     venueIndex: 0,
     organizerKey: 'organizer@planner.ai',
   },
@@ -362,8 +394,10 @@ export const COMPLETED_EVENTS = [
     endDate: new Date('2026-01-17T21:00:00Z'),
     eventType: 'Festival',
     capacity: 800,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&auto=format&fit=crop&q=80'
+    ],
     venueIndex: 4,
     organizerKey: 'organizer2@planner.ai',
   },
@@ -373,31 +407,39 @@ export const COMPLETED_EVENTS = [
 export const CANCELLED_EVENTS = [
   {
     title: 'Winter Music Fest',
-    description: 'Qishki musiqa festivali — ob-havo sharoiti tufayli bekor qilindi.',
+    description:
+      'Qishki musiqa festivali — ob-havo sharoiti tufayli bekor qilindi.',
     startDate: new Date('2026-02-10T17:00:00Z'),
     endDate: new Date('2026-02-10T23:00:00Z'),
     eventType: 'Festival',
     capacity: 300,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer@planner.ai',
   },
   {
     title: 'Photography Masterclass',
-    description: 'Professional fotografiya bo\'yicha masterklas — keyingi chorakka ko\'chirildi.',
+    description:
+      "Professional fotografiya bo'yicha masterklas — keyingi chorakka ko'chirildi.",
     startDate: new Date('2026-03-01T10:00:00Z'),
     endDate: new Date('2026-03-01T18:00:00Z'),
     eventType: 'Trening',
     capacity: 30,
-    bannerUrl:
+    bannerUrl: [
       'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1400&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=1400&auto=format&fit=crop&q=80',
+    ],
     organizerKey: 'organizer2@planner.ai',
   },
 ];
 
 // ─── Ticket Tiers (per published event by index, then completed events) ───────
 // Index matches PUBLISHED_EVENTS order, then COMPLETED_EVENTS
-export const TICKET_TIERS_BY_EVENT: Array<Array<{ name: string; price: number; quantity: number }>> = [
+export const TICKET_TIERS_BY_EVENT: Array<
+  Array<{ name: string; price: number; quantity: number }>
+> = [
   // Event 0 – Marketing Forum
   [
     { name: 'Early Bird', price: 150000, quantity: 50 },
@@ -443,7 +485,7 @@ export const SERVICES = [
     name: 'Premium Catering Service',
     category: ServiceCategory.CATERING,
     description:
-      'Har qanday miqyosdagi tadbirlar uchun to\'liq katering: banketlar, furshetlar, kofe-tanaffuslar. 20+ oshpazdan iborat jamoa.',
+      "Har qanday miqyosdagi tadbirlar uchun to'liq katering: banketlar, furshetlar, kofe-tanaffuslar. 20+ oshpazdan iborat jamoa.",
     priceFrom: 15000000,
     city: 'Toshkent',
     rating: 4.8,
@@ -457,7 +499,7 @@ export const SERVICES = [
     name: 'Elite Sound & Light',
     category: ServiceCategory.SOUND,
     description:
-      'Tadbirda texnik bilan professional ovoz va yorug\'lik jihozlarini ijaraga berish.',
+      "Tadbirda texnik bilan professional ovoz va yorug'lik jihozlarini ijaraga berish.",
     priceFrom: 8000000,
     city: 'Toshkent',
     rating: 4.5,
@@ -485,7 +527,7 @@ export const SERVICES = [
     name: 'Elegant Decor Studio',
     category: ServiceCategory.DECORATION,
     description:
-      'Har qanday format uchun mualliflik dekori va floristika: to\'ylar, konferensiyalar, ko\'rgazmalar. To\'liq tsikl.',
+      "Har qanday format uchun mualliflik dekori va floristika: to'ylar, konferensiyalar, ko'rgazmalar. To'liq tsikl.",
     priceFrom: 5000000,
     city: 'Toshkent',
     rating: 4.6,
@@ -499,7 +541,7 @@ export const SERVICES = [
     name: 'SecureGuard Services',
     category: ServiceCategory.SECURITY,
     description:
-      'Tadbirlarni professional qo\'riqlash: kirish nazorati, VIP-hamrohlik, videokuzatuv.',
+      "Tadbirlarni professional qo'riqlash: kirish nazorati, VIP-hamrohlik, videokuzatuv.",
     priceFrom: 2000000,
     city: 'Toshkent',
     rating: 3.8,
@@ -512,7 +554,7 @@ export const SERVICES = [
     name: 'Samarkand Catering House',
     category: ServiceCategory.CATERING,
     description:
-      'Tadbiringizda o\'zbek milliy taomlari. Palov, samsa, go\'shtli taomlar va shirinliklar.',
+      "Tadbiringizda o'zbek milliy taomlari. Palov, samsa, go'shtli taomlar va shirinliklar.",
     priceFrom: 8000000,
     city: 'Samarqand',
     rating: 4.7,

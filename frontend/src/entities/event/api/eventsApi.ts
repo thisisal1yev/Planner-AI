@@ -8,7 +8,7 @@ import type { VolunteerApplication } from '../../volunteer/model/types'
 export interface CreateEventDto {
   title: string
   description?: string
-  bannerUrl?: string
+  bannerUrl?: string[]
   startDate: string
   endDate: string
   eventType: string
