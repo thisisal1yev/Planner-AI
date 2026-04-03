@@ -29,7 +29,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="group relative flex flex-col rounded-2xl overflow-hidden border border-white/8 bg-[#0f1925] no-underline
+      className="group relative flex flex-col rounded-2xl overflow-hidden border border-white/8 bg-navy-3 no-underline
         transition-all duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)]
         hover:-translate-y-[6px] hover:border-gold/30
         hover:shadow-[0_28px_60px_rgba(0,0,0,0.55),0_0_0_1px_rgba(201,150,58,0.14)]"
@@ -51,7 +51,7 @@ export function EventCard({ event }: EventCardProps) {
             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.07]"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#101b28] to-[#080f19] flex items-center justify-center">
+          <div className="w-full h-full bg-linear-to-br from-navy-2 to-navy-dark flex items-center justify-center">
             <span className="lp-serif text-[90px] font-bold leading-none select-none text-gold/8">
               {event.title.charAt(0).toUpperCase()}
             </span>
