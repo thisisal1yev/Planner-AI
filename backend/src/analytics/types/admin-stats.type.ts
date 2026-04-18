@@ -1,7 +1,7 @@
 export interface AdminPendingEvent {
   id: string;
   title: string;
-  eventType: string;
+  category: { id: string; name: string };
   bannerUrl: string[];
   startDate: Date;
   status: string;

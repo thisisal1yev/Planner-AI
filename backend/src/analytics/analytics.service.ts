@@ -82,7 +82,7 @@ export class AnalyticsService {
       select: {
         id: true,
         title: true,
-        eventType: true,
+        category: { select: { id: true, name: true } },
         bannerUrl: true,
         startDate: true,
         status: true,
