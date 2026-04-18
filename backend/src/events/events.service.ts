@@ -18,7 +18,7 @@ export class EventsService {
    * Creates a new event with optional ticket tiers (organizer only)
    */
   async create(organizerId: string, dto: CreateEventDto) {
-    const { ticketTiers, categoryId, startDate, endDate, ...rest } = dto;
+    const { ticketTiers, startDate, endDate, ...rest } = dto;
 
     return this.prisma.event.create({
       data: {
@@ -26,7 +26,6 @@ export class EventsService {
         startDate: new Date(startDate),
         endDate: new Date(endDate),
         organizerId,
-        category: { connect: { id: categoryId } },
         ticketTiers: ticketTiers ? { create: ticketTiers } : undefined,
       },
       include: { ticketTiers: true, square: true, category: { select: { id: true, name: true } } },
