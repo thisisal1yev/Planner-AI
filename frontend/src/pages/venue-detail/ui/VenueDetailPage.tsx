@@ -26,12 +26,6 @@ import { formatUZS } from '@shared/lib/dateUtils'
 import { Skeleton } from '@/shared/ui/primitives/skeleton'
 import { Separator } from '@/shared/ui/primitives/separator'
 import { CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/ui/primitives/card'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/shared/ui/primitives/tooltip'
 import { Button } from '@/shared/ui/primitives/button'
 
 function DetailSkeleton() {
