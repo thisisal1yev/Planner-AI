@@ -85,22 +85,31 @@ model User {
   payments      Payment[]
 }
 
+model EventCategory {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  events Event[]
+}
+
 model Event {
-  id          String      @id @default(uuid())
+  id          String        @id @default(uuid())
   organizerId String
-  organizer   User        @relation(fields: [organizerId], references: [id], onDelete: Restrict)
+  organizer   User          @relation(fields: [organizerId], references: [id], onDelete: Restrict)
   title       String
   description String?
   bannerUrl   String[]
   startDate   DateTime
   endDate     DateTime
-  eventType   String
+  categoryId  String
+  category    EventCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   capacity    Int
-  status      EventStatus @default(DRAFT)
+  status      EventStatus   @default(DRAFT)
   squareId    String?
-  square      Square?     @relation(fields: [squareId], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  square      Square?       @relation(fields: [squareId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   tickets       Ticket[]
   ticketTiers   TicketTier[]
@@ -109,11 +118,8 @@ model Event {
   volunteers    Volunteer[]
 
   @@index([status, startDate])
-  // Фильтр по типу: WHERE status='PUBLISHED' AND eventType=? ORDER BY startDate
-  @@index([status, eventType, startDate])
-  // Мои события организатора: WHERE organizerId=? ORDER BY createdAt DESC
+  @@index([status, categoryId, startDate])
   @@index([organizerId, createdAt(sort: Desc)])
-  // FK на square — для "события в этой площадке"
   @@index([squareId])
 }
 
