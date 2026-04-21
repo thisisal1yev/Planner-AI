@@ -28,7 +28,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
   const start = formatDateShort(event.startDate);
   const dot = STATUS_DOT[event.status] ?? "#9CA3AF";
   const label = STATUS_LABEL[event.status] ?? event.status;
-  const banner = event.bannerUrl?.[0];
+  const banner = event.bannerUrls?.[0];
 
   const fadeDelay = `svc-d${(index % 12) + 1}`;
 

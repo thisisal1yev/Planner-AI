@@ -113,8 +113,8 @@ export function AdminEventsPage() {
                     <tr key={e.id} className="border-b border-border/40 last:border-0 hover:bg-muted/15 transition-colors group">
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-2.5">
-                          {e.bannerUrl?.[0] ? (
-                            <img src={e.bannerUrl[0]} alt="" className="w-8 h-8 rounded-lg object-cover shrink-0 border border-border" />
+                          {e.bannerUrls?.[0] ? (
+                            <img src={e.bannerUrls[0]} alt="" className="w-8 h-8 rounded-lg object-cover shrink-0 border border-border" />
                           ) : (
                             <div className="w-8 h-8 rounded-lg bg-gold/8 border border-gold/12 flex items-center justify-center shrink-0">
                               <CalendarDays className="size-3.5 text-gold/60" />

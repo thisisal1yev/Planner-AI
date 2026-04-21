@@ -8,7 +8,7 @@ import type { VolunteerApplication } from '../../volunteer/model/types'
 export interface CreateEventDto {
   title: string
   description?: string
-  bannerUrl?: string[]
+  bannerUrls?: string[]
   startDate: string
   endDate: string
   eventType: string
@@ -33,6 +33,10 @@ export interface QueryEventsDto {
 export const eventsApi = {
   list: async (params?: QueryEventsDto): Promise<PaginatedResponse<Event>> => {
     const { data } = await apiClient.get('/events', { params })
+    return { data: data.data, meta: data.meta }
+  },
+  myList: async (params?: Omit<QueryEventsDto, 'organizerId'>): Promise<PaginatedResponse<Event>> => {
+    const { data } = await apiClient.get('/events/my', { params })
     return { data: data.data, meta: data.meta }
   },
   get: async (id: string): Promise<Event> => {

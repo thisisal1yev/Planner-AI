@@ -49,9 +49,9 @@ const STRINGS = {
 
 function RecentEventRow({ event }: { event: Event }) {
   const total = event.ticketTiers?.reduce((s, t) => s + t.quantity, 0) ?? 0
-  const sold = event.ticketTiers?.reduce((s, t) => s + (t.sold ?? 0), 0) ?? 0
+  const sold = event.ticketTiers?.reduce((s, t) => s + (t._count?.tickets ?? 0), 0) ?? 0
   const pct = total > 0 ? Math.round((sold / total) * 100) : 0
-  const banner = event.bannerUrl?.[0]
+  const banner = event.bannerUrls?.[0]
 
   return (
     <Link
@@ -127,8 +127,8 @@ export function OrganizerDashboardPage() {
   })
 
   const { data: eventsData, isLoading: eventsLoading } = useQuery({
-    queryKey: eventKeys.list({ limit: 6, my: true }),
-    queryFn: () => eventsApi.list({ limit: 6 }),
+    queryKey: eventKeys.myList(),
+    queryFn: () => eventsApi.myList({ limit: 6 }),
   })
 
   if (statsLoading) return <Spinner />
@@ -137,10 +137,13 @@ export function OrganizerDashboardPage() {
   const net = (stats?.totalRevenue ?? 0) - (stats?.totalCommission ?? 0)
 
   const chartData = recentEvents
-    .map((e) => ({
-      name: e.title.slice(0, 14) + (e.title.length > 14 ? '…' : ''),
-      chipta: 0,
-    }))
+    .map((e) => {
+      const sold = e.ticketTiers?.reduce((s, t) => s + (t._count?.tickets ?? 0), 0) ?? 0
+      return {
+        name: e.title.slice(0, 14) + (e.title.length > 14 ? '…' : ''),
+        chipta: sold,
+      }
+    })
     .reverse()
 
   return (

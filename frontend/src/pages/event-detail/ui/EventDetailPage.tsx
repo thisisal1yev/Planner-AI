@@ -119,7 +119,7 @@ export function EventDetailPage() {
     <div className="flex flex-col pb-16">
       {/* Cinematic hero */}
       <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
-        {event.bannerUrl && event.bannerUrl.length > 0 ? (
+        {event.bannerUrls && event.bannerUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
@@ -130,7 +130,7 @@ export function EventDetailPage() {
             }}
             onSlideChange={(s) => setImgIndex(s.realIndex)}
           >
-            {event.bannerUrl.map((url, idx) => (
+            {event.bannerUrls.map((url, idx) => (
               <SwiperSlide key={`${url}-${idx}`}>
                 <img src={url} alt={event.title} className="h-full w-full object-cover" />
               </SwiperSlide>
@@ -186,9 +186,9 @@ export function EventDetailPage() {
         </div>
 
         {/* Thumbnail strip */}
-        {(event?.bannerUrl?.length ?? 0) > 1 && (
+        {(event?.bannerUrls?.length ?? 0) > 1 && (
           <div className="absolute right-6 bottom-6 z-10 flex gap-1.5">
-            {event?.bannerUrl?.map((url: string, i: number) => (
+            {event?.bannerUrls?.map((url: string, i: number) => (
               <button
                 key={i}
                 onClick={() => {

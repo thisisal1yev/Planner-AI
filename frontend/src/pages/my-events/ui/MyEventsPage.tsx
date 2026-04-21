@@ -10,7 +10,7 @@ export function MyEventsPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: eventKeys.myList(),
-    queryFn: () => eventsApi.list({ limit: 50 }),
+    queryFn: () => eventsApi.myList({ limit: 20 }),
   })
 
   const deleteMutation = useMutation({

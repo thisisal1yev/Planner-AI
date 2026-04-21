@@ -221,7 +221,7 @@ export function AdminDashboardPage() {
             <tbody>
               {filtered.map((e: AdminPendingEvent) => {
                 const isPending = publishMutation.isPending || deleteMutation.isPending
-                const banner = e.bannerUrl?.[0]
+                const banner = e.bannerUrls?.[0]
                 return (
                   <tr key={e.id} className="border-b border-border/40 last:border-0 hover:bg-muted/15 transition-colors group">
                     <td className="px-5 py-3">

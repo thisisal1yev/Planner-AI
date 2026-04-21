@@ -10,22 +10,8 @@ interface VenueCardProps {
   className?: string;
 }
 
-const AMENITY_ICON: Record<string, string> = {
-  wifi: "⌘",
-  parking: "⊕",
-  sound: "♪",
-  stage: "◈",
-  indoor: "⬡",
-};
-
 export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
-  const amenities = [
-    venue.hasWifi && { key: "wifi", label: "WiFi" },
-    venue.hasParking && { key: "parking", label: "Parkovka" },
-    venue.hasSound && { key: "sound", label: "Ovoz" },
-    venue.hasStage && { key: "stage", label: "Sahna" },
-    venue.isIndoor && { key: "indoor", label: "Yopiq" },
-  ].filter(Boolean) as { key: string; label: string }[];
+  const amenities = (venue.characteristics ?? []).map((c) => ({ key: c.id, label: c.name }));
 
   const fadeDelay = `svc-d${(index % 12) + 1}`;
 
@@ -128,12 +114,9 @@ export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
             {amenities.map(({ key, label }) => (
               <span
                 key={key}
-                className="inline-flex items-center gap-1 text-[10px] py-[3px] px-2 rounded-full
+                className="inline-flex items-center text-[10px] py-[3px] px-2 rounded-full
                   bg-white/4 border border-white/8 text-cream/45 tracking-wide"
               >
-                <span className="text-gold/50 text-[9px]">
-                  {AMENITY_ICON[key]}
-                </span>
                 {label}
               </span>
             ))}

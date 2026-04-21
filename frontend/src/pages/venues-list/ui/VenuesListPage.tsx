@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { X, Wifi, Car } from "lucide-react";
+import { X } from "lucide-react";
 import { venuesApi, VenueCard } from "@entities/venue";
 import { Pagination } from "@shared/ui/Pagination";
 import { CardSkeleton } from "@shared/ui/CardSkeleton";
@@ -18,23 +18,13 @@ export function VenuesListPage() {
   const [city, setCity] = useState("");
   const [minCapacity, setMinCapacity] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [hasParking, setHasParking] = useState(false);
-  const [hasWifi, setHasWifi] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const hasAdvancedFilters =
-    !!minCapacity || !!maxPrice || hasParking || hasWifi;
+  const hasAdvancedFilters = !!minCapacity || !!maxPrice;
   const hasFilters = !!city || hasAdvancedFilters;
 
   const { data, isLoading } = useQuery({
-    queryKey: venueKeys.list({
-      page,
-      city,
-      minCapacity,
-      maxPrice,
-      hasParking,
-      hasWifi,
-    }),
+    queryKey: venueKeys.list({ page, city, minCapacity, maxPrice }),
     queryFn: () =>
       venuesApi.list({
         page,
@@ -42,8 +32,6 @@ export function VenuesListPage() {
         city: city || undefined,
         minCapacity: minCapacity ? Number(minCapacity) : undefined,
         maxPrice: maxPrice ? Number(maxPrice) : undefined,
-        hasParking: hasParking || undefined,
-        hasWifi: hasWifi || undefined,
       }),
   });
 
@@ -51,8 +39,6 @@ export function VenuesListPage() {
     setCity("");
     setMinCapacity("");
     setMaxPrice("");
-    setHasParking(false);
-    setHasWifi(false);
     setPage(1);
   }
 
@@ -74,7 +60,7 @@ export function VenuesListPage() {
             <p className="lp-serif text-3xl font-semibold text-gold leading-none">
               {data?.meta.total ?? "—"}
             </p>
-            
+
             <p className="text-xs text-muted-foreground mt-0.5">
               maydon topildi
             </p>
@@ -162,32 +148,6 @@ export function VenuesListPage() {
               className="h-8 w-40 px-3 text-[13px] bg-background border border-border rounded-lg focus:outline-none focus:border-gold/40 transition-colors text-foreground"
             />
           </div>
-          <label className="flex items-center gap-2 text-[13px] text-muted-foreground cursor-pointer h-8 px-3 rounded-lg border border-border hover:border-gold/20 transition-colors select-none">
-            <input
-              type="checkbox"
-              checked={hasParking}
-              onChange={(e) => {
-                setHasParking(e.target.checked);
-                setPage(1);
-              }}
-              className="accent-primary"
-            />
-            <Car className="size-3.5" />
-            Parkovka
-          </label>
-          <label className="flex items-center gap-2 text-[13px] text-muted-foreground cursor-pointer h-8 px-3 rounded-lg border border-border hover:border-gold/20 transition-colors select-none">
-            <input
-              type="checkbox"
-              checked={hasWifi}
-              onChange={(e) => {
-                setHasWifi(e.target.checked);
-                setPage(1);
-              }}
-              className="accent-primary"
-            />
-            <Wifi className="size-3.5" />
-            WiFi
-          </label>
         </div>
       )}
 

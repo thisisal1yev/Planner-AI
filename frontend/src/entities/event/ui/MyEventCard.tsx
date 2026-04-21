@@ -37,9 +37,9 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
 
       {/* ── Image ── */}
       <div className="relative overflow-hidden h-52 shrink-0">
-        {event.bannerUrl?.[0] ? (
+        {event.bannerUrls?.[0] ? (
           <img
-            src={event.bannerUrl[0]}
+            src={event.bannerUrls[0]}
             alt={event.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.07]"
           />
