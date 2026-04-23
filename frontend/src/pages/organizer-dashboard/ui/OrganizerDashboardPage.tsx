@@ -65,8 +65,8 @@ function RecentEventRow({ event }: { event: Event }) {
           className="border-border h-9 w-9 shrink-0 rounded-lg border object-cover"
         />
       ) : (
-        <div className="bg-gold/8 border-gold/15 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border">
-          <CalendarDays className="text-gold/50 size-4" />
+        <div className="bg-primary/8 border-primary/15 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border">
+          <CalendarDays className="text-primary/50 size-4" />
         </div>
       )}
 
@@ -115,7 +115,7 @@ function CustomTooltip({
   return (
     <div className="border-border bg-card rounded-lg border px-3 py-2 shadow-lg">
       <p className="text-muted-foreground/60 mb-1 text-[11px]">{label}</p>
-      <p className="text-gold text-[13px] font-bold">{formatUZS(payload[0].value)}</p>
+      <p className="text-primary text-[13px] font-bold">{formatUZS(payload[0].value)}</p>
     </div>
   )
 }
@@ -158,7 +158,7 @@ export function OrganizerDashboardPage() {
         </div>
         <Link
           to="/my-events/create"
-          className="bg-gold text-navy hover:bg-gold-light inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
+          className="bg-primary text-navy hover:bg-primary-light inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
         >
           <Plus className="size-3.5" />
           {STRINGS.create}
@@ -171,7 +171,7 @@ export function OrganizerDashboardPage() {
           label={STRINGS.totalEvents}
           value={stats?.totalEvents ?? 0}
           icon={CalendarDays}
-          accent="gold"
+          accent="primary"
         />
         <StatCard
           label={STRINGS.published}
@@ -200,7 +200,7 @@ export function OrganizerDashboardPage() {
           label={STRINGS.revenue}
           value={formatUZS(stats?.totalRevenue ?? 0)}
           icon={TrendingUp}
-          accent="gold"
+          accent="primary"
           sub={`${STRINGS.netRevenue}: ${formatUZS(net)}`}
         />
         <StatCard
@@ -217,7 +217,7 @@ export function OrganizerDashboardPage() {
         {/* Chart */}
         <div className="bg-card border-border rounded-xl border p-5">
           <div className="mb-4 flex items-center gap-2">
-            <BadgeDollarSign className="text-gold/70 size-4" />
+            <BadgeDollarSign className="text-primary/70 size-4" />
             <p className="text-foreground text-[13px] font-semibold">
               Chipta sotuvi (so'nggi tadbirlar)
             </p>
@@ -270,12 +270,12 @@ export function OrganizerDashboardPage() {
         <div className="bg-card border-border rounded-xl border p-5">
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="text-gold/70 size-4" />
+              <Zap className="text-primary/70 size-4" />
               <p className="text-foreground text-[13px] font-semibold">{STRINGS.recentEvents}</p>
             </div>
             <Link
               to="/my-events"
-              className="text-gold/70 hover:text-gold flex items-center gap-1 text-[11px] transition-colors"
+              className="text-primary/70 hover:text-primary flex items-center gap-1 text-[11px] transition-colors"
             >
               <ListChecks className="size-3" />
               {STRINGS.allEvents}
@@ -297,7 +297,7 @@ export function OrganizerDashboardPage() {
               <p className="text-muted-foreground/40 text-[13px]">{STRINGS.noEvents}</p>
               <Link
                 to="/my-events/create"
-                className="text-gold/70 hover:text-gold text-xs transition-colors"
+                className="text-primary/70 hover:text-primary text-xs transition-colors"
               >
                 Birinchi tadbiringizni yarating →
               </Link>

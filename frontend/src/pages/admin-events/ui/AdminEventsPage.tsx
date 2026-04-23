@@ -80,7 +80,7 @@ export function AdminEventsPage() {
             placeholder="Tadbir nomini qidirish..."
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1) }}
-            className="w-52 h-9 pl-8 pr-3 text-[13px] bg-card border border-border rounded-lg focus:outline-none focus:border-gold/40 transition-colors placeholder:text-muted-foreground/40"
+            className="w-52 h-9 pl-8 pr-3 text-[13px] bg-card border border-border rounded-lg focus:outline-none focus:border-primary/40 transition-colors placeholder:text-muted-foreground/40"
           />
         </div>
       </div>
@@ -116,8 +116,8 @@ export function AdminEventsPage() {
                           {e.bannerUrls?.[0] ? (
                             <img src={e.bannerUrls[0]} alt="" className="w-8 h-8 rounded-lg object-cover shrink-0 border border-border" />
                           ) : (
-                            <div className="w-8 h-8 rounded-lg bg-gold/8 border border-gold/12 flex items-center justify-center shrink-0">
-                              <CalendarDays className="size-3.5 text-gold/60" />
+                            <div className="w-8 h-8 rounded-lg bg-primary/8 border border-primary/12 flex items-center justify-center shrink-0">
+                              <CalendarDays className="size-3.5 text-primary/60" />
                             </div>
                           )}
                           <div>

@@ -111,7 +111,7 @@ function AttachModal({ eventId, onClose }: { eventId: string; onClose: () => voi
             <button
               onClick={() => attachMutation.mutate()}
               disabled={!serviceId || !price || attachMutation.isPending}
-              className="flex-1 h-9 rounded-lg text-[13px] font-semibold bg-gold text-navy hover:bg-gold-light disabled:opacity-40 transition-colors"
+              className="flex-1 h-9 rounded-lg text-[13px] font-semibold bg-primary text-navy hover:bg-primary-light disabled:opacity-40 transition-colors"
             >
               {STRINGS.modalAttach}
             </button>
@@ -165,7 +165,7 @@ export function EventServicesPage() {
       {/* ── Header ── */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-2.5">
-          <Wrench className="size-5 text-gold/70 shrink-0" />
+          <Wrench className="size-5 text-primary/70 shrink-0" />
           <h1 className="text-[18px] font-bold text-foreground tracking-tight">{STRINGS.title}</h1>
           {(attached?.length ?? 0) > 0 && (
             <span className="text-[11px] text-muted-foreground/50 border border-border rounded-full px-2.5 py-0.5 bg-muted/20">
@@ -176,12 +176,12 @@ export function EventServicesPage() {
         <div className="flex items-center gap-3">
           {total > 0 && (
             <span className="text-[12px] text-muted-foreground/60">
-              {STRINGS.total}: <span className="font-semibold text-gold">{formatUZS(total)}</span>
+              {STRINGS.total}: <span className="font-semibold text-primary">{formatUZS(total)}</span>
             </span>
           )}
           <button
             onClick={() => setAttachOpen(true)}
-            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-xl text-[13px] font-semibold bg-gold text-navy hover:bg-gold-light shadow-[0_4px_12px_rgba(76,140,167,0.2)] transition-all duration-200"
+            className="inline-flex items-center gap-1.5 h-9 px-4 rounded-xl text-[13px] font-semibold bg-primary text-navy hover:bg-primary-light shadow-[0_4px_12px_rgba(76,140,167,0.2)] transition-all duration-200"
           >
             <Plus className="size-3.5" />
             {STRINGS.add}
@@ -228,8 +228,8 @@ export function EventServicesPage() {
               className="bg-card rounded-xl border border-border p-4 flex items-center gap-3 group hover:border-border/80 transition-colors"
             >
               {/* Icon */}
-              <div className="w-9 h-9 rounded-lg bg-gold/8 border border-gold/12 flex items-center justify-center shrink-0">
-                <CategoryIcon className="size-4 text-gold/60" />
+              <div className="w-9 h-9 rounded-lg bg-primary/8 border border-primary/12 flex items-center justify-center shrink-0">
+                <CategoryIcon className="size-4 text-primary/60" />
               </div>
 
               {/* Info */}
@@ -242,7 +242,7 @@ export function EventServicesPage() {
 
                   <span className="text-[11px] text-muted-foreground/30">•</span>
                   
-                  <span className="text-[11px] font-semibold text-gold/80">{formatUZS(Number(es.agreedPrice))}</span>
+                  <span className="text-[11px] font-semibold text-primary/80">{formatUZS(Number(es.agreedPrice))}</span>
                 </div>
               </div>
 

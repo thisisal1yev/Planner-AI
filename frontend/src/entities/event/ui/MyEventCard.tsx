@@ -18,16 +18,17 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
   const statusColor = EVENT_STATUS_COLOR[event.status] ?? 'gray'
   const statusLabel = EVENT_STATUS_LABEL[event.status] ?? event.status
 
-  const fadeDelay = `svc-d${(index % 12) + 1}`
-
   return (
     <div
       className={cn(
-        `svc-card svc-fade ${fadeDelay} group relative flex flex-col rounded-2xl overflow-hidden border border-white/8 bg-card`,
+        "animate-[svc-in_0.45s_ease-out_both] group relative flex flex-col rounded-2xl overflow-hidden border border-white/8 bg-card",
+        "transition-[transform,box-shadow,border-color] duration-[280ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+        "hover:-translate-y-[5px] hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)] hover:!border-primary/30",
         className
       )}
+      style={{ animationDelay: `${(index % 12) * 0.04}s` }}
     >
-      {/* Animated gold shimmer rule */}
+      {/* Animated primary shimmer rule */}
       <div
         className="absolute bottom-0 left-0 right-0 h-[2px] z-10 pointer-events-none origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
         style={{
@@ -45,7 +46,7 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
           />
         ) : (
           <div className="w-full h-full bg-linear-to-br from-navy-2 to-navy-dark flex items-center justify-center">
-            <span className="lp-serif text-[90px] font-bold leading-none select-none text-gold/8">
+            <span className="font-serif text-[90px] font-bold leading-none select-none text-primary/8">
               {event.title.charAt(0).toUpperCase()}
             </span>
           </div>
@@ -87,10 +88,10 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
         {/* Title */}
         <div className="absolute bottom-0 px-4">
           {event.eventType && (
-            <div className="text-xs uppercase tracking-widest text-gold/60 font-medium">{event.eventType}</div>
+            <div className="text-xs uppercase tracking-widest text-primary/60 font-medium">{event.eventType}</div>
           )}
           <div className="pb-3.5">
-            <h3 className="lp-serif text-[20px] font-bold leading- line-clamp-2 text-cream/95 transition-colors duration-200 group-hover:text-gold-light">
+            <h3 className="font-serif text-[20px] font-bold leading- line-clamp-2 text-cream/95 transition-colors duration-200 group-hover:text-primary-light">
               {event.title}
             </h3>
           </div>
@@ -101,14 +102,14 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
       <div className="px-4 py-3 flex flex-col gap-2">
         {/* Date & Location */}
         <div className="flex items-center gap-1.5 text-[12px] text-cream/40">
-          <Calendar className="w-3 h-3 shrink-0 text-gold/40" />
-          <span className="group-hover:text-gold transition-colors duration-200">{start}</span>
+          <Calendar className="w-3 h-3 shrink-0 text-primary/40" />
+          <span className="group-hover:text-primary transition-colors duration-200">{start}</span>
 
           {event.venue && (
             <>
-              <span className="text-cream/15 mx-0.5 group-hover:text-gold transition-colors duration-200">•</span>
-              <MapPin className="w-3 h-3 shrink-0 text-gold/40 group-hover:text-gold transition-colors duration-200" />
-              <span className="truncate group-hover:text-gold transition-colors duration-200">{event.venue.city}</span>
+              <span className="text-cream/15 mx-0.5 group-hover:text-primary transition-colors duration-200">•</span>
+              <MapPin className="w-3 h-3 shrink-0 text-primary/40 group-hover:text-primary transition-colors duration-200" />
+              <span className="truncate group-hover:text-primary transition-colors duration-200">{event.venue.city}</span>
             </>
           )}
         </div>
@@ -160,7 +161,7 @@ export function MyEventCard({ event, index = 0, onDelete, isDeleting = false, cl
         {/* Footer link */}
         <div className="flex items-center justify-between pt-1 border-t border-white/5">
           <span className="text-[11px] text-cream/30">ID: {event.id.slice(0, 8)}</span>
-          <span className="text-[12px] text-gold/70 font-medium flex items-center gap-1 group-hover:text-gold transition-colors duration-200">
+          <span className="text-[12px] text-primary/70 font-medium flex items-center gap-1 group-hover:text-primary transition-colors duration-200">
             Ko'rish
             <ArrowRight className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>
