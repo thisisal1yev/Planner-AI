@@ -48,6 +48,7 @@ export class TicketsService {
           eventId,
           tierId: dto.tierId,
           qrCode,
+          pricePaid: amount,
         },
       });
 
