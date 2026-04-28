@@ -7,6 +7,8 @@ import { authApi, usersApi } from "@entities/user";
 import { useAuthStore } from "@shared/model/auth.store";
 import type { LoginDto, RegisterDto } from "@entities/user";
 
+const GOOGLE_AUTH_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/auth/google`
+
 // ─── Decorative elements ──────────────────────────────────────────────────────
 
 function OrnamentStar({
@@ -263,7 +265,7 @@ function SignInForm() {
       <button
         type="submit"
         disabled={mutation.isPending}
-        className="w-full h-11 bg-linear-to-r from-primary to-primary-dark text-navy font-semibold text-sm rounded-md -tracking-tight transition-all duration-200 hover:opacity-90 disabled:opacity-50 shadow-[0_4px_20px_rgba(76,140,167,0.25)] mt-1"
+        className="w-full h-11 bg-primary text-navy font-semibold text-sm rounded-md tracking-wide transition-all duration-200 hover:bg-primary-light disabled:opacity-50 mt-1"
       >
         {mutation.isPending ? "Kirish…" : "Kirish"}
       </button>
@@ -451,7 +453,7 @@ function CreateAccountForm() {
       <button
         type="submit"
         disabled={mutation.isPending}
-        className="w-full h-11 bg-linear-to-r from-primary to-primary-dark text-navy font-semibold text-sm rounded-md -tracking-tight transition-all duration-200 hover:opacity-90 disabled:opacity-50 shadow-[0_4px_20px_rgba(76,140,167,0.25)] mt-1"
+        className="w-full h-11 bg-primary text-navy font-semibold text-sm rounded-md tracking-wide transition-all duration-200 hover:bg-primary-light disabled:opacity-50 mt-1"
       >
         {mutation.isPending ? "Yaratilmoqda…" : "Akkaunt yaratish"}
       </button>
@@ -486,11 +488,11 @@ export function AuthPage() {
 
         {/* Corner ornaments */}
         <div className="absolute -top-16 -right-16 pointer-events-none">
-          <OrnamentStar size={300} op={0.08} />
+          <OrnamentStar size={300} op={0.32} />
         </div>
 
         <div className="absolute -bottom-10 -left-10 pointer-events-none">
-          <OrnamentStar size={200} op={0.055} />
+          <OrnamentStar size={200} op={0.32} />
         </div>
 
         {/* Top primary line */}
@@ -697,6 +699,7 @@ export function AuthPage() {
           {/* Google button */}
           <button
             type="button"
+            onClick={() => { window.location.href = GOOGLE_AUTH_URL }}
             className="animate-[auth-up_0.5s_ease-out_forwards] opacity-0 [animation-delay:0.3s] w-full flex items-center justify-center gap-2.5 h-11 border border-white/8 rounded-[8px] text-[13px] font-medium text-cream/65 hover:text-cream hover:border-primary hover:bg-primary/10 transition-[color,border-color,background] duration-300 group"
           >
             <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
@@ -725,20 +728,20 @@ export function AuthPage() {
 
           {/* Terms */}
           <p className="animate-[auth-up_0.5s_ease-out_forwards] opacity-0 [animation-delay:0.42s] text-[11px] text-center text-cream/24 mt-5 leading-[1.7]">
-            Davom etish orqali{" "}
+            Davom etish orqali&nbsp;
             <Link
               to="/terms"
               className="text-cream/40 hover:text-primary transition-colors underline underline-offset-2 decoration-cream/20 hover:decoration-primary/50"
             >
               Foydalanish shartlari
-            </Link>{" "}
-            va{" "}
+            </Link>&nbsp;
+            va&nbsp;
             <Link
               to="/privacy"
               className="text-cream/40 hover:text-primary transition-colors underline underline-offset-2 decoration-cream/20 hover:decoration-primary/50"
             >
               Maxfiylik siyosati
-            </Link>{" "}
+            </Link>&nbsp;
             bilan rozisiz
           </p>
         </div>
