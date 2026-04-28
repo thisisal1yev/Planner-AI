@@ -205,7 +205,7 @@ export function HomePage() {
 
           {/* Headline */}
           <h1 className="font-serif text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] opacity-0 [animation-delay:0.22s] text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em]">
-            Tadbirlarni <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-[size:200%_auto] animate-[lp-shimmer_3s_linear_infinite]">muommosiz</em>
+            Tadbirlarni <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] animate-[lp-shimmer_3s_linear_infinite]">muommosiz</em>
             <br />
             tashkil eting
           </h1>
@@ -280,7 +280,7 @@ export function HomePage() {
               <Link
                 key={c.l}
                 to={c.to}
-                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-white/[0.018] px-[10px] py-[22px] no-underline transition-all duration-200 hover:-translate-y-[3px]"
+                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-white/[0.018] px-[10px] py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px]"
               >
                 <span className="text-[26px]">{c.e}</span>
                 <span className="text-cream text-center text-[12px] leading-[1.3] font-medium">
@@ -579,7 +579,7 @@ export function HomePage() {
 
               <h2 className="font-serif text-cream mb-4 text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
                 Tadbir boshlashga{' '}
-                <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-[size:200%_auto] animate-[lp-shimmer_3s_linear_infinite]">tayyormisiz?</em>
+                <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] animate-[lp-shimmer_3s_linear_infinite]">tayyormisiz?</em>
               </h2>
 
               <p className="text-clay mx-auto mb-11 max-w-[480px] text-[17px] leading-[1.75]">
