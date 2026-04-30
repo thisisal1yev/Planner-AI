@@ -62,7 +62,7 @@ function UserMenu() {
       </button>
 
       {open && (
-        <div className="hdr-menu border-primary/18 absolute right-0 z-50 mt-2.5 w-[228px] overflow-hidden rounded-xl border bg-[rgba(15,25,37,0.97)] shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
+        <div className="hdr-menu border-primary/18 absolute right-0 z-50 mt-2.5 w-[228px] overflow-hidden rounded-xl border bg-white dark:bg-[rgba(15,25,37,0.97)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
           <div className="border-b-primary/12 flex items-center gap-3 border-b px-4 py-3.5">
             {user.avatarUrl ? (
               <img
@@ -76,11 +76,11 @@ function UserMenu() {
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-cream overflow-hidden text-sm font-semibold text-ellipsis whitespace-nowrap">
+              <p className="text-gray-900 dark:text-cream overflow-hidden text-sm font-semibold text-ellipsis whitespace-nowrap">
                 {user.firstName} {user.lastName}
               </p>
 
-              <p className="text-cream/45 overflow-hidden text-xs text-ellipsis whitespace-nowrap">
+              <p className="text-gray-500 dark:text-cream/45 overflow-hidden text-xs text-ellipsis whitespace-nowrap">
                 {user.email}
               </p>
             </div>
@@ -95,7 +95,7 @@ function UserMenu() {
                 key={to}
                 to={to}
                 onClick={() => setOpen(false)}
-                className="text-cream/70 hover:text-primary-light hover:bg-primary/7 flex items-center gap-2.5 px-4 py-[9px] text-sm transition-[color,background] duration-150"
+                className="text-gray-600 hover:text-primary hover:bg-primary/7 dark:text-cream/70 dark:hover:text-primary-light flex items-center gap-2.5 px-4 py-[9px] text-sm transition-[color,background] duration-150"
               >
                 <Icon className="h-[15px] w-[15px] shrink-0 opacity-50" strokeWidth={1.5} />
                 
@@ -125,10 +125,10 @@ export function AppHeader() {
 
   return (
     <>
-      <header className="bg-navy-header sticky top-0 z-40 w-full backdrop-blur-md">
+      <header className="bg-white/95 dark:bg-navy-header sticky top-0 z-40 w-full border-b border-gray-200 dark:border-white/8 backdrop-blur-md">
         <div className="mx-auto flex h-15 max-w-7xl items-center justify-between gap-8 px-6">
           <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
+            <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
 
             <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>
@@ -139,7 +139,7 @@ export function AppHeader() {
                 <a
                   key={href}
                   href={href}
-                  className="group text-cream hover:text-primary-light relative pb-0.5 text-sm transition-colors duration-200"
+                  className="group text-gray-700 hover:text-primary dark:text-cream dark:hover:text-primary-light relative pb-0.5 text-sm transition-colors duration-200"
                 >
                   {label}
                   <span className="bg-primary-light absolute -bottom-0.5 left-0 h-px w-0 transition-[width] duration-250 ease-in-out group-hover:w-full" />
@@ -154,7 +154,7 @@ export function AppHeader() {
                 <>
                   <Link
                     to="/login"
-                    className="text-cream hover:border-primary/55 hover:text-primary-light rounded-xl border border-cream/20 px-4 py-2 text-sm font-medium transition-colors duration-300"
+                    className="text-gray-700 hover:text-primary dark:text-cream dark:hover:text-primary-light rounded-xl border border-gray-200 dark:border-cream/20 hover:border-primary/55 px-4 py-2 text-sm font-medium transition-colors duration-300"
                   >
                     Kirish
                   </Link>

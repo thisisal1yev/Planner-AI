@@ -80,7 +80,7 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="bg-navy-dark border-t border-t-primary/13">
+    <footer className="bg-gray-100 dark:bg-navy-dark border-t border-t-primary/13">
       <div className="h-px bg-linear-to-r from-transparent via-primary/35 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-9">
@@ -89,7 +89,7 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-3.5">
           <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
+            <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
 
             <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>
