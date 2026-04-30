@@ -171,9 +171,9 @@ export function HomePage() {
   })
 
   return (
-    <div className="bg-white text-gray-900 dark:bg-navy dark:text-cream">
+    <div className="dark:bg-navy dark:text-cream bg-white text-gray-900">
       {/* ════════════════════════════════ HERO ════════════════════════════════ */}
-      <section className="lp-noise relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden bg-white bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%)] dark:bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%),#0C1520]">
+      <section className="lp-noise relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden bg-white bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%)] dark:bg-[radial-gradient(ellipse_0%_40%_at_50%_10%,rgba(76,140,167,0.07)_0%,rgba(12,21,32,1)_70%)]">
         {/* top line */}
         <div className="absolute top-0 right-0 left-0 h-px bg-[linear-gradient(90deg,transparent,#4c8ca7,transparent)] opacity-35" />
 
@@ -193,7 +193,7 @@ export function HomePage() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-gray-900 dark:text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] font-serif text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em] opacity-0 [animation-delay:0.22s]">
+          <h1 className="dark:text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] font-serif text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em] text-gray-900 opacity-0 [animation-delay:0.22s]">
             Tadbirlarni{' '}
             <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
               muommosiz
@@ -255,12 +255,12 @@ export function HomePage() {
       </div>
 
       {/* ════════════════════════════════ CATEGORIES ════════════════════════ */}
-      <section className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
+      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Kategoriyalar" />
-              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+              <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold text-gray-900">
                 Tadbir turini tanlang
               </h2>
             </div>
@@ -276,10 +276,10 @@ export function HomePage() {
               <Link
                 key={c.l}
                 to={c.to}
-                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-gray-50 dark:bg-white/[0.018] px-[10px] py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px]"
+                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-gray-50 px-[10px] py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px] dark:bg-white/[0.018]"
               >
                 <span className="text-[26px]">{c.e}</span>
-                <span className="text-gray-900 dark:text-cream text-center text-[12px] leading-[1.3] font-medium">
+                <span className="dark:text-cream text-center text-[12px] leading-[1.3] font-medium text-gray-900">
                   {c.l}
                 </span>
               </Link>
@@ -289,12 +289,12 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ EVENTS ════════════════════════════ */}
-      <section className="bg-white dark:bg-navy px-6 py-[88px]">
+      <section className="dark:bg-navy bg-white px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Tadbirlar" />
-              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+              <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold text-gray-900">
                 Yaqinlashayotgan tadbirlar
               </h2>
               <p className="text-slate mt-2 text-[15px]">O'zbekistonning dolzarb tadbirlari</p>
@@ -323,11 +323,14 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ HOW IT WORKS ══════════════════════ */}
-      <section id="how-it-works" className="bg-slate-50 dark:bg-navy-3 border-primary/15 border-y px-6 py-[88px]">
+      <section
+        id="how-it-works"
+        className="dark:bg-navy-3 border-primary/15 border-y bg-slate-50 px-6 py-[88px]"
+      >
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-[72px] text-center">
             <Label text="Jarayon" />
-            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
               Bu qanday ishlaydi
             </h2>
             <p className="text-slate mx-auto mt-3 max-w-[380px] text-[15px] leading-relaxed">
@@ -349,7 +352,9 @@ export function HomePage() {
 
                 <div className="bg-primary mb-4 h-0.5 w-9 opacity-55" />
 
-                <h3 className="text-gray-900 dark:text-cream mb-[10px] text-[19px] font-semibold">{s.t}</h3>
+                <h3 className="dark:text-cream mb-[10px] text-[19px] font-semibold text-gray-900">
+                  {s.t}
+                </h3>
 
                 <p className="text-slate text-sm leading-[1.75]">{s.d}</p>
               </div>
@@ -359,19 +364,19 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ VENUES ════════════════════════════ */}
-      <section className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
+      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Maydonlar" />
 
-              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+              <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold text-gray-900">
                 Mashhur maydonlar
               </h2>
 
               <p className="text-slate mt-2 text-[15px]">Tadbirlaringiz uchun eng yaxshi joylar</p>
             </div>
-            
+
             <Link to="/venues" className="text-primary text-sm no-underline">
               Barcha maydonlar →
             </Link>
@@ -395,11 +400,11 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ FEATURES ══════════════════════════ */}
-      <section id="features" className="bg-white dark:bg-navy px-6 py-[88px]">
+      <section id="features" className="dark:bg-navy bg-white px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-16 text-center">
             <Label text="Imkoniyatlar" />
-            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
               Tashkilotchi uchun hamma narsa
             </h2>
             <p className="text-slate mt-3 text-[15px]">
@@ -415,7 +420,9 @@ export function HomePage() {
                 <div className="bg-primary/6 border-primary/15 mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-xl border text-[26px]">
                   {f.e}
                 </div>
-                <h3 className="text-gray-900 dark:text-cream mb-2 text-[16px] font-semibold">{f.t}</h3>
+                <h3 className="dark:text-cream mb-2 text-[16px] font-semibold text-gray-900">
+                  {f.t}
+                </h3>
                 <p className="text-slate text-sm leading-[1.65]">{f.d}</p>
               </div>
             ))}
@@ -424,11 +431,14 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ PRICING ═══════════════════════════ */}
-      <section id="pricing" className="bg-slate-50 dark:bg-navy-3 border-primary/15 border-t px-6 py-[88px]">
+      <section
+        id="pricing"
+        className="dark:bg-navy-3 border-primary/15 border-t bg-slate-50 px-6 py-[88px]"
+      >
         <div className="mx-auto max-w-[960px]">
           <div className="mb-16 text-center">
             <Label text="Narxlar" />
-            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
               Tariflar
             </h2>
             <p className="text-slate mt-3 text-[15px]">
@@ -468,7 +478,10 @@ export function HomePage() {
 
                 <ul className="m-0 mb-7 flex flex-1 list-none flex-col gap-[10px] p-0">
                   {p.fs.map((f) => (
-                    <li key={f} className="text-gray-700 dark:text-cream flex items-start gap-[10px] text-sm">
+                    <li
+                      key={f}
+                      className="dark:text-cream flex items-start gap-[10px] text-sm text-gray-700"
+                    >
                       <span className="text-primary mt-[2px] shrink-0 text-[12px] font-bold">
                         ✓
                       </span>
@@ -483,7 +496,7 @@ export function HomePage() {
                     'block rounded-lg p-3 text-center text-sm font-semibold tracking-wide no-underline transition-opacity hover:opacity-80',
                     p.hot
                       ? 'bg-primary border-0 text-[#0C1520]'
-                      : 'border-primary/15 text-gray-900 dark:text-cream border bg-transparent'
+                      : 'border-primary/15 dark:text-cream border bg-transparent text-gray-900'
                   )}
                 >
                   {p.cta}
@@ -495,11 +508,11 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ CONTACT ═══════════════════════════ */}
-      <section id="contact" className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
+      <section id="contact" className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
         <div className="mx-auto max-w-[1000px]">
           <div className="mb-14 text-center">
             <Label text="Aloqa" />
-            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
               Biz bilan bog'laning
             </h2>
 
@@ -575,7 +588,7 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ CTA ═══════════════════════════════ */}
-      <section className="bg-white dark:bg-navy px-6 py-20">
+      <section className="dark:bg-navy bg-white px-6 py-20">
         <div className="mx-auto max-w-[1100px]">
           <div className="lp-noise border-primary/[0.28] relative overflow-hidden rounded-3xl border bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(76,140,167,0.07),transparent_70%)] px-[clamp(24px,5vw,80px)] py-[clamp(48px,8vw,88px)] text-center">
             <div className="pointer-events-none absolute top-[-30px] right-[-30px]">
@@ -589,7 +602,7 @@ export function HomePage() {
             <div className="relative z-10">
               <Label text="Hoziroq boshlang" />
 
-              <h2 className="text-gray-900 dark:text-cream mb-4 font-serif text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
+              <h2 className="dark:text-cream mb-4 font-serif text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold text-gray-900">
                 Tadbir boshlashga{' '}
                 <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
                   tayyormisiz?
