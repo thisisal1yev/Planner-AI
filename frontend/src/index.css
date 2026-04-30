@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @import '@fontsource-variable/inter';
+@import '@fontsource-variable/cormorant-garamond';
+@import '@fontsource-variable/cormorant-garamond/wght-italic.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -77,7 +78,7 @@
 
 @theme inline {
   --font-sans: 'Inter Variable', sans-serif;
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
 
   /* Brand accent palette */
   --color-primary-light: #7ab8cc;
@@ -88,7 +89,7 @@
   --color-navy-3: #0f1925;
   --color-navy-dark: #080f19;
   --color-navy-header: #0a111c;
-  --color-clay: #7a6d59;
+  --color-slate: #94a3b8;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -137,6 +138,26 @@
 
   html {
     @apply scroll-smooth font-sans;
+  }
+}
+
+/* ─── Component classes ─────────────────────────────────────────────────────── */
+
+@layer components {
+  .btn-primary {
+    @apply inline-block cursor-pointer rounded-md font-semibold tracking-wide py-4 px-8 bg-primary text-white transition-colors duration-300 hover:bg-primary-light;
+  }
+
+  .btn-outline {
+    @apply inline-block cursor-pointer rounded-lg font-medium tracking-wide py-4 px-8 bg-transparent text-gray-900 dark:text-cream border border-primary transition-colors duration-300 hover:text-primary-light;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:translate-y-[-5px] hover:shadow-[0_20px_48px_rgba(0,0,0,0.1),0_0_0_1px_rgba(76,140,167,0.2)] dark:hover:shadow-[0_20px_48px_rgba(0,0,0,0.5),0_0_0_1px_rgba(76,140,167,0.25)];
+  }
+
+  .input-cls {
+    @apply box-border w-full rounded-lg text-sm outline-none py-[10px] px-[14px] bg-white border border-gray-200 text-gray-900 dark:bg-white/3 dark:border-primary/15 dark:text-cream transition-[border-color] duration-200 focus:border-primary/50 placeholder:text-gray-400 dark:placeholder:text-slate;
   }
 }
 

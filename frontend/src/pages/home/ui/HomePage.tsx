@@ -27,8 +27,14 @@ const CATS = [
 ]
 
 const MQ = [
-  'Konsertlar', 'Konferensiyalar', "Ko'rgazmalar", 'Treninglar',
-  'Festivallar', 'Ziyofatlar', 'Mitaplar', 'Namoyishlar',
+  'Konsertlar',
+  'Konferensiyalar',
+  "Ko'rgazmalar",
+  'Treninglar',
+  'Festivallar',
+  'Ziyofatlar',
+  'Mitaplar',
+  'Namoyishlar',
 ]
 
 const STEPS = [
@@ -152,23 +158,6 @@ function Label({ text }: { text: string }) {
   )
 }
 
-// ─── Shared class strings ─────────────────────────────────────────────────────
-
-const btnPrimary = `inline-block cursor-pointer rounded-md font-semibold tracking-wide py-4 px-8
-  bg-primary text-white transition-colors duration-300
-  hover:bg-primary-light`
-
-const btnOutline = `inline-block cursor-pointer rounded-lg font-medium tracking-wide py-4 px-8
-  bg-transparent text-cream border border-primary
-  transition-colors duration-300 hover:border-primary hover:text-primary-light`
-
-const cardHover = `transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-  hover:-translate-y-[5px] hover:shadow-[0_20px_48px_rgba(0,0,0,0.5),0_0_0_1px_rgba(76,140,167,0.25)]`
-
-const inputCls = `box-border w-full rounded-lg text-sm outline-none py-[10px] px-[14px]
-  bg-white/[0.03] border border-primary/15 text-cream
-  transition-[border-color] duration-200 focus:border-primary/50 placeholder:text-[#5a4f3e]`
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function HomePage() {
@@ -182,9 +171,9 @@ export function HomePage() {
   })
 
   return (
-    <div className="bg-navy text-cream">
+    <div className="bg-white text-gray-900 dark:bg-navy dark:text-cream">
       {/* ════════════════════════════════ HERO ════════════════════════════════ */}
-      <section className="lp-noise relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%),#0C1520]">
+      <section className="lp-noise relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden bg-white bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%)] dark:bg-[radial-gradient(ellipse_90%_55%_at_50%_-5%,rgba(76,140,167,0.09)_0%,transparent_68%),#0C1520]">
         {/* top line */}
         <div className="absolute top-0 right-0 left-0 h-px bg-[linear-gradient(90deg,transparent,#4c8ca7,transparent)] opacity-35" />
 
@@ -204,24 +193,28 @@ export function HomePage() {
           </div>
 
           {/* Headline */}
-          <h1 className="font-serif text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] opacity-0 [animation-delay:0.22s] text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em]">
-            Tadbirlarni <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-[size:200%_auto] animate-[lp-shimmer_3s_linear_infinite]">muommosiz</em>
+          <h1 className="text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] font-serif text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em] opacity-0 [animation-delay:0.22s]">
+            Tadbirlarni{' '}
+            <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
+              muommosiz
+            </em>
             <br />
             tashkil eting
           </h1>
 
           {/* Sub */}
-          <p className="text-clay mx-auto mb-[44px] max-w-[520px] animate-[lp-up_0.75s_ease-out_forwards] text-lg leading-[1.75] opacity-0 [animation-delay:0.36s]">
+          <p className="text-slate mx-auto mb-[44px] max-w-[520px] animate-[lp-up_0.75s_ease-out_forwards] text-lg leading-[1.75] opacity-0 [animation-delay:0.36s]">
             Maydonlar, xizmatlar, chiptalar — hammasi bir joyda. Planner AI tashkilotchilarga
             tadbirlarni tez va samarali ishga tushirishga yordam beradi.
           </p>
 
           {/* CTAs */}
           <div className="mb-[68px] flex animate-[lp-up_0.75s_ease-out_forwards] flex-col justify-center gap-3 opacity-0 [animation-delay:0.5s] sm:flex-row">
-            <Link to="/events" className={btnPrimary}>
+            <Link to="/events" className="btn-primary">
               Tadbirlarni ko'rish →
             </Link>
-            <Link to="/register" className={btnOutline}>
+
+            <Link to="/register" className="btn-outline">
               Tadbir yaratish
             </Link>
           </div>
@@ -229,18 +222,21 @@ export function HomePage() {
           {/* Stats */}
           <div className="mx-auto grid max-w-[580px] animate-[lp-up_0.75s_ease-out_forwards] grid-cols-2 gap-3 opacity-0 [animation-delay:0.64s] sm:grid-cols-4">
             {STATS.map((s) => (
-              <div key={s.l} className="bg-primary/4 border-primary/15 rounded-xl border px-3 py-[18px]">
-                <div className="font-serif text-primary-light text-[30px] leading-none font-bold">
+              <div
+                key={s.l}
+                className="bg-primary/4 border-primary/15 rounded-xl border px-3 py-[18px]"
+              >
+                <div className="text-primary-light font-serif text-[30px] leading-none font-bold">
                   {s.v}
                 </div>
-                <div className="text-clay mt-[5px] text-[12px] tracking-[0.04em]">{s.l}</div>
+                <div className="text-slate mt-[5px] text-[12px] tracking-[0.04em]">{s.l}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* bottom fade */}
-        <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[100px] bg-[linear-gradient(to_bottom,transparent,#0C1520)]" />
+        <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[100px] bg-[linear-gradient(to_bottom,transparent,#ffffff)] dark:bg-[linear-gradient(to_bottom,transparent,#0C1520)]" />
       </section>
 
       {/* ════════════════════════════════ MARQUEE ════════════════════════════ */}
@@ -249,7 +245,7 @@ export function HomePage() {
           {[...MQ, ...MQ, ...MQ, ...MQ].map((item, i) => (
             <span
               key={i}
-              className="text-clay mr-[44px] flex items-center gap-[44px] text-[12px] tracking-[0.14em] whitespace-nowrap uppercase"
+              className="text-slate mr-[44px] flex items-center gap-[44px] text-[12px] tracking-[0.14em] whitespace-nowrap uppercase"
             >
               {item}
               <span className="text-primary text-[7px]">◆</span>
@@ -259,12 +255,12 @@ export function HomePage() {
       </div>
 
       {/* ════════════════════════════════ CATEGORIES ════════════════════════ */}
-      <section className="bg-navy-2 px-6 py-[88px]">
+      <section className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Kategoriyalar" />
-              <h2 className="font-serif text-cream text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
                 Tadbir turini tanlang
               </h2>
             </div>
@@ -280,10 +276,10 @@ export function HomePage() {
               <Link
                 key={c.l}
                 to={c.to}
-                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-white/[0.018] px-[10px] py-[22px] no-underline transition-all duration-200 hover:-translate-y-[3px]"
+                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-gray-50 dark:bg-white/[0.018] px-[10px] py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px]"
               >
                 <span className="text-[26px]">{c.e}</span>
-                <span className="text-cream text-center text-[12px] leading-[1.3] font-medium">
+                <span className="text-gray-900 dark:text-cream text-center text-[12px] leading-[1.3] font-medium">
                   {c.l}
                 </span>
               </Link>
@@ -293,15 +289,15 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ EVENTS ════════════════════════════ */}
-      <section className="bg-navy px-6 py-[88px]">
+      <section className="bg-white dark:bg-navy px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Tadbirlar" />
-              <h2 className="font-serif text-cream text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
                 Yaqinlashayotgan tadbirlar
               </h2>
-              <p className="text-clay mt-2 text-[15px]">O'zbekistonning dolzarb tadbirlari</p>
+              <p className="text-slate mt-2 text-[15px]">O'zbekistonning dolzarb tadbirlari</p>
             </div>
             <Link to="/events" className="text-primary text-sm no-underline">
               Barcha tadbirlar →
@@ -310,7 +306,7 @@ export function HomePage() {
           {eventsLoading ? (
             <Spinner />
           ) : eventsData?.data.length === 0 ? (
-            <p className="text-clay py-12 text-center">Mavjud tadbirlar yo'q</p>
+            <p className="text-slate py-12 text-center">Mavjud tadbirlar yo'q</p>
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {eventsData?.data.map((e, i) => (
@@ -327,21 +323,21 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ HOW IT WORKS ══════════════════════ */}
-      <section id="how-it-works" className="bg-navy-3 border-primary/15 border-y px-6 py-[88px]">
+      <section id="how-it-works" className="bg-slate-50 dark:bg-navy-3 border-primary/15 border-y px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-[72px] text-center">
             <Label text="Jarayon" />
-            <h2 className="font-serif text-cream text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
               Bu qanday ishlaydi
             </h2>
-            <p className="text-clay mx-auto mt-3 max-w-[380px] text-[15px] leading-relaxed">
+            <p className="text-slate mx-auto mt-3 max-w-[380px] text-[15px] leading-relaxed">
               Uch oddiy qadam — va tadbiringiz ishga tushishga tayyor
             </p>
           </div>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             {STEPS.map((s, i) => (
               <div key={s.n} className="relative">
-                <div className="font-serif mb-3 text-[88px] leading-none font-bold text-transparent select-none [-webkit-text-stroke:1px_rgba(76,140,167,0.18)]">
+                <div className="mb-3 font-serif text-[88px] leading-none font-bold text-transparent select-none [-webkit-text-stroke:1px_rgba(76,140,167,0.18)]">
                   {s.n}
                 </div>
 
@@ -353,9 +349,9 @@ export function HomePage() {
 
                 <div className="bg-primary mb-4 h-0.5 w-9 opacity-55" />
 
-                <h3 className="text-cream mb-[10px] text-[19px] font-semibold">{s.t}</h3>
+                <h3 className="text-gray-900 dark:text-cream mb-[10px] text-[19px] font-semibold">{s.t}</h3>
 
-                <p className="text-clay text-sm leading-[1.75]">{s.d}</p>
+                <p className="text-slate text-sm leading-[1.75]">{s.d}</p>
               </div>
             ))}
           </div>
@@ -363,16 +359,19 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ VENUES ════════════════════════════ */}
-      <section className="bg-navy-2 px-6 py-[88px]">
+      <section className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Maydonlar" />
-              <h2 className="font-serif text-cream text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
+
+              <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold">
                 Mashhur maydonlar
               </h2>
-              <p className="text-clay mt-2 text-[15px]">Tadbirlaringiz uchun eng yaxshi joylar</p>
+
+              <p className="text-slate mt-2 text-[15px]">Tadbirlaringiz uchun eng yaxshi joylar</p>
             </div>
+            
             <Link to="/venues" className="text-primary text-sm no-underline">
               Barcha maydonlar →
             </Link>
@@ -396,14 +395,14 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ FEATURES ══════════════════════════ */}
-      <section id="features" className="bg-navy px-6 py-[88px]">
+      <section id="features" className="bg-white dark:bg-navy px-6 py-[88px]">
         <div className="mx-auto max-w-[1100px]">
           <div className="mb-16 text-center">
             <Label text="Imkoniyatlar" />
-            <h2 className="font-serif text-cream text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
               Tashkilotchi uchun hamma narsa
             </h2>
-            <p className="text-clay mt-3 text-[15px]">
+            <p className="text-slate mt-3 text-[15px]">
               Professional tadbirlarni tashkil etish uchun to'liq vositalar to'plami
             </p>
           </div>
@@ -411,13 +410,13 @@ export function HomePage() {
             {FEATS.map((f) => (
               <div
                 key={f.t}
-                className={cn(cardHover, 'bg-primary/2.5 border-primary/15 rounded-2xl border px-[22px] py-7')}
+                className="card-hover bg-primary/2.5 border-primary/15 rounded-2xl border px-[22px] py-7"
               >
                 <div className="bg-primary/6 border-primary/15 mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-xl border text-[26px]">
                   {f.e}
                 </div>
-                <h3 className="text-cream mb-2 text-[16px] font-semibold">{f.t}</h3>
-                <p className="text-clay text-sm leading-[1.65]">{f.d}</p>
+                <h3 className="text-gray-900 dark:text-cream mb-2 text-[16px] font-semibold">{f.t}</h3>
+                <p className="text-slate text-sm leading-[1.65]">{f.d}</p>
               </div>
             ))}
           </div>
@@ -425,12 +424,14 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ PRICING ═══════════════════════════ */}
-      <section id="pricing" className="bg-navy-3 border-primary/15 border-t px-6 py-[88px]">
+      <section id="pricing" className="bg-slate-50 dark:bg-navy-3 border-primary/15 border-t px-6 py-[88px]">
         <div className="mx-auto max-w-[960px]">
           <div className="mb-16 text-center">
             <Label text="Narxlar" />
-            <h2 className="font-serif text-cream text-[clamp(32px,5vw,48px)] font-bold">Tariflar</h2>
-            <p className="text-clay mt-3 text-[15px]">
+            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
+              Tariflar
+            </h2>
+            <p className="text-slate mt-3 text-[15px]">
               Bepul boshlang va o'sishingiz bilan kengaytiring
             </p>
           </div>
@@ -440,11 +441,11 @@ export function HomePage() {
               <div
                 key={p.n}
                 className={cn(
-                  cardHover,
+                  'card-hover',
                   'relative flex flex-col rounded-2xl px-6 py-8',
                   p.hot
-                    ? 'border-primary border bg-[linear-gradient(160deg,rgba(76,140,167,0.12),rgba(76,140,167,0.04))]'
-                    : 'border-primary/15 border bg-[rgba(255,255,255,0.018)]'
+                    ? 'border-primary border bg-[linear-gradient(160deg,rgba(76,140,167,0.07),rgba(76,140,167,0.03))] dark:bg-[linear-gradient(160deg,rgba(76,140,167,0.12),rgba(76,140,167,0.04))]'
+                    : 'border-primary/15 border bg-gray-50 dark:bg-[rgba(255,255,255,0.018)]'
                 )}
               >
                 {p.hot && (
@@ -453,20 +454,24 @@ export function HomePage() {
                   </div>
                 )}
 
-                <p className="text-clay mb-[10px] text-[11px] tracking-[0.12em] uppercase">{p.n}</p>
+                <p className="text-slate mb-[10px] text-[11px] tracking-[0.12em] uppercase">
+                  {p.n}
+                </p>
                 <div className="mb-1 flex items-baseline gap-1">
-                  <span className="font-serif text-primary text-[38px] leading-none font-bold">
+                  <span className="text-primary font-serif text-[38px] leading-none font-bold">
                     {p.p}
                   </span>
-                  {p.per && <span className="text-clay text-[13px]">{p.per}</span>}
+                  {p.per && <span className="text-slate text-[13px]">{p.per}</span>}
                 </div>
 
-                <p className="text-clay mb-6 text-[13px]">{p.desc}</p>
+                <p className="text-slate mb-6 text-[13px]">{p.desc}</p>
 
                 <ul className="m-0 mb-7 flex flex-1 list-none flex-col gap-[10px] p-0">
                   {p.fs.map((f) => (
-                    <li key={f} className="text-cream flex items-start gap-[10px] text-sm">
-                      <span className="text-primary mt-[2px] shrink-0 text-[12px] font-bold">✓</span>
+                    <li key={f} className="text-gray-700 dark:text-cream flex items-start gap-[10px] text-sm">
+                      <span className="text-primary mt-[2px] shrink-0 text-[12px] font-bold">
+                        ✓
+                      </span>
                       {f}
                     </li>
                   ))}
@@ -478,7 +483,7 @@ export function HomePage() {
                     'block rounded-lg p-3 text-center text-sm font-semibold tracking-wide no-underline transition-opacity hover:opacity-80',
                     p.hot
                       ? 'bg-primary border-0 text-[#0C1520]'
-                      : 'border-primary/15 text-cream border bg-transparent'
+                      : 'border-primary/15 text-gray-900 dark:text-cream border bg-transparent'
                   )}
                 >
                   {p.cta}
@@ -490,14 +495,15 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ CONTACT ═══════════════════════════ */}
-      <section id="contact" className="bg-navy-2 px-6 py-[88px]">
+      <section id="contact" className="bg-gray-50 dark:bg-navy-2 px-6 py-[88px]">
         <div className="mx-auto max-w-[1000px]">
           <div className="mb-14 text-center">
             <Label text="Aloqa" />
-            <h2 className="font-serif text-cream text-[clamp(32px,5vw,48px)] font-bold">
+            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold">
               Biz bilan bog'laning
             </h2>
-            <p className="text-clay mt-3 text-[15px]">
+
+            <p className="text-slate mt-3 text-[15px]">
               Savollaringiz bormi? Ish kuni davomida javob beramiz
             </p>
           </div>
@@ -514,11 +520,13 @@ export function HomePage() {
                   className="bg-primary/2.5 border-primary/15 flex items-start gap-4 rounded-xl border px-5 py-4"
                 >
                   <span className="shrink-0 text-[22px]">{x.ic}</span>
+
                   <div>
                     <p className="text-primary-light mb-[3px] text-[12px] font-semibold tracking-[0.06em] uppercase">
                       {x.t}
                     </p>
-                    <p className="text-clay text-sm">{x.v}</p>
+
+                    <p className="text-slate text-sm">{x.v}</p>
                   </div>
                 </div>
               ))}
@@ -529,32 +537,36 @@ export function HomePage() {
                   <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
                     Ism
                   </label>
-                  <input className={inputCls} type="text" placeholder="Ismingiz" />
+                  <input className="input-cls" type="text" placeholder="Ismingiz" />
                 </div>
+
                 <div>
                   <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
                     Email
                   </label>
-                  <input className={inputCls} type="email" placeholder="email@example.com" />
+                  <input className="input-cls" type="email" placeholder="email@example.com" />
                 </div>
               </div>
               <div>
                 <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
                   Mavzu
                 </label>
-                <input className={inputCls} type="text" placeholder="Qanday yordam bera olamiz?" />
+                <input className="input-cls" type="text" placeholder="Qanday yordam bera olamiz?" />
               </div>
+
               <div>
                 <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
                   Xabar
                 </label>
+
                 <textarea
-                  className={cn(inputCls, 'resize-none')}
+                  className="input-cls resize-none"
                   rows={4}
                   placeholder="Savolingizni tasvirlab bering..."
                 />
               </div>
-              <button type="submit" className={cn(btnPrimary, 'w-full text-center')}>
+
+              <button type="submit" className="btn-primary w-full text-center">
                 Xabar yuborish
               </button>
             </form>
@@ -563,7 +575,7 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ CTA ═══════════════════════════════ */}
-      <section className="bg-navy px-6 py-20">
+      <section className="bg-white dark:bg-navy px-6 py-20">
         <div className="mx-auto max-w-[1100px]">
           <div className="lp-noise border-primary/[0.28] relative overflow-hidden rounded-3xl border bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(76,140,167,0.07),transparent_70%)] px-[clamp(24px,5vw,80px)] py-[clamp(48px,8vw,88px)] text-center">
             <div className="pointer-events-none absolute top-[-30px] right-[-30px]">
@@ -577,22 +589,24 @@ export function HomePage() {
             <div className="relative z-10">
               <Label text="Hoziroq boshlang" />
 
-              <h2 className="font-serif text-cream mb-4 text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
+              <h2 className="text-cream mb-4 font-serif text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
                 Tadbir boshlashga{' '}
-                <em className="not-italic bg-clip-text text-transparent bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-[size:200%_auto] animate-[lp-shimmer_3s_linear_infinite]">tayyormisiz?</em>
+                <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
+                  tayyormisiz?
+                </em>
               </h2>
 
-              <p className="text-clay mx-auto mb-11 max-w-[480px] text-[17px] leading-[1.75]">
+              <p className="text-slate mx-auto mb-11 max-w-[480px] text-[17px] leading-[1.75]">
                 Planner AI orqali muvaffaqiyatli tadbirlarni allaqachon o'tkazayotgan yuzlab
                 tashkilotchilarga qo'shiling
               </p>
 
               <div className="flex flex-col justify-center gap-3 sm:flex-row">
-                <Link to="/register" className={btnPrimary}>
+                <Link to="/register" className="btn-primary">
                   Bepul boshlash →
                 </Link>
 
-                <Link to="/events" className={btnOutline}>
+                <Link to="/events" className="btn-outline">
                   Tadbirlarni ko'rish
                 </Link>
               </div>

@@ -88,17 +88,13 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-10 mb-12 sm:grid-cols-4">
           {/* Brand */}
           <div className="flex flex-col gap-3.5">
-            <Link to="/" className="no-underline inline-flex items-center">
-              <span className="font-bold text-[17px] text-cream tracking-[-0.01em]">
-                Planner
-              </span>
-              <span className="font-bold text-[17px] text-primary tracking-[-0.01em]">
-                {" "}
-                AI
-              </span>
-            </Link>
+          <Link to={'/'} className="relative z-10 flex items-center">
+            <span className="text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
 
-            <p className="text-[13px] text-cream/38 leading-[1.7] max-w-[220px]">
+            <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
+          </Link>
+
+            <p className="text-[13px] text-slate leading-[1.7] max-w-[220px]">
               O'zbekistondagi №&nbsp;1 tadbirlar marketi. Maydonlar, xizmatlar
               va chiptalar — hammasi bir joyda.
             </p>
@@ -112,7 +108,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex items-center justify-center size-8 border rounded-[8px] text-cream/45 no-underline transition-[color,border-color,background] duration-200 hover:text-primary hover:border-primary/45 hover:bg-primary/6"
+                  className="flex items-center justify-center size-8 border rounded-[8px] text-slate no-underline transition-[color,border-color,background] duration-200 hover:text-primary hover:border-primary/45 hover:bg-primary/6"
                 >
                   {icon}
                 </a>
@@ -132,7 +128,7 @@ export function Footer() {
                   <li key={label}>
                     <Link
                       to={to}
-                      className="text-xs text-cream/42 no-underline leading-none transition-colors duration-200 hover:text-primary"
+                      className="text-xs text-slate no-underline leading-none transition-colors duration-200 hover:text-primary"
                     >
                       {label}
                     </Link>
@@ -145,7 +141,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-t-primary/10 pt-6 flex items-center justify-between flex-wrap gap-3">
-          <p className="text-xs text-cream/28 tracking-[0.02em]">
+          <p className="text-xs text-slate tracking-[0.02em]">
             © {new Date().getFullYear()} Planner AI. Barcha huquqlar
             himoyalangan.
           </p>
@@ -158,7 +154,7 @@ export function Footer() {
               <Link
                 key={to}
                 to={to}
-                className="text-xs text-cream/42 no-underline leading-none transition-colors duration-200 hover:text-primary"
+                className="text-xs text-slate no-underline leading-none transition-colors duration-200 hover:text-primary"
               >
                 {label}
               </Link>

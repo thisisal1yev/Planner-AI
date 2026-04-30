@@ -4,7 +4,7 @@ export function AboutPage() {
       <div className="max-w-[640px] text-center">
         <p className="text-[11px] text-primary tracking-[0.14em] uppercase mb-4">Kompaniya</p>
         <h1 className="text-[clamp(36px,6vw,56px)] font-bold leading-[1.08] mb-5">Biz haqimizda</h1>
-        <p className="text-base text-clay leading-[1.75]">
+        <p className="text-base text-slate leading-[1.75]">
           Planner AI — O'zbekistondagi №1 tadbirlar marketi. Maydonlar, xizmatlar va chiptalar — hammasi bir joyda.
         </p>
       </div>
