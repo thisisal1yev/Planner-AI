@@ -193,7 +193,7 @@ export function HomePage() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] font-serif text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em] opacity-0 [animation-delay:0.22s]">
+          <h1 className="text-gray-900 dark:text-cream mb-6 animate-[lp-up_0.75s_ease-out_forwards] font-serif text-[clamp(52px,9vw,96px)] leading-[1.03] font-bold tracking-[-0.02em] opacity-0 [animation-delay:0.22s]">
             Tadbirlarni{' '}
             <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
               muommosiz
@@ -589,7 +589,7 @@ export function HomePage() {
             <div className="relative z-10">
               <Label text="Hoziroq boshlang" />
 
-              <h2 className="text-cream mb-4 font-serif text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
+              <h2 className="text-gray-900 dark:text-cream mb-4 font-serif text-[clamp(34px,6vw,62px)] leading-[1.08] font-bold">
                 Tadbir boshlashga{' '}
                 <em className="animate-[lp-shimmer_3s_linear_infinite] bg-[linear-gradient(90deg,#4c8ca7_0%,#7ab8cc_50%,#4c8ca7_100%)] bg-size-[200%_auto] bg-clip-text text-transparent not-italic">
                   tayyormisiz?
