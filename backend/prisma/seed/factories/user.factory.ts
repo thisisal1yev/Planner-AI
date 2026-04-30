@@ -9,6 +9,7 @@ export type GeneratedUser = {
   firstName: string;
   lastName: string;
   role: Role;
+  phone?: string;
   passwordHash: string;
   avatarUrl: string;
   isVerified: boolean;

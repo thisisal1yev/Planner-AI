@@ -4,6 +4,7 @@ import {
   IsEnum,
   IsOptional,
   IsString,
+  Matches,
   MinLength,
 } from 'class-validator';
 
@@ -17,10 +18,10 @@ export class RegisterDto {
   @IsEmail()
   email: string;
 
-  @ApiPropertyOptional({ example: '+998901234567' })
-  @IsOptional()
+  @ApiProperty({ example: '+998901234567' })
   @IsString()
-  phone?: string;
+  @Matches(/^\+998\d{9}$/, { message: 'Phone must match format +998XXXXXXXXX' })
+  phone: string;
 
   @ApiProperty({ example: 'SecurePass123' })
   @IsString()

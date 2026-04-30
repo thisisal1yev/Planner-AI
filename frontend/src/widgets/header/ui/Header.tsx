@@ -290,7 +290,7 @@ export function Header() {
 
         <div className="mx-auto flex h-15 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-cream text-[20px] font-bold tracking-[-0.01em]">Planner</span>
+            <span className="text-gray-900 dark:text-cream text-[20px] font-bold tracking-[-0.01em]">Planner</span>
 
             <span className="text-primary text-[20px] font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>

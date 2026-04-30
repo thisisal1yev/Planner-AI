@@ -59,6 +59,7 @@ export type UserSeed = {
   firstName: string;
   lastName: string;
   role: Role;
+  phone?: string;
   avatarUrl?: string;
   createdAt?: Date;
 };

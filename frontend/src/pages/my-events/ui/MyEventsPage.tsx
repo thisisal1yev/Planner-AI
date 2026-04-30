@@ -5,18 +5,15 @@ import { useInfiniteMyEvents } from '@entities/event/model/event.infinite'
 import { useIntersectionObserver } from '@shared/hooks/useIntersectionObserver'
 import { Spinner } from '@shared/ui/Spinner'
 import { Button } from '@shared/ui/Button'
+import { Plus } from 'lucide-react'
 
 export function MyEventsPage() {
-  const {
-    data,
-    isLoading,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteMyEvents()
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteMyEvents()
 
   const sentinelRef = useRef<HTMLDivElement>(null)
-  const onIntersect = useCallback(() => { fetchNextPage() }, [fetchNextPage])
+  const onIntersect = useCallback(() => {
+    fetchNextPage()
+  }, [fetchNextPage])
   useIntersectionObserver(sentinelRef, onIntersect, hasNextPage && !isFetchingNextPage)
 
   const events = data?.pages.flatMap((p) => p.data) ?? []
@@ -26,26 +23,29 @@ export function MyEventsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-foreground">Mening tadbirlarim</h1>
-        <Link to="/my-events/create">
-          <Button>+ Yaratish</Button>
+        <h1 className="text-foreground text-2xl font-bold">Mening tadbirlarim</h1>
+        
+        <Link
+          to="/my-events/create"
+          className="bg-primary text-navy hover:bg-primary-light inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
+        >
+          <Plus className="size-3.5" />
+          Yaratish
         </Link>
       </div>
 
       {events.length === 0 && (
-        <div className="text-center py-16">
+        <div className="py-16 text-center">
           <p className="text-muted-foreground mb-4">Sizda hozircha tadbirlar yo'q</p>
-          <Link to="/my-events/create"><Button>Birinchi tadbir yaratish</Button></Link>
+          <Link to="/my-events/create">
+            <Button>Birinchi tadbir yaratish</Button>
+          </Link>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event, index) => (
-          <MyEventCard
-            key={event.id}
-            event={event}
-            index={index}
-          />
+          <MyEventCard key={event.id} event={event} index={index} />
         ))}
       </div>
 
