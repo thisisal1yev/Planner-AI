@@ -20,6 +20,7 @@ export async function seedUsers(
         email: u.email,
         firstName: u.firstName,
         lastName: u.lastName,
+        phone: u.phone,
         role: u.role,
         passwordHash: hash,
         isVerified: true,
