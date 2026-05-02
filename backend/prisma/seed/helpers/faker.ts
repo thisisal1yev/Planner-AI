@@ -12,7 +12,11 @@ export function initFaker(): Faker {
   return f;
 }
 
-export function emailFromName(firstName: string, lastName: string, f: Faker = faker): string {
+export function emailFromName(
+  firstName: string,
+  lastName: string,
+  f: Faker = faker,
+): string {
   const first = firstName.toLowerCase().replace(/[^a-z]/g, '');
   const last = lastName.toLowerCase().replace(/[^a-z]/g, '');
   const suffix = f.number.int({ min: 1, max: 999 });
@@ -20,27 +24,76 @@ export function emailFromName(firstName: string, lastName: string, f: Faker = fa
 }
 
 const UZ_FIRST_NAMES = [
-  'Jasur', 'Bobur', 'Sardor', 'Ulugbek', 'Sherzod',
-  'Dilnoza', 'Malika', 'Nilufar', 'Zulfiya', 'Feruza',
-  'Otabek', 'Mirzo', 'Doniyor', 'Eldor', 'Sanjar',
-  'Kamola', 'Ozoda', 'Mohira', 'Barno', 'Umida',
+  'Jasur',
+  'Bobur',
+  'Sardor',
+  'Ulugbek',
+  'Sherzod',
+  'Dilnoza',
+  'Malika',
+  'Nilufar',
+  'Zulfiya',
+  'Feruza',
+  'Otabek',
+  'Mirzo',
+  'Doniyor',
+  'Eldor',
+  'Sanjar',
+  'Kamola',
+  'Ozoda',
+  'Mohira',
+  'Barno',
+  'Umida',
 ];
 
 const UZ_LAST_NAMES = [
-  'Karimov', 'Rahimov', 'Toshmatov', 'Ergashev', 'Xolmatov',
-  'Yusupov', 'Nazarov', 'Abdullayev', 'Ismoilov', 'Hamidov',
-  'Mirzayev', 'Qodirov', 'Holiqov', 'Turgunov', 'Baxtiyorov',
-  'Raximova', 'Tursunova', 'Xasanova', 'Normatova', 'Salimova',
+  'Karimov',
+  'Rahimov',
+  'Toshmatov',
+  'Ergashev',
+  'Xolmatov',
+  'Yusupov',
+  'Nazarov',
+  'Abdullayev',
+  'Ismoilov',
+  'Hamidov',
+  'Mirzayev',
+  'Qodirov',
+  'Holiqov',
+  'Turgunov',
+  'Baxtiyorov',
+  'Raximova',
+  'Tursunova',
+  'Xasanova',
+  'Normatova',
+  'Salimova',
 ];
 
-export function randomUzbekFullName(f: Faker): { firstName: string; lastName: string } {
+export function randomUzbekFullName(f: Faker): {
+  firstName: string;
+  lastName: string;
+} {
   return {
     firstName: f.helpers.arrayElement(UZ_FIRST_NAMES),
     lastName: f.helpers.arrayElement(UZ_LAST_NAMES),
   };
 }
 
-const UZ_OPERATOR_CODES = ['90', '91', '93', '94', '95', '97', '98', '99', '33', '50', '55', '77', '88'];
+const UZ_OPERATOR_CODES = [
+  '90',
+  '91',
+  '93',
+  '94',
+  '95',
+  '97',
+  '98',
+  '99',
+  '33',
+  '50',
+  '55',
+  '77',
+  '88',
+];
 
 export function randomUzbekPhone(f: Faker): string {
   const code = f.helpers.arrayElement(UZ_OPERATOR_CODES);

@@ -2,7 +2,6 @@ import type { Faker } from '@faker-js/faker';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import { EventStatus } from '../../../generated/prisma/enums';
 import type { SeedRegistry } from '../types';
-import { CuratedEventKey } from '../types';
 import { SEED_CONFIG } from '../config';
 import { daysFromNow, addHours } from '../helpers/dates';
 import { validateDateOrder } from '../helpers/validators';
@@ -36,6 +35,7 @@ async function insertCuratedEvent(
       capacity: e.capacity,
       bannerUrls: e.bannerUrls,
       status: e.status,
+      city: e.city,
       organizer: { connect: { id: registry.getUser(e.organizerKey) } },
       ...(e.squareKey
         ? { square: { connect: { id: registry.getSquare(e.squareKey) } } }
@@ -46,12 +46,17 @@ async function insertCuratedEvent(
   registry.setEvent(e.key, created.id);
 
   // Seed ticket tiers if defined for this event
-  const tiers = TICKET_TIERS_BY_EVENT[e.key as CuratedEventKey];
+  const tiers = TICKET_TIERS_BY_EVENT[e.key];
   if (tiers) {
     const tierIds: string[] = [];
     for (const t of tiers) {
       const tc = await prisma.ticketTier.create({
-        data: { name: t.name, price: t.price, quantity: t.quantity, event: { connect: { id: created.id } } },
+        data: {
+          name: t.name,
+          price: t.price,
+          quantity: t.quantity,
+          event: { connect: { id: created.id } },
+        },
       });
       tierIds.push(tc.id);
     }
@@ -66,7 +71,12 @@ export async function seedEvents(
   registry: SeedRegistry,
   f: Faker,
 ): Promise<void> {
-  const allCurated = [...PUBLISHED_EVENTS, ...COMPLETED_EVENTS, ...DRAFT_EVENTS, ...CANCELLED_EVENTS];
+  const allCurated = [
+    ...PUBLISHED_EVENTS,
+    ...COMPLETED_EVENTS,
+    ...DRAFT_EVENTS,
+    ...CANCELLED_EVENTS,
+  ];
   for (const e of allCurated) {
     await insertCuratedEvent(prisma, registry, e);
   }
@@ -75,11 +85,16 @@ export async function seedEvents(
     where: { role: 'ORGANIZER' },
     select: { id: true },
   });
-  const squares = await prisma.square.findMany({ select: { id: true } });
+  const squares = await prisma.square.findMany({
+    select: { id: true, city: true },
+  });
 
   for (let i = 0; i < SEED_CONFIG.extraEvents; i++) {
     const categoryName = f.helpers.arrayElement(EVENT_CATEGORIES);
-    const generated = makeEvent(f, { categoryName, status: EventStatus.PUBLISHED });
+    const generated = makeEvent(f, {
+      categoryName,
+      status: EventStatus.PUBLISHED,
+    });
     const organizer = f.helpers.arrayElement(organizers);
     const square = f.helpers.arrayElement(squares);
 
@@ -89,10 +104,13 @@ export async function seedEvents(
         description: generated.description,
         startDate: generated.startDate,
         endDate: generated.endDate,
-        category: { connect: { id: registry.getEventCategory(generated.categoryName) } },
+        category: {
+          connect: { id: registry.getEventCategory(generated.categoryName) },
+        },
         capacity: generated.capacity,
         bannerUrls: generated.bannerUrls,
         status: generated.status,
+        city: square.city,
         organizer: { connect: { id: organizer.id } },
         square: { connect: { id: square.id } },
       },
@@ -103,8 +121,16 @@ export async function seedEvents(
     const vipPrice = standardPrice * f.number.int({ min: 2, max: 4 });
     const tierIds: string[] = [];
     for (const t of [
-      { name: 'Standard', price: standardPrice, quantity: Math.floor(generated.capacity * 0.8) },
-      { name: 'VIP',      price: vipPrice,       quantity: Math.floor(generated.capacity * 0.2) },
+      {
+        name: 'Standard',
+        price: standardPrice,
+        quantity: Math.floor(generated.capacity * 0.8),
+      },
+      {
+        name: 'VIP',
+        price: vipPrice,
+        quantity: Math.floor(generated.capacity * 0.2),
+      },
     ]) {
       const tc = await prisma.ticketTier.create({
         data: { ...t, event: { connect: { id: created.id } } },
@@ -114,5 +140,7 @@ export async function seedEvents(
     registry.setTiers(created.id, tierIds);
   }
 
-  console.log(`✅ Events seeded: ${allCurated.length} curated + ${SEED_CONFIG.extraEvents} generated`);
+  console.log(
+    `✅ Events seeded: ${allCurated.length} curated + ${SEED_CONFIG.extraEvents} generated`,
+  );
 }

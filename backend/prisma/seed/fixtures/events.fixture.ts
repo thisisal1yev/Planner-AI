@@ -24,6 +24,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
     squareKey: CuratedSquareKey.TASHKENT_CITY_HALL,
+    city: 'Toshkent',
   },
   {
     key: CuratedEventKey.TECH_MEETUP,
@@ -42,6 +43,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
     squareKey: CuratedSquareKey.SAMARKAND_GARDEN,
+    city: 'Samarqand',
   },
   {
     key: CuratedEventKey.JAZZ_FESTIVAL,
@@ -60,6 +62,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
     squareKey: CuratedSquareKey.NAVOI_PALACE,
+    city: 'Toshkent',
   },
   {
     key: CuratedEventKey.UX_WORKSHOP,
@@ -78,6 +81,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
     squareKey: CuratedSquareKey.BUKHARA_CONFERENCE,
+    city: 'Buxoro',
   },
   {
     key: CuratedEventKey.SILK_ROAD_EXHIBITION,
@@ -96,6 +100,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
     squareKey: CuratedSquareKey.ANDIJAN_EXPO,
+    city: 'Andijon',
   },
 ];
 
@@ -117,6 +122,7 @@ export const COMPLETED_EVENTS: EventSeed[] = [
     status: EventStatus.COMPLETED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
     squareKey: CuratedSquareKey.TASHKENT_CITY_HALL,
+    city: 'Toshkent',
   },
   {
     key: CuratedEventKey.SILK_ROAD_CUISINE_FAIR,
@@ -135,6 +141,7 @@ export const COMPLETED_EVENTS: EventSeed[] = [
     status: EventStatus.COMPLETED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
     squareKey: CuratedSquareKey.ANDIJAN_EXPO,
+    city: 'Andijon',
   },
 ];
 
@@ -155,6 +162,7 @@ export const DRAFT_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.DRAFT,
     organizerKey: CuratedUserKey.ORGANIZER_2,
+    city: 'Toshkent',
   },
   {
     key: 'STARTUP_DEMO_DAY' as CuratedEventKey,
@@ -172,6 +180,7 @@ export const DRAFT_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.DRAFT,
     organizerKey: CuratedUserKey.ORGANIZER_1,
+    city: 'Toshkent',
   },
 ];
 
@@ -192,6 +201,7 @@ export const CANCELLED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.CANCELLED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
+    city: 'Toshkent',
   },
 ];
 

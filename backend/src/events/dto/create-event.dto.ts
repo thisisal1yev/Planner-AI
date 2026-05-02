@@ -65,6 +65,10 @@ export class CreateEventDto {
   @Min(1)
   capacity: number;
 
+  @ApiProperty({ example: 'Toshkent' })
+  @IsString()
+  city: string;
+
   @ApiPropertyOptional({ description: 'Square ID to associate with the event' })
   @IsOptional()
   @IsString()

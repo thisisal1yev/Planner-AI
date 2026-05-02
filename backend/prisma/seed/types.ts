@@ -104,6 +104,7 @@ export type EventSeed = {
   status: EventStatus;
   organizerKey: CuratedUserKey;
   squareKey?: CuratedSquareKey;
+  city: string;
 };
 
 export type TicketTierSeed = {

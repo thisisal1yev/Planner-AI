@@ -12,6 +12,7 @@ export type GeneratedEvent = {
   capacity: number;
   bannerUrls: string[];
   status: EventStatus;
+  city: string;
 };
 
 const EVENT_TITLE_TEMPLATES = [
@@ -73,5 +74,6 @@ export function makeEvent(
     capacity: f.number.int({ min: 50, max: 800 }),
     bannerUrls: f.helpers.arrayElements(BANNER_POOL, { min: 1, max: 2 }),
     status: options.status,
+    city,
   };
 }

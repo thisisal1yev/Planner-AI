@@ -31,7 +31,9 @@ async function up() {
   await seedVolunteers(prisma, registry, f);
   await seedReviews(prisma, registry, f);
 
-  console.log(`✅ Seed completed in ${((Date.now() - start) / 1000).toFixed(1)}s`);
+  console.log(
+    `✅ Seed completed in ${((Date.now() - start) / 1000).toFixed(1)}s`,
+  );
 }
 
 async function down() {

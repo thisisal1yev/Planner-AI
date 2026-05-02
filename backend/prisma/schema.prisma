@@ -106,6 +106,7 @@ model Event {
   categoryId  String
   category    EventCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   capacity    Int
+  city        String
   status      EventStatus   @default(DRAFT)
   squareId    String?
   square      Square?       @relation(fields: [squareId], references: [id])

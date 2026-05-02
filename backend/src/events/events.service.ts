@@ -48,7 +48,7 @@ export class EventsService {
 
     if (query.status) where.status = query.status;
     if (query.categoryId) where.categoryId = query.categoryId;
-    if (query.city) where.square = { city: query.city };
+    if (query.city) where.city = query.city;
     if (query.organizerId) where.organizerId = query.organizerId;
     if (query.title)
       where.title = { contains: query.title, mode: 'insensitive' };
