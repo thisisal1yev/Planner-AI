@@ -22,39 +22,9 @@ import {
 import { eventsApi, EVENT_STATUS_COLOR, EVENT_STATUS_LABEL } from '@entities/event'
 import { PublishEventButton } from '@features/event-publish'
 import { Spinner } from '@shared/ui/Spinner'
-import { Skeleton } from '@/shared/ui/primitives/skeleton'
 import { eventKeys } from '@shared/api/queryKeys'
 import { formatDateTime, formatDateShort } from '@shared/lib/dateUtils'
-
-function DetailSkeleton() {
-  return (
-    <div className="flex flex-col gap-0 pb-16">
-      <Skeleton className="mb-6 h-4 w-32" />
-      <Skeleton
-        className="h-[480px] w-full"
-        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
-      />
-      <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">
-        <div className="flex flex-col gap-6 lg:col-span-7">
-          <div className="flex flex-col gap-3 pl-6">
-            <Skeleton className="h-3 w-24" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-3/4" />
-          </div>
-          <div className="grid grid-cols-3 gap-px">
-            <Skeleton className="h-24 rounded-none" />
-            <Skeleton className="h-24 rounded-none" />
-            <Skeleton className="h-24 rounded-none" />
-          </div>
-        </div>
-        <div className="lg:col-span-5">
-          <Skeleton className="h-64 rounded-xl" />
-        </div>
-      </div>
-    </div>
-  )
-}
+import { DetailPageSkeleton } from '@shared/ui/DetailPageSkeleton'
 
 export function MyEventDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -77,7 +47,7 @@ export function MyEventDetailPage() {
     },
   })
 
-  if (isLoading) return <DetailSkeleton />
+  if (isLoading) return <DetailPageSkeleton />
 
   if (!event) {
     return (
@@ -85,12 +55,14 @@ export function MyEventDetailPage() {
         <div className="bg-card border-border/60 flex h-16 w-16 items-center justify-center rounded-2xl border">
           <CalendarDays className="text-muted-foreground/20 size-7" />
         </div>
+
         <div className="text-center">
           <p className="text-foreground/60 font-serif text-lg">Tadbir topilmadi</p>
           <p className="text-muted-foreground/40 mt-1 text-xs">
             Bunday tadbir mavjud emas yoki o'chirilgan
           </p>
         </div>
+
         <Link
           to="/my-events"
           className="text-primary/60 hover:text-primary text-xs tracking-[0.12em] uppercase transition-colors"
@@ -416,7 +388,7 @@ export function MyEventDetailPage() {
                     <p className="text-primary/45 mb-1 text-[9px] font-medium tracking-[0.25em] uppercase">
                       Tadbir boshqaruvi
                     </p>
-                    
+
                     <p className="text-foreground/90 font-serif text-lg font-bold">Harakatlar</p>
                   </div>
                   {totalTickets > 0 && (

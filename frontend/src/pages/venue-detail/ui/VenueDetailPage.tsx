@@ -15,60 +15,10 @@ import { Modal } from '@shared/ui/Modal'
 import { useAuthStore } from '@shared/model/auth.store'
 import { venueKeys } from '@shared/api/queryKeys'
 import { formatUZS } from '@shared/lib/dateUtils'
-import { Skeleton } from '@/shared/ui/primitives/skeleton'
 import { Separator } from '@/shared/ui/primitives/separator'
 import { CardContent, CardHeader, CardTitle, CardDescription } from '@/shared/ui/primitives/card'
 import { Button } from '@/shared/ui/primitives/button'
-
-function DetailSkeleton() {
-  return (
-    <div className="flex flex-col gap-0 pb-16">
-      <Skeleton className="mb-8 h-4 w-24" />
-
-      {/* Editorial title skeleton */}
-      <div className="mb-8 flex flex-col gap-3">
-        <Skeleton className="h-3 w-16" />
-        <Skeleton className="h-14 w-3/4" />
-        <Skeleton className="h-14 w-1/2" />
-        <div className="mt-1 flex items-center gap-3">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-4 w-px" />
-          <Skeleton className="h-4 w-16" />
-        </div>
-      </div>
-
-      {/* Gallery skeleton */}
-      <div className="grid h-[460px] grid-cols-[1fr_80px] gap-2">
-        <Skeleton className="rounded-2xl" />
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-[120px] rounded-lg" />
-          <Skeleton className="h-[120px] rounded-lg" />
-          <Skeleton className="h-[120px] rounded-lg" />
-        </div>
-      </div>
-
-      {/* Content skeleton */}
-      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12">
-        <div className="flex flex-col gap-6 lg:col-span-7">
-          <Skeleton className="h-12 rounded-xl" />
-          <div className="border-border/20 flex flex-col gap-3 border-l pl-5">
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-full" />
-            <Skeleton className="h-3.5 w-2/3" />
-          </div>
-          <div className="flex gap-2">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className="h-12 w-12 rounded-xl" />
-            ))}
-          </div>
-        </div>
-        <div className="lg:col-span-5">
-          <Skeleton className="h-72 rounded-xl" />
-        </div>
-      </div>
-    </div>
-  )
-}
+import { DetailPageSkeleton } from '@shared/ui/DetailPageSkeleton'
 
 export function VenueDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -89,7 +39,7 @@ export function VenueDetailPage() {
     enabled: !!id,
   })
 
-  if (isLoading) return <DetailSkeleton />
+  if (isLoading) return <DetailPageSkeleton />
 
   if (!venue) {
     return (
