@@ -1,14 +1,40 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { Link } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import { Funnel, Plus } from 'lucide-react'
 import { MyServiceCard } from '@entities/service'
 import { useInfiniteMyServices } from '@entities/service/model/service.infinite'
 import { useIntersectionObserver } from '@shared/hooks/useIntersectionObserver'
 import { Button } from '@shared/ui/Button'
+import { CardSkeleton } from '@shared/ui/CardSkeleton'
+import { EmptyState } from '@shared/ui/EmptyState'
+import { Input } from '@shared/ui/Input'
 import { Spinner } from '@shared/ui/Spinner'
-import { Plus } from 'lucide-react'
+import { categoriesApi } from '@shared/api/categoriesApi'
+import { categoryKeys } from '@shared/api/queryKeys'
+import { UZBEK_CITIES } from '@shared/lib/constants'
 
 export function MyServicesPage() {
-  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteMyServices()
+  const [category, setCategory] = useState('')
+  const [city, setCity] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
+  const [filtersOpen, setFiltersOpen] = useState(false)
+
+  const { data: categories, isLoading: categoriesLoading } = useQuery({
+    queryKey: categoryKeys.serviceCategories(),
+    queryFn: categoriesApi.listServiceCategories,
+    staleTime: Infinity,
+  })
+
+  const hasFilters = !!category || !!city || !!maxPrice
+
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteMyServices(
+    {
+      category: category || undefined,
+      city: city || undefined,
+      maxPrice: maxPrice ? Number(maxPrice) : undefined,
+    }
+  )
 
   const sentinelRef = useRef<HTMLDivElement>(null)
   const onIntersect = useCallback(() => {
@@ -17,36 +43,150 @@ export function MyServicesPage() {
   useIntersectionObserver(sentinelRef, onIntersect, hasNextPage && !isFetchingNextPage)
 
   const services = data?.pages.flatMap((p) => p.data) ?? []
+  const total = data?.pages[0]?.meta.total
 
-  if (isLoading) return <Spinner />
+  function resetFilters() {
+    setCategory('')
+    setCity('')
+    setMaxPrice('')
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-foreground text-2xl font-bold">Mening xizmatlarim</h1>
-        <Link
-          to="/my-services/create"
-          className="bg-primary text-navy hover:bg-primary-light inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
-        >
-          <Plus className="size-3.5" />
-          Qo'shish
-        </Link>
+      {/* ── Page header ── */}
+      <div className="flex flex-col gap-1">
+        <div className="flex justify-between gap-4">
+          <h1 className="text-foreground font-serif text-4xl leading-none font-bold md:text-5xl">
+            Mening xizmatlarim
+          </h1>
+
+          <div className="flex items-center justify-between gap-x-5 text-right">
+            <div>
+              <p className="text-primary font-serif text-3xl leading-none font-semibold">
+                {total ?? '—'}
+              </p>
+
+              <p className="text-muted-foreground mt-0.5 text-xs">xizmat topildi</p>
+            </div>
+
+            <Link
+              to="/my-services/create"
+              className="bg-primary text-navy hover:bg-primary-light mt-3 inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
+            >
+              <Plus className="size-3.5" />
+              Qo'shish
+            </Link>
+          </div>
+        </div>
+        <div className="from-primary/50 via-primary/15 mt-4 h-px bg-linear-to-r to-transparent" />
       </div>
 
-      {services.length === 0 && (
-        <div className="py-16 text-center">
-          <p className="text-muted-foreground mb-4">Sizda hozircha xizmatlar yo'q</p>
-          <Link to="/my-services/create">
-            <Button>Birinchi xizmat qo'shish</Button>
-          </Link>
+      {/* ── Category pills + filter toggle ── */}
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          onClick={() => setCategory('')}
+          className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200 ${!category ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]' : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent'}`}
+        >
+          Barchasi
+        </button>
+
+        {categoriesLoading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-muted/30 h-9 w-24 animate-pulse rounded-full" />
+            ))
+          : categories?.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setCategory(c.name)}
+                className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200 ${category === c.name ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]' : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent'}`}
+              >
+                {c.name}
+              </button>
+            ))}
+
+        <button
+          onClick={() => setFiltersOpen(!filtersOpen)}
+          className={`ml-auto flex cursor-pointer items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 ${
+            filtersOpen || hasFilters
+              ? 'border-primary/50 text-primary bg-primary/5'
+              : 'border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
+          }`}
+        >
+          <Funnel className="h-3.5 w-3.5" />
+          Filtr
+          {hasFilters && <span className="bg-primary h-1.5 w-1.5 rounded-full" />}
+        </button>
+      </div>
+
+      {/* ── Expanded filters ── */}
+      {filtersOpen && (
+        <div className="bg-card border-border -mt-4 flex animate-[svc-in_0.45s_ease-out_both] flex-wrap items-end gap-4 rounded-2xl border p-5">
+          <div className="flex min-w-[150px] flex-col gap-1.5">
+            <label className="text-muted-foreground/60 text-[10px] font-medium tracking-widest uppercase">
+              Shahar
+            </label>
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="border-input bg-background focus-visible:border-ring text-foreground h-9 rounded-lg border px-3 text-sm transition-colors outline-none"
+            >
+              <option value="">Barcha shaharlar</option>
+              {UZBEK_CITIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-muted-foreground/60 text-[10px] font-medium tracking-widest uppercase">
+              Narx gacha (so'm)
+            </label>
+            <Input
+              type="number"
+              placeholder="1 000 000"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className="w-36"
+            />
+          </div>
+
+          {hasFilters && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={resetFilters}
+              className="text-muted-foreground hover:text-destructive"
+            >
+              Tozalash
+            </Button>
+          )}
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service, index) => (
-          <MyServiceCard key={service.id} service={service} index={index} />
-        ))}
-      </div>
+      {/* ── Content ── */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <CardSkeleton key={i} />
+          ))}
+        </div>
+      ) : services.length === 0 ? (
+        <EmptyState
+          title="Xizmatlar topilmadi"
+          description={
+            hasFilters ? "Filtrlarni o'zgartirib ko'ring" : "Sizda hozircha xizmatlar yo'q"
+          }
+          action={hasFilters ? { label: 'Filtrlarni tozalash', onClick: resetFilters } : undefined}
+        />
+      ) : (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, index) => (
+            <MyServiceCard key={service.id} service={service} index={index} />
+          ))}
+        </div>
+      )}
 
       <div ref={sentinelRef} className="h-1" />
       {isFetchingNextPage && (

@@ -14,12 +14,14 @@ export function useInfiniteServices(filters: Omit<QueryServicesDto, 'page' | 'li
   })
 }
 
-export function useInfiniteMyServices() {
+export function useInfiniteMyServices(
+  filters: Omit<QueryServicesDto, 'page' | 'limit' | 'vendorId'> = {},
+) {
   const userId = useAuthStore((s) => s.user?.id)
   return useInfiniteQuery({
-    queryKey: [...serviceKeys.myList(), userId],
+    queryKey: [...serviceKeys.myList(), userId, filters],
     queryFn: ({ pageParam }) =>
-      servicesApi.myList({ page: pageParam as number, limit: 12 }),
+      servicesApi.myList({ ...filters, page: pageParam as number, limit: 12 }),
     initialPageParam: 1,
     getNextPageParam: (last) =>
       last.meta.page < last.meta.totalPages ? last.meta.page + 1 : undefined,
