@@ -1,6 +1,6 @@
-import type { ElementType } from "react";
-import { Link, useNavigate, useLocation } from "react-router";
-import { useMutation } from "@tanstack/react-query";
+import type { ElementType } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router'
+import { useMutation } from '@tanstack/react-query'
 import {
   CalendarDays,
   Building2,
@@ -19,10 +19,10 @@ import {
   ShieldCheck,
   CalendarRange,
   Landmark,
-} from "lucide-react";
-import { useAuthStore } from "@shared/model/auth.store";
-import { useThemeStore } from "@shared/model/theme.store";
-import { authApi } from "@entities/user";
+} from 'lucide-react'
+import { useAuthStore } from '@shared/model/auth.store'
+import { useThemeStore } from '@shared/model/theme.store'
+import { authApi } from '@entities/user'
 import {
   Sidebar,
   SidebarContent,
@@ -34,7 +34,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/shared/ui/primitives/sidebar";
+} from '@/shared/ui/primitives/sidebar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,63 +43,51 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/shared/ui/primitives/dropdown-menu";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/shared/ui/primitives/avatar";
+} from '@/shared/ui/primitives/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/primitives/avatar'
 
 const commonLinks = [
-  { to: "/events", label: "Tadbirlar", icon: CalendarDays },
-  { to: "/venues", label: "Maydonlar", icon: Building2 },
-  { to: "/services", label: "Xizmatlar", icon: Wrench },
-];
+  { to: '/events', label: 'Tadbirlar', icon: CalendarDays },
+  { to: '/venues', label: 'Maydonlar', icon: Building2 },
+  { to: '/services', label: 'Xizmatlar', icon: Wrench },
+]
 
-const roleLinks: Record<
-  string,
-  Array<{ to: string; label: string; icon: ElementType }>
-> = {
-  PARTICIPANT: [{ to: "/tickets", label: "Mening chiptalаrim", icon: Ticket }],
+const roleLinks: Record<string, Array<{ to: string; label: string; icon: ElementType }>> = {
+  PARTICIPANT: [{ to: '/tickets', label: 'Mening chiptalаrim', icon: Ticket }],
   ORGANIZER: [
-    { to: "/dashboard", label: "Boshqaruv paneli", icon: LayoutDashboard },
-    { to: "/my-events", label: "Mening tadbirlarim", icon: ListChecks },
+    { to: '/dashboard', label: 'Boshqaruv paneli', icon: LayoutDashboard },
+    { to: '/my-events', label: 'Mening tadbirlarim', icon: ListChecks },
   ],
   VENDOR: [
-    { to: "/my-venues", label: "Mening maydonlarim", icon: MapPin },
-    { to: "/my-services", label: "Mening xizmatlarim", icon: Settings2 },
+    { to: '/my-venues', label: 'Mening maydonlarim', icon: MapPin },
+    { to: '/my-services', label: 'Mening xizmatlarim', icon: Settings2 },
   ],
   ADMIN: [
     {
-      to: "/admin/dashboard",
-      label: "Boshqaruv paneli",
+      to: '/admin/dashboard',
+      label: 'Boshqaruv paneli',
       icon: LayoutDashboard,
     },
-    { to: "/admin/users", label: "Foydalanuvchilar", icon: Users },
-    { to: "/admin/events", label: "Tadbirlar", icon: CalendarRange },
-    { to: "/admin/venues", label: "Maydonlar", icon: Landmark },
+    { to: '/admin/users', label: 'Foydalanuvchilar', icon: Users },
+    { to: '/admin/events', label: 'Tadbirlar', icon: CalendarRange },
+    { to: '/admin/venues', label: 'Maydonlar', icon: Landmark },
   ],
   VOLUNTEER: [],
-};
+}
 
 const roleLabels: Record<string, string> = {
-  PARTICIPANT: "Ishtirokchi",
-  ORGANIZER: "Tashkilotchi",
+  PARTICIPANT: 'Ishtirokchi',
+  ORGANIZER: 'Tashkilotchi',
   VENDOR: "Ta'minotchi",
-  ADMIN: "Administrator",
+  ADMIN: 'Administrator',
   VOLUNTEER: "Ko'ngilli",
-};
+}
 
-function getInitials(
-  firstName?: string,
-  lastName?: string,
-  email?: string,
-): string {
-  if (firstName && lastName)
-    return `${firstName[0]}${lastName[0]}`.toUpperCase();
-  if (firstName) return firstName[0].toUpperCase();
-  if (email) return email[0].toUpperCase();
-  return "?";
+function getInitials(firstName?: string, lastName?: string, email?: string): string {
+  if (firstName && lastName) return `${firstName[0]}${lastName[0]}`.toUpperCase()
+  if (firstName) return firstName[0].toUpperCase()
+  if (email) return email[0].toUpperCase()
+  return '?'
 }
 
 function NavLink({
@@ -108,85 +96,81 @@ function NavLink({
   icon: Icon,
   exact = false,
 }: {
-  to: string;
-  label: string;
-  icon: ElementType;
-  exact?: boolean;
+  to: string
+  label: string
+  icon: ElementType
+  exact?: boolean
 }) {
-  const location = useLocation();
+  const location = useLocation()
   const active = exact
     ? location.pathname === to
-    : location.pathname === to || location.pathname.startsWith(to + "/");
+    : location.pathname === to || location.pathname.startsWith(to + '/')
 
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
         isActive={active}
-        className="group/item relative rounded-lg h-9 transition-all duration-150 hover:bg-primary/6 data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-medium"
+        className="group/item hover:bg-primary/6 data-[active=true]:bg-primary/10 data-[active=true]:text-primary relative h-9 rounded-lg transition-all duration-150 data-[active=true]:font-medium"
       >
         <Link to={to} className="flex items-center gap-2.5 px-2.5">
           {active && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-r-full shadow-[0_0_6px_rgba(76,140,167,0.6)]" />
+            <span className="bg-primary absolute top-1/2 left-0 h-5 w-0.75 -translate-y-1/2 rounded-r-full shadow-[0_0_6px_rgba(76,140,167,0.6)]" />
           )}
           <Icon
-            className={`size-[15px] shrink-0 transition-colors ${
-              active
-                ? "text-primary"
-                : "text-muted-foreground group-hover/item:text-foreground"
+            className={`size-3.75 shrink-0 transition-colors ${
+              active ? 'text-primary' : 'text-muted-foreground group-hover/item:text-foreground'
             }`}
           />
           <span
-            className={`text-[13px] transition-colors ${active ? "text-primary" : "text-foreground/80"}`}
+            className={`text-[13px] transition-colors ${active ? 'text-primary' : 'text-foreground/80'}`}
           >
             {label}
           </span>
         </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
-  );
+  )
 }
 
 export function AppSidebar() {
-  const { user, logout } = useAuthStore();
-  const { theme, toggle } = useThemeStore();
-  const navigate = useNavigate();
+  const { user, logout } = useAuthStore()
+  const { theme, toggle } = useThemeStore()
+  const navigate = useNavigate()
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSettled: () => {
-      logout();
-      navigate("/login");
+      logout()
+      navigate('/login')
     },
-  });
+  })
 
-  const extraLinks = user ? (roleLinks[user.role] ?? []) : [];
-  const initials = getInitials(user?.firstName, user?.lastName, user?.email);
-  const displayName = user
-    ? `${user.firstName} ${user.lastName}`.trim() || user.email
-    : "";
-  const isAdmin = user?.role === "ADMIN";
+  const extraLinks = user ? (roleLinks[user.role] ?? []) : []
+  const initials = getInitials(user?.firstName, user?.lastName, user?.email)
+  const displayName = user ? `${user.firstName} ${user.lastName}`.trim() || user.email : ''
+  const isAdmin = user?.role === 'ADMIN'
 
   return (
-    <Sidebar className="border-r border-primary/8">
+    <Sidebar className="border-primary/8 border-r">
       {/* ── Header ── */}
-      <SidebarHeader className="px-4 py-[14px] border-b border-primary/8">
-        <Link to="/events" className="flex items-center gap-2.5 group">
-          <div className="relative w-7 h-7 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/15 transition-colors">
-            <ShieldCheck className="size-3.5 text-primary" />
+      <SidebarHeader className="border-primary/8 border-b px-4 py-3.5">
+        <Link to="/events" className="group flex items-center gap-2.5">
+          <div className="bg-primary/10 border-primary/20 group-hover:bg-primary/15 relative flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors">
+            <ShieldCheck className="text-primary size-3.5" />
           </div>
-          <span className="font-bold text-[15px] tracking-tight">
+          <span className="text-[15px] font-bold tracking-tight">
             <span className="text-foreground">Planner</span>
             <span className="text-primary">&nbsp;AI</span>
           </span>
         </Link>
       </SidebarHeader>
 
-      <SidebarContent className="px-2 py-3 gap-0">
+      <SidebarContent className="gap-0 px-2 py-3">
         {/* ── Common ── */}
         <SidebarGroup className="p-0">
-          <SidebarGroupLabel className="text-[10px] tracking-[0.14em] uppercase px-2.5 mb-1 h-auto py-1 flex items-center gap-1.5">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+          <SidebarGroupLabel className="mb-1 flex h-auto items-center gap-1.5 px-2.5 py-1 text-[10px] tracking-[0.14em] uppercase">
+            <span className="bg-primary flex h-1.5 w-1.5 animate-pulse rounded-full" />
             <span className="text-primary/80">Ummiy</span>
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -200,16 +184,16 @@ export function AppSidebar() {
 
         {/* ── Role-specific ── */}
         {extraLinks.length > 0 && (
-          <SidebarGroup className="p-0 mt-4">
-            <SidebarGroupLabel className="text-[10px] tracking-[0.14em] uppercase px-2.5 mb-1 h-auto py-1 flex items-center gap-1.5">
+          <SidebarGroup className="mt-4 p-0">
+            <SidebarGroupLabel className="mb-1 flex h-auto items-center gap-1.5 px-2.5 py-1 text-[10px] tracking-[0.14em] uppercase">
               {isAdmin ? (
                 <>
-                  <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="bg-primary flex h-1.5 w-1.5 animate-pulse rounded-full" />
                   <span className="text-primary/80">Admin panel</span>
                 </>
               ) : (
                 <span className="text-muted-foreground/50">
-                  {user ? roleLabels[user.role] : ""}
+                  {user ? roleLabels[user.role] : ''}
                 </span>
               )}
             </SidebarGroupLabel>
@@ -225,34 +209,35 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* ── Footer ── */}
-      <SidebarFooter className="border-t border-primary/8 px-2 py-3">
+      <SidebarFooter className="border-primary/8 border-t px-2 py-3">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
-                  className="rounded-lg h-auto py-2 px-2.5 hover:bg-primary/5 data-[state=open]:bg-primary/8 transition-colors"
+                  className="hover:bg-primary/5 data-[state=open]:bg-primary/8 h-auto rounded-lg px-2.5 py-2 transition-colors"
                 >
-                  <Avatar className="h-7 w-7 rounded-md shrink-0">
+                  <Avatar className="h-7 w-7 shrink-0 rounded-md">
                     <AvatarImage
                       src={user?.avatarUrl}
                       alt={displayName}
                       className="rounded-md object-cover"
                     />
-                    <AvatarFallback className="rounded-md text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+
+                    <AvatarFallback className="bg-primary/10 text-primary border-primary/20 rounded-md border text-[10px] font-bold">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="grid flex-1 text-left leading-tight min-w-0">
-                    <span className="truncate font-medium text-[12px] text-foreground">
+
+                  <div className="grid min-w-0 flex-1 text-left leading-tight">
+                    <span className="text-foreground truncate text-xs font-medium">
                       {displayName}
                     </span>
-                    <span className="truncate text-[11px] text-muted-foreground/70">
-                      {user?.email}
-                    </span>
+
+                    <span className="text-muted-foreground/70 truncate text-xs">{user?.email}</span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-3 text-muted-foreground/50 shrink-0" />
+                  <ChevronsUpDown className="text-muted-foreground/50 ml-auto size-3 shrink-0" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
 
@@ -270,17 +255,15 @@ export function AppSidebar() {
                         alt={displayName}
                         className="rounded-lg object-cover"
                       />
-                      <AvatarFallback className="rounded-lg text-[11px] font-bold bg-primary/10 text-primary">
+
+                      <AvatarFallback className="bg-primary/10 text-primary rounded-lg text-xs font-bold">
                         {initials}
                       </AvatarFallback>
                     </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight min-w-0">
-                      <span className="truncate font-medium text-[13px]">
-                        {displayName}
-                      </span>
-                      <span className="truncate text-[11px] text-muted-foreground">
-                        {user?.email}
-                      </span>
+
+                    <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
+                      <span className="truncate text-sm font-medium">{displayName}</span>
+                      <span className="text-muted-foreground truncate text-xs">{user?.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -295,12 +278,8 @@ export function AppSidebar() {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={toggle}>
-                    {theme === "dark" ? (
-                      <Sun className="size-4" />
-                    ) : (
-                      <Moon className="size-4" />
-                    )}
-                    {theme === "dark" ? "Yorug' mavzu" : "Qorong'u mavzu"}
+                    {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+                    {theme === 'dark' ? "Yorug' mavzu" : "Qorong'u mavzu"}
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
@@ -320,5 +299,5 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }
