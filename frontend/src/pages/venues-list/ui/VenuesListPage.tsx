@@ -6,19 +6,6 @@ import { useIntersectionObserver } from '@shared/hooks/useIntersectionObserver'
 import { CardSkeleton } from '@shared/ui/CardSkeleton'
 import { EmptyState } from '@shared/ui/EmptyState'
 import { Spinner } from '@shared/ui/Spinner'
-import { UZBEK_CITIES } from '@shared/lib/constants'
-
-const CITY_OPTIONS = [
-  { value: '', label: 'Barcha shaharlar' },
-  ...UZBEK_CITIES.map((c) => ({ value: c, label: c })),
-]
-
-const chipCls = (active: boolean) =>
-  `px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer border whitespace-nowrap ${
-    active
-      ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]'
-      : 'bg-transparent border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
-  }`
 
 export function VenuesListPage() {
   const [city, setCity] = useState('')
@@ -70,13 +57,19 @@ export function VenuesListPage() {
         <div className="from-primary/50 via-primary/15 mt-4 h-px bg-linear-to-r to-transparent" />
       </div>
 
-      {/* ── City pills + advanced filter toggle ── */}
+      {/* ── City select + advanced filter toggle ── */}
       <div className="flex flex-wrap items-center gap-2">
-        {CITY_OPTIONS.map((c) => (
+        {[
+          { value: '', label: 'Barcha shaharlar' },
+          ...['Toshkent', 'Samarqand', 'Buxoro', 'Namangan', 'Andijon', "Farg'ona"].map((c) => ({
+            value: c,
+            label: c,
+          })),
+        ].map((c) => (
           <button
             key={c.value}
             onClick={() => setCity(c.value)}
-            className={chipCls(city === c.value)}
+            className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200 ${c.value === city ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]' : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent'}`}
           >
             {c.label}
           </button>
@@ -103,6 +96,7 @@ export function VenuesListPage() {
             <label className="text-muted-foreground/60 text-[10px] font-medium tracking-widest uppercase">
               O'rindan (min)
             </label>
+
             <input
               type="number"
               placeholder="100"

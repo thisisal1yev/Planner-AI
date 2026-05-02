@@ -21,6 +21,7 @@ import { Spinner } from '@shared/ui/Spinner'
 import { venueKeys } from '@shared/api/queryKeys'
 import { formatUZS } from '@shared/lib/dateUtils'
 import { DetailPageSkeleton } from '@shared/ui/DetailPageSkeleton'
+import { StarRating } from '@/shared/ui/StarRating'
 
 export function MyVenueDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -73,7 +74,7 @@ export function MyVenueDetailPage() {
   return (
     <div className="flex flex-col pb-16">
       {/* ── Cinematic hero ── */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {venue.imageUrls && venue.imageUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -109,7 +110,7 @@ export function MyVenueDetailPage() {
         {/* Category badge */}
         {venue.category && (
           <div className="absolute top-5 right-5 z-20">
-            <div className="inline-flex items-center gap-[5px] rounded-full border border-primary/30 bg-[rgba(8,15,25,0.65)] px-[10px] py-[4px] text-[10px] font-medium text-primary/80 backdrop-blur-sm">
+            <div className="border-primary/30 text-primary/80 inline-flex items-center gap-1.25 rounded-full border bg-[rgba(8,15,25,0.65)] px-2.5 py-1 text-[10px] font-medium backdrop-blur-sm">
               <Tag size={9} />
               {venue.category.name}
             </div>
@@ -143,21 +144,19 @@ export function MyVenueDetailPage() {
           <h1 className="mb-2 max-w-2xl font-serif text-3xl leading-tight font-bold text-white drop-shadow-lg md:text-4xl">
             {venue.name}
           </h1>
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
+            <div className="flex items-center gap-1">
+              <StarRating rating={rating} />
+              <span className="text-white/40">({reviewCount})</span>
+            </div>
+
+            <span className="text-white/25">•</span>
+
             <div className="flex items-center gap-1.5">
               <MapPin className="text-primary/60 h-3.5 w-3.5" />
-              <span>{venue.city}, {venue.address}</span>
+              <span>{venue.city}</span>
             </div>
-            {rating > 0 && (
-              <>
-                <span className="text-white/25">•</span>
-                <div className="flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 fill-amber-400/80 text-amber-400/80" />
-                  <span>{rating.toFixed(1)}</span>
-                  <span className="text-white/40">({reviewCount})</span>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -171,6 +170,7 @@ export function MyVenueDetailPage() {
             <h2 className="text-muted-foreground/35 mb-5 text-[10px] font-semibold tracking-[0.22em] uppercase">
               Ma'lumotlar
             </h2>
+
             <div className="bg-border/30 grid grid-cols-3 gap-px overflow-hidden rounded-xl">
               <div className="bg-card/50 flex flex-col gap-2.5 px-5 py-5">
                 <div className="flex items-center gap-2">
@@ -258,7 +258,9 @@ export function MyVenueDetailPage() {
                     <p className="text-primary/70 font-mono text-xl font-bold">
                       {venue.capacity.toLocaleString()}
                     </p>
-                    <p className="text-muted-foreground/40 text-[10px] tracking-wide">o'rin sig'im</p>
+                    <p className="text-muted-foreground/40 text-[10px] tracking-wide">
+                      o'rin sig'im
+                    </p>
                   </div>
                 </div>
                 <span className="border-primary/18 absolute top-2.5 right-2.5 h-3 w-3 border-t border-r" />
@@ -278,7 +280,9 @@ export function MyVenueDetailPage() {
                 <button
                   disabled={deleteMutation.isPending}
                   onClick={() => {
-                    if (confirm("Maydonni o'chirishni tasdiqlaysizmi? Bu amalni qaytarib bo'lmaydi.")) {
+                    if (
+                      confirm("Maydonni o'chirishni tasdiqlaysizmi? Bu amalni qaytarib bo'lmaydi.")
+                    ) {
                       deleteMutation.mutate()
                     }
                   }}
@@ -309,7 +313,11 @@ export function MyVenueDetailPage() {
                     value: rating > 0 ? rating.toFixed(1) : '—',
                     icon: Star,
                   },
-                  { label: 'Narx', value: `${(venue.pricePerDay / 1_000_000).toFixed(1)}M`, icon: Banknote },
+                  {
+                    label: 'Narx',
+                    value: `${(venue.pricePerDay / 1_000_000).toFixed(1)}M`,
+                    icon: Banknote,
+                  },
                 ].map(({ label, value, icon: Icon }) => (
                   <div
                     key={label}

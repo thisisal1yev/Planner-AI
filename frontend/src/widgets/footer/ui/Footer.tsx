@@ -94,7 +94,7 @@ export function Footer() {
             <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>
 
-            <p className="text-[13px] text-slate leading-[1.7] max-w-[220px]">
+            <p className="text-[13px] text-slate leading-[1.7] max-w-55">
               O'zbekistondagi №&nbsp;1 tadbirlar marketi. Maydonlar, xizmatlar
               va chiptalar — hammasi bir joyda.
             </p>
@@ -108,7 +108,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex items-center justify-center size-8 border rounded-[8px] text-slate no-underline transition-[color,border-color,background] duration-200 hover:text-primary hover:border-primary/45 hover:bg-primary/6"
+                  className="flex items-center justify-center size-8 border rounded-lg text-slate no-underline transition-[color,border-color,background] duration-200 hover:text-primary hover:border-primary/45 hover:bg-primary/6"
                 >
                   {icon}
                 </a>

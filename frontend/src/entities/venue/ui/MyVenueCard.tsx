@@ -58,7 +58,7 @@ export function MyVenueCard({ venue, className, index = 0 }: MyVenueCardProps) {
         <div className="absolute top-3 flex w-full items-center justify-between px-4">
           <div className="flex items-baseline gap-1 rounded-lg border border-white/10 bg-[rgba(8,15,25,0.55)] px-2.5 py-1.5 backdrop-blur-sm">
             <span
-              className="text-cream/90 text-[18px] leading-none font-bold"
+              className="text-cream/90 text-lg leading-none font-bold"
               style={{ fontVariantNumeric: 'tabular-nums' }}
             >
               {venue.capacity.toLocaleString()}
@@ -88,7 +88,7 @@ export function MyVenueCard({ venue, className, index = 0 }: MyVenueCardProps) {
 
         {/* Name bleeds over image bottom */}
         <div className="absolute right-0 bottom-0 left-0 px-4 pb-3.5">
-          <h3 className="text-cream/95 group-hover:text-primary-light line-clamp-1 font-serif text-[20px] leading-[1.22] font-bold transition-colors duration-200">
+          <h3 className="text-cream/95 group-hover:text-primary-light line-clamp-1 font-serif text-xl leading-[1.22] font-bold transition-colors duration-200">
             {venue.name}
           </h3>
         </div>
@@ -124,13 +124,13 @@ export function MyVenueCard({ venue, className, index = 0 }: MyVenueCardProps) {
           <div>
             <p className="text-cream/25 mb-0.5 text-[9px] tracking-widest uppercase">Kunlik narx</p>
 
-            <span className="text-primary text-[14px] leading-none font-semibold">
+            <span className="text-primary text-sm leading-none font-semibold">
               {formatUZS(venue.pricePerDay)}
               <span className="text-primary/55 text-[11px] font-normal">/kun</span>
             </span>
           </div>
 
-          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-[12px] font-medium transition-colors duration-200">
+          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-xs font-medium transition-colors duration-200">
             Batafsil
             <ArrowRight className="h-3 w-3 transition-all duration-200 group-hover:translate-x-0.5" />
           </span>

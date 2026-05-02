@@ -68,11 +68,12 @@ export function ServiceDetailPage() {
   }
 
   const avgRating = service.ratingStats?.avg ?? null
+  const reviewCount = service.ratingStats?.count ?? 0
 
   return (
     <div className="flex flex-col gap-0 pb-16">
       {/* Hero */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {service.imageUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -102,6 +103,7 @@ export function ServiceDetailPage() {
               className="group flex items-center gap-2 border border-white/20 text-white/80 backdrop-blur-sm hover:bg-white/10 hover:text-white"
             >
               <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+
               <span className="text-[10px] tracking-[0.15em] text-white/80 uppercase hover:text-white">
                 Barcha xizmatlar
               </span>
@@ -113,15 +115,19 @@ export function ServiceDetailPage() {
           <span className="text-primary-light/90 border-primary/20 mb-3 inline-flex items-center rounded-full border bg-black/45 px-3 py-1.5 text-xs font-medium tracking-[0.18em] uppercase backdrop-blur-sm">
             {service.category?.name ?? '—'}
           </span>
+
           <h1 className="mb-3 max-w-2xl font-serif text-4xl leading-tight font-bold text-white drop-shadow-lg md:text-5xl">
             {service.name}
           </h1>
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/80">
             <div className="flex items-center gap-1.5">
               <StarRating rating={avgRating ?? 0} />
+
               <span className="text-primary-light font-medium">
                 {parseFloat((avgRating ?? 0).toFixed(1))}
               </span>
+              <span className="text-white/40">({reviewCount})</span>
             </div>
 
             <span className="text-white/25">•</span>
@@ -162,7 +168,7 @@ export function ServiceDetailPage() {
           {/* Vendor block */}
           {service.vendor && (
             <div className="border-border/50 bg-card/35 relative overflow-hidden rounded-xl border">
-              <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+              <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
               <div className="flex items-center gap-4 p-5 pl-7">
                 <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">
                   <Users className="text-primary/55 size-4" />
@@ -171,7 +177,7 @@ export function ServiceDetailPage() {
                   <p className="text-muted-foreground/35 text-[10px] tracking-[0.18em] uppercase">
                     Xizmat ko'rsatuvchi
                   </p>
-                  <p className="text-foreground/85 text-[14px] font-semibold">
+                  <p className="text-foreground/85 text-sm font-semibold">
                     {service.vendor.firstName} {service.vendor.lastName}
                   </p>
                 </div>
@@ -224,7 +230,7 @@ export function ServiceDetailPage() {
             {!reviews?.data.length ? (
               <div className="border-border/35 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed py-10">
                 <Star className="text-muted-foreground/12 size-6" />
-                <p className="text-muted-foreground/35 text-[12px] tracking-wide">
+                <p className="text-muted-foreground/35 text-xs tracking-wide">
                   Hozircha sharhlar yo'q
                 </p>
                 {user && (
@@ -282,11 +288,11 @@ export function ServiceDetailPage() {
                 {formatUZS(service.priceFrom)}
               </div>
 
-              <CardTitle className="text-muted-foreground/45 mt-1.5 text-[12px] font-normal">
+              <CardTitle className="text-muted-foreground/45 mt-1.5 text-xs font-normal">
                 dan boshlab
               </CardTitle>
 
-              <CardDescription className="text-muted-foreground/35 mt-0 text-[12px]">
+              <CardDescription className="text-muted-foreground/35 mt-0 text-xs">
                 {service.city} • {service.category?.name ?? '—'}
               </CardDescription>
             </CardHeader>
@@ -319,7 +325,7 @@ export function ServiceDetailPage() {
               <Separator className="my-4 opacity-8" />
 
               {user ? (
-                <div className="bg-primary/5 border-primary/10 text-primary/55 rounded-xl border px-4 py-3.5 text-center text-[12px] leading-relaxed">
+                <div className="bg-primary/5 border-primary/10 text-primary/55 rounded-xl border px-4 py-3.5 text-center text-xs leading-relaxed">
                   "Mening tadbirlarim" bo'limida tadbirga ulang
                 </div>
               ) : (

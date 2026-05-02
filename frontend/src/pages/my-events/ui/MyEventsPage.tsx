@@ -3,8 +3,9 @@ import { Link } from 'react-router'
 import { MyEventCard } from '@entities/event'
 import { useInfiniteMyEvents } from '@entities/event/model/event.infinite'
 import { useIntersectionObserver } from '@shared/hooks/useIntersectionObserver'
-import { Spinner } from '@shared/ui/Spinner'
 import { Button } from '@shared/ui/Button'
+import { CardSkeleton } from '@shared/ui/CardSkeleton'
+import { Spinner } from '@shared/ui/Spinner'
 import { Plus } from 'lucide-react'
 
 export function MyEventsPage() {
@@ -18,13 +19,11 @@ export function MyEventsPage() {
 
   const events = data?.pages.flatMap((p) => p.data) ?? []
 
-  if (isLoading) return <Spinner />
-
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-foreground text-2xl font-bold">Mening tadbirlarim</h1>
-        
+
         <Link
           to="/my-events/create"
           className="bg-primary text-navy hover:bg-primary-light inline-flex h-9 items-center gap-1.5 rounded-xl border-0 px-4 text-[13px] font-semibold shadow-[0_4px_12px_rgba(76,140,167,0.25)] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(76,140,167,0.35)]"
@@ -34,20 +33,27 @@ export function MyEventsPage() {
         </Link>
       </div>
 
-      {events.length === 0 && (
+      {/* ── Content ── */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <CardSkeleton key={i} />
+          ))}
+        </div>
+      ) : events.length === 0 ? (
         <div className="py-16 text-center">
           <p className="text-muted-foreground mb-4">Sizda hozircha tadbirlar yo'q</p>
           <Link to="/my-events/create">
             <Button>Birinchi tadbir yaratish</Button>
           </Link>
         </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {events.map((event, index) => (
+            <MyEventCard key={event.id} event={event} index={index} />
+          ))}
+        </div>
       )}
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {events.map((event, index) => (
-          <MyEventCard key={event.id} event={event} index={index} />
-        ))}
-      </div>
 
       {/* ── Infinite scroll sentinel ── */}
       <div ref={sentinelRef} className="h-1" />

@@ -47,7 +47,7 @@ export function AdminEventsPage() {
 
       {/* ── Header ── */}
       <div className="flex items-center gap-3">
-        <h1 className="text-[18px] font-bold text-foreground tracking-tight">Tadbirlar</h1>
+        <h1 className="text-lg font-bold text-foreground tracking-tight">Tadbirlar</h1>
         {data?.meta && (
           <span className="text-[11px] font-medium text-muted-foreground/60 border border-border rounded-full px-2.5 py-0.5 bg-muted/30">
             {data.meta.total} ta
@@ -62,7 +62,7 @@ export function AdminEventsPage() {
             <button
               key={tab.value}
               onClick={() => { setStatus(tab.value); setPage(1) }}
-              className={`h-7 px-3 rounded-md text-[12px] font-medium transition-all ${
+              className={`h-7 px-3 rounded-md text-xs font-medium transition-all ${
                 status === tab.value
                   ? 'bg-card text-foreground shadow-sm border border-border/60'
                   : 'text-muted-foreground hover:text-foreground'
@@ -130,8 +130,8 @@ export function AdminEventsPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden md:table-cell">{e.eventType}</td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden sm:table-cell">
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell">{e.eventType}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden sm:table-cell">
                         {formatDateDefault(e.startDate)}
                       </td>
                       <td className="px-4 py-3">

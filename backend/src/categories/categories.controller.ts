@@ -21,4 +21,11 @@ export class CategoriesController {
   listServiceCategories() {
     return this.categoriesService.listServiceCategories();
   }
+
+  @Get('venue-categories')
+  @Public()
+  @ApiOperation({ summary: 'List all venue categories' })
+  listVenueCategories() {
+    return this.categoriesService.listVenueCategories();
+  }
 }

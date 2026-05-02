@@ -100,7 +100,7 @@ function AttachModal({ eventId, onClose }: { eventId: string; onClose: () => voi
             onChange={(e) => setPrice(e.target.value)}
           />
           {attachMutation.isError && (
-            <p className="text-destructive bg-destructive/8 border-destructive/20 rounded-lg border px-3 py-2 text-[12px]">
+            <p className="text-destructive bg-destructive/8 border-destructive/20 rounded-lg border px-3 py-2 text-xs">
               Qo'shishda xatolik yuz berdi
             </p>
           )}
@@ -177,7 +177,7 @@ export function EventServicesPage() {
               <div className="bg-primary/10 border-primary/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
                 <Wrench className="text-primary/80 size-4" />
               </div>
-              <h1 className="text-foreground text-[20px] font-bold tracking-tight">
+              <h1 className="text-foreground text-xl font-bold tracking-tight">
                 Xizmatlar boshqaruvi
               </h1>
               {all.length > 0 && (
@@ -250,7 +250,7 @@ export function EventServicesPage() {
             <p className="text-muted-foreground/40 text-[13px] font-medium">
               Xizmatlar biriktirilmagan
             </p>
-            <p className="text-muted-foreground/25 mt-1 text-[12px]">
+            <p className="text-muted-foreground/25 mt-1 text-xs">
               Xizmat qo'shish tugmasi orqali qo'shing
             </p>
           </div>
@@ -279,7 +279,7 @@ export function EventServicesPage() {
 
                   {/* Info */}
                   <div className="min-w-0 flex-1">
-                    <p className="text-foreground truncate text-[14px] leading-snug font-semibold">
+                    <p className="text-foreground truncate text-sm leading-snug font-semibold">
                       {es.service?.name}
                     </p>
                     <div className="mt-0.5 flex items-center gap-2">

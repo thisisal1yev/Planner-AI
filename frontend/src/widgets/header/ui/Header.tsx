@@ -103,7 +103,7 @@ function MobileNavLink({
       to={to}
       onClick={onClick}
       className={cn(
-        'flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[14px] font-medium transition-all',
+        'flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-all',
         active
           ? 'text-primary bg-primary/10'
           : 'text-foreground/70 hover:text-foreground hover:bg-muted/40'
@@ -175,7 +175,7 @@ function UserMenu({ className }: { className?: string }) {
             {initials}
           </div>
         )}
-        <span className="text-foreground/80 hidden max-w-[88px] truncate text-[12.5px] font-medium sm:block">
+        <span className="text-foreground/80 hidden max-w-22 truncate text-[12.5px] font-medium sm:block">
           {user.firstName}
         </span>
 
@@ -288,11 +288,11 @@ export function Header() {
       <header className="border-border/60 bg-background/95 sticky top-0 z-40 w-full border-b backdrop-blur-md">
         <div className="via-primary/50 h-0.5 bg-linear-to-r from-transparent to-transparent" />
 
-        <div className="mx-auto flex h-15 max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6">
+        <div className="mx-auto flex h-15 max-w-360 items-center justify-between gap-4 px-4 sm:px-6">
           <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-gray-900 dark:text-cream text-[20px] font-bold tracking-[-0.01em]">Planner</span>
+            <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
 
-            <span className="text-primary text-[20px] font-bold tracking-[-0.01em]">&nbsp;AI</span>
+            <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>
 
           <nav className="ml-auto hidden h-full gap-5 md:flex">
@@ -389,7 +389,7 @@ export function Header() {
                 <Link
                   to="/login"
                   onClick={closeMobile}
-                  className="text-foreground/70 hover:text-foreground hover:bg-muted/40 flex items-center rounded-lg px-3 py-2.5 text-[14px] font-medium transition-colors"
+                  className="text-foreground/70 hover:text-foreground hover:bg-muted/40 flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
                 >
                   Kirish
                 </Link>
@@ -397,7 +397,7 @@ export function Header() {
                 <Link
                   to="/register"
                   onClick={closeMobile}
-                  className="text-navy bg-primary hover:bg-primary-light mt-1 flex h-10 items-center justify-center rounded-lg text-[14px] font-semibold transition-colors"
+                  className="text-navy bg-primary hover:bg-primary-light mt-1 flex h-10 items-center justify-center rounded-lg text-sm font-semibold transition-colors"
                 >
                   Boshlash
                 </Link>

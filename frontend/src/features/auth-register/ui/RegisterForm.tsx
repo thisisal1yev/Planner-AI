@@ -117,14 +117,14 @@ export function RegisterForm() {
               {s}
             </div>
             <span className={cn(
-              'text-[12px] font-medium transition-colors',
+              'text-xs font-medium transition-colors',
               step === s ? 'text-foreground' : 'text-muted-foreground/40',
             )}>
               {s === 1 ? STRINGS.step1 : STRINGS.step2}
             </span>
             {s === 1 && (
               <div className={cn(
-                'flex-1 h-[1px] mx-1 transition-colors duration-300',
+                'flex-1 h-px mx-1 transition-colors duration-300',
                 step === 2 ? 'bg-primary/40' : 'bg-border',
               )} />
             )}
@@ -214,7 +214,7 @@ export function RegisterForm() {
 
             {/* Role selection */}
             <div className="flex flex-col gap-2">
-              <p className="text-[12px] font-medium text-muted-foreground/60">Rol tanlang</p>
+              <p className="text-xs font-medium text-muted-foreground/60">Rol tanlang</p>
               <div className="grid grid-cols-2 gap-2">
                 {([
                   { value: 'PARTICIPANT', label: STRINGS.participantLabel, desc: STRINGS.participantDesc, icon: CalendarDays },
@@ -243,7 +243,7 @@ export function RegisterForm() {
                         {role === value && <div className="w-2 h-2 rounded-full bg-primary" />}
                       </div>
                       <Icon className={cn('size-3.5', role === value ? 'text-primary' : 'text-muted-foreground/50')} />
-                      <span className={cn('text-[12px] font-semibold', role === value ? 'text-foreground' : 'text-foreground/60')}>
+                      <span className={cn('text-xs font-semibold', role === value ? 'text-foreground' : 'text-foreground/60')}>
                         {label}
                       </span>
                     </div>

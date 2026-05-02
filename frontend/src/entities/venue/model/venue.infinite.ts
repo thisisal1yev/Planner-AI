@@ -14,12 +14,14 @@ export function useInfiniteVenues(filters: Omit<QueryVenuesDto, 'page' | 'limit'
   })
 }
 
-export function useInfiniteMyVenues() {
+export function useInfiniteMyVenues(
+  filters: Omit<QueryVenuesDto, 'page' | 'limit'> = {},
+) {
   const userId = useAuthStore((s) => s.user?.id)
   return useInfiniteQuery({
-    queryKey: [...venueKeys.myList(), userId],
+    queryKey: [...venueKeys.myList(), userId, filters],
     queryFn: ({ pageParam }) =>
-      venuesApi.myList({ page: pageParam as number, limit: 12 }),
+      venuesApi.myList({ ...filters, page: pageParam as number, limit: 12 }),
     initialPageParam: 1,
     getNextPageParam: (last) =>
       last.meta.page < last.meta.totalPages ? last.meta.page + 1 : undefined,

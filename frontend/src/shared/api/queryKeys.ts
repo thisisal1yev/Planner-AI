@@ -41,6 +41,7 @@ export const ticketKeys = {
 export const categoryKeys = {
   eventCategories:   () => ['event-categories'] as const,
   serviceCategories: () => ['service-categories'] as const,
+  venueCategories:   () => ['venue-categories'] as const,
 }
 
 export const analyticsKeys = {

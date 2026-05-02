@@ -12,4 +12,8 @@ export class CategoriesService {
   listServiceCategories() {
     return this.prisma.serviceCategory.findMany({ orderBy: { name: 'asc' } });
   }
+
+  listVenueCategories() {
+    return this.prisma.squareCategory.findMany({ orderBy: { name: 'asc' } });
+  }
 }

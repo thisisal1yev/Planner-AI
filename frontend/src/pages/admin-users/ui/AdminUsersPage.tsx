@@ -47,7 +47,7 @@ export function AdminUsersPage() {
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="text-[18px] font-bold text-foreground tracking-tight">Foydalanuvchilar</h1>
+          <h1 className="text-lg font-bold text-foreground tracking-tight">Foydalanuvchilar</h1>
           {data?.meta && (
             <span className="text-[11px] font-medium text-muted-foreground/60 border border-border rounded-full px-2.5 py-0.5 bg-muted/30">
               {data.meta.total} ta
@@ -111,11 +111,11 @@ export function AdminUsersPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden sm:table-cell">{u.email}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden sm:table-cell">{u.email}</td>
                       <td className="px-4 py-3">
                         <Badge color={ROLE_COLOR[u.role]}>{ROLE_LABELS[u.role] ?? u.role}</Badge>
                       </td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden md:table-cell">
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell">
                         {formatDateDefault(u.createdAt)}
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell">

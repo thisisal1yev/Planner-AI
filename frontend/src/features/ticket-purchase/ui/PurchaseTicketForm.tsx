@@ -37,7 +37,7 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
 
   if (!tiers.length) {
     return (
-      <p className="text-[12px] text-muted-foreground/50 text-center py-4">
+      <p className="text-xs text-muted-foreground/50 text-center py-4">
         Mavjud chiptalar yo'q
       </p>
     )
@@ -126,7 +126,7 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
               type="button"
               onClick={() => setProvider(id)}
               className={cn(
-                'relative h-11 rounded-xl border text-[12px] font-semibold tracking-wide transition-all duration-200 cursor-pointer',
+                'relative h-11 rounded-xl border text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30',
                 provider === id
                   ? 'border-primary/35 bg-primary/8 text-primary shadow-[inset_0_1px_0_rgba(76,140,167,0.12)]'
@@ -134,11 +134,11 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
               )}
             >
               <span className="flex items-center justify-center gap-1.5">
-                <span className="text-[14px]">{icon}</span>
+                <span className="text-sm">{icon}</span>
                 {label}
               </span>
               {provider === id && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2px] rounded-full bg-primary/60" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-primary/60" />
               )}
             </button>
           ))}
@@ -149,18 +149,18 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
       {mutation.isError && (
         <div className="flex items-center gap-2 rounded-xl border border-destructive/20 bg-destructive/6 px-4 py-3">
           <AlertCircle className="size-3.5 text-destructive shrink-0" />
-          <p className="text-[12px] text-destructive/80">Xatolik yuz berdi. Qaytadan urinib ko'ring.</p>
+          <p className="text-xs text-destructive/80">Xatolik yuz berdi. Qaytadan urinib ko'ring.</p>
         </div>
       )}
       {mutation.isSuccess && (
         <div className="flex flex-col gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/6 px-4 py-3">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
-            <p className="text-[12px] text-emerald-500/80">Chipta muvaffaqiyatli sotib olindi!</p>
+            <p className="text-xs text-emerald-500/80">Chipta muvaffaqiyatli sotib olindi!</p>
           </div>
           <Link
             to="/tickets"
-            className="inline-flex items-center gap-1 text-[12px] font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+            className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
           >
             <ExternalLink className="size-3" />
             Mening chiptalarim →
@@ -171,7 +171,7 @@ export function PurchaseTicketForm({ eventId, tiers, onSuccess }: PurchaseTicket
       {/* ── Price summary + CTA ── */}
       <div className="flex flex-col gap-3 pt-1">
         {selectedTier && (
-          <div className="flex items-center justify-between text-[12px] px-1">
+          <div className="flex items-center justify-between text-xs px-1">
             <span className="text-muted-foreground/40 tracking-wide">Jami to'lov</span>
             <span className="font-bold text-[15px] text-primary font-serif tracking-tight">
               {formatUZS(selectedTier.price)}

@@ -62,7 +62,7 @@ function UserMenu() {
       </button>
 
       {open && (
-        <div className="hdr-menu border-primary/18 absolute right-0 z-50 mt-2.5 w-[228px] overflow-hidden rounded-xl border bg-white dark:bg-[rgba(15,25,37,0.97)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
+        <div className="hdr-menu border-primary/18 absolute right-0 z-50 mt-2.5 w-57 overflow-hidden rounded-xl border bg-white dark:bg-[rgba(15,25,37,0.97)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
           <div className="border-b-primary/12 flex items-center gap-3 border-b px-4 py-3.5">
             {user.avatarUrl ? (
               <img

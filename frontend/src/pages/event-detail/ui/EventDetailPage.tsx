@@ -61,8 +61,8 @@ export function EventDetailPage() {
         </div>
 
         <div className="text-center">
-          <p className="text-foreground/60 font-serif text-[18px]">Tadbir topilmadi</p>
-          <p className="text-muted-foreground/40 mt-1 text-[12px]">
+          <p className="text-foreground/60 font-serif text-lg">Tadbir topilmadi</p>
+          <p className="text-muted-foreground/40 mt-1 text-xs">
             Bunday tadbir mavjud emas yoki o'chirilgan
           </p>
         </div>
@@ -87,7 +87,7 @@ export function EventDetailPage() {
   return (
     <div className="flex flex-col pb-16">
       {/* Cinematic hero */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {event.bannerUrls && event.bannerUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -121,6 +121,7 @@ export function EventDetailPage() {
               className="group flex items-center gap-2 border border-white/20 text-white/80 backdrop-blur-sm hover:bg-white/10 hover:text-white"
             >
               <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+
               <span className="text-[10px] tracking-[0.15em] text-white/80 uppercase hover:text-white">
                 Barcha tadbirlar
               </span>
@@ -137,11 +138,14 @@ export function EventDetailPage() {
           <h1 className="mb-3 max-w-2xl font-serif text-4xl leading-tight font-bold text-white drop-shadow-lg md:text-5xl">
             {event.title}
           </h1>
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/80">
             <div className="flex items-center gap-1.5">
               <StarRating rating={avgRating ?? 0} />
 
               <span className="text-primary-light font-medium">{avgRating?.toFixed(1)}</span>
+
+              <span className="text-white/40">({reviewCount})</span>
             </div>
 
             <span className="text-white/25">•</span>
@@ -149,7 +153,7 @@ export function EventDetailPage() {
             <div className="flex items-center gap-1">
               <MapPin className="text-primary/60 h-3.5 w-3.5" />
 
-              <span>{event.venue?.city}</span>
+              <span>{event?.city}</span>
             </div>
           </div>
         </div>
@@ -187,7 +191,7 @@ export function EventDetailPage() {
               <h2 className="text-muted-foreground/35 mb-4 text-[10px] font-semibold tracking-[0.22em] uppercase">
                 Tadbir haqida
               </h2>
-              <p className="text-foreground/70 text-[14px] leading-[1.9] whitespace-pre-line">
+              <p className="text-foreground/70 text-sm leading-[1.9] whitespace-pre-line">
                 {event.description}
               </p>
             </section>
@@ -217,6 +221,7 @@ export function EventDetailPage() {
                     Tugash
                   </span>
                 </div>
+
                 <p className="text-foreground/85 font-mono text-[17px] font-semibold tracking-tight">
                   {end}
                 </p>
@@ -224,10 +229,12 @@ export function EventDetailPage() {
               <div className="bg-card/50 flex flex-col gap-2.5 px-6 py-5">
                 <div className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+
                   <span className="text-muted-foreground/35 text-[10px] tracking-[0.18em] uppercase">
                     Sig'im
                   </span>
                 </div>
+
                 <p className="text-foreground/85 font-mono text-[17px] font-semibold tracking-tight">
                   {event.capacity} o'rin
                 </p>
@@ -241,17 +248,20 @@ export function EventDetailPage() {
               <h2 className="text-muted-foreground/35 mb-4 text-[10px] font-semibold tracking-[0.22em] uppercase">
                 Tashkilotchi
               </h2>
+
               <div className="border-border/50 hover:border-primary/25 bg-card/35 relative overflow-hidden rounded-xl border transition-all duration-300">
-                <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
                 <div className="flex items-center gap-4 p-5 pl-7">
                   <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">
                     <Users className="text-primary/55 size-4" />
                   </div>
+
                   <div>
-                    <p className="text-foreground/85 text-[14px] font-semibold">
+                    <p className="text-foreground/85 text-sm font-semibold">
                       {event.organizer.firstName} {event.organizer.lastName}
                     </p>
-                    <p className="text-muted-foreground/45 mt-0.5 text-[12px]">
+
+                    <p className="text-muted-foreground/45 mt-0.5 text-xs">
                       {event.organizer.email}
                     </p>
                   </div>
@@ -268,21 +278,24 @@ export function EventDetailPage() {
               </h2>
               <Link to={`/venues/${event.venue.id}`} className="group block">
                 <div className="border-border/50 hover:border-primary/25 bg-card/35 relative overflow-hidden rounded-xl border transition-all duration-300">
-                  <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                  <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
                   <div className="flex items-center justify-between gap-3 p-5 pl-7">
                     <div className="flex items-center gap-4">
                       <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">
                         <MapPin className="text-primary/55 size-4" />
                       </div>
+
                       <div>
-                        <p className="text-foreground/85 group-hover:text-primary text-[14px] font-semibold transition-colors duration-200">
+                        <p className="text-foreground/85 group-hover:text-primary text-sm font-semibold transition-colors duration-200">
                           {event.venue.name}
                         </p>
-                        <p className="text-muted-foreground/45 mt-0.5 text-[12px]">
+
+                        <p className="text-muted-foreground/45 mt-0.5 text-xs">
                           {event.venue.city}, {event.venue.address}
                         </p>
                       </div>
                     </div>
+
                     <ChevronRight className="text-muted-foreground/20 group-hover:text-primary size-4 shrink-0 transition-all duration-200 group-hover:translate-x-0.5" />
                   </div>
                 </div>
@@ -296,22 +309,26 @@ export function EventDetailPage() {
               <h2 className="text-muted-foreground/35 mb-4 text-[10px] font-semibold tracking-[0.22em] uppercase">
                 Xizmatlar
               </h2>
+
               <div className="flex flex-col gap-2.5">
                 {event.eventServices.map((es) => (
                   <div
                     key={es.id}
                     className="border-border/50 hover:border-primary/25 bg-card/35 relative overflow-hidden rounded-xl border transition-all duration-300"
                   >
-                    <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                    <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
+
                     <div className="flex items-center justify-between gap-3 p-5 pl-7">
                       <div className="flex flex-col">
-                        <p className="text-foreground/85 text-[14px] font-semibold">
+                        <p className="text-foreground/85 text-sm font-semibold">
                           {es.service?.name}
                         </p>
-                        <p className="text-muted-foreground/45 mt-0.5 text-[12px]">
+
+                        <p className="text-muted-foreground/45 mt-0.5 text-xs">
                           {es.service?.category?.name}
                         </p>
                       </div>
+
                       <p className="text-primary/60 text-[13px] font-semibold whitespace-nowrap">
                         {es.agreedPrice.toLocaleString('uz-UZ')} so'm
                       </p>
@@ -362,9 +379,11 @@ export function EventDetailPage() {
                 <div className="mb-3 flex justify-center gap-1">
                   {avgRating != null && <StarRating rating={avgRating} />}
                 </div>
-                <p className="text-muted-foreground/35 text-[12px] tracking-wide">
+
+                <p className="text-muted-foreground/35 text-xs tracking-wide">
                   Hozircha sharhlar yo'q
                 </p>
+
                 {user && (
                   <button
                     onClick={() => setReviewModal(true)}
@@ -426,7 +445,7 @@ export function EventDetailPage() {
                         Event Ticket
                       </p>
 
-                      <p className="text-foreground/90 font-serif text-[18px] font-bold">
+                      <p className="text-foreground/90 font-serif text-lg font-bold">
                         Chipta sotib olish
                       </p>
                     </div>
@@ -449,7 +468,7 @@ export function EventDetailPage() {
                         <Users className="text-primary/50 size-5" />
                       </div>
 
-                      <p className="text-muted-foreground/45 mb-5 text-[12px] leading-relaxed">
+                      <p className="text-muted-foreground/45 mb-5 text-xs leading-relaxed">
                         Chipta sotib olish uchun
                         <br />
                         tizimga kiring
@@ -457,7 +476,7 @@ export function EventDetailPage() {
 
                       <Link
                         to="/login"
-                        className="bg-primary text-navy hover:bg-primary-light flex h-9 w-full items-center justify-center rounded-lg text-[12px] font-semibold tracking-wide transition-colors"
+                        className="bg-primary text-navy hover:bg-primary-light flex h-9 w-full items-center justify-center rounded-lg text-xs font-semibold tracking-wide transition-colors"
                       >
                         Kirish
                       </Link>

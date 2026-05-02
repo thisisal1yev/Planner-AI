@@ -66,11 +66,12 @@ export function VenueDetailPage() {
   }
 
   const avgRating = venue.ratingStats?.avg ?? null
+  const reviewCount = venue.ratingStats?.count ?? 0
 
   return (
     <div className="flex flex-col gap-0 pb-16">
       {/* Cinematic hero */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {venue.imageUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -104,6 +105,7 @@ export function VenueDetailPage() {
               className="group flex items-center gap-2 border border-white/20 text-white/80 backdrop-blur-sm hover:bg-white/10 hover:text-white"
             >
               <ArrowLeft size={24} className="transition-transform group-hover:-translate-x-0.5" />
+
               <span className="text-[10px] tracking-[0.15em] text-white/80 uppercase hover:text-white">
                 Barcha maydonlar
               </span>
@@ -116,9 +118,11 @@ export function VenueDetailPage() {
           <span className="text-primary-light/90 border-primary/20 mb-3 inline-flex items-center rounded-full border bg-black/45 px-3 py-1.5 text-xs font-medium tracking-[0.18em] uppercase backdrop-blur-sm">
             {venue.category?.name}
           </span>
+
           <h1 className="mb-3 max-w-2xl font-serif text-4xl leading-tight font-bold text-white drop-shadow-lg md:text-5xl">
             {venue.name}
           </h1>
+
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/80">
             <div className="flex items-center gap-1.5">
               <StarRating rating={venue.ratingStats?.avg ?? 0} />
@@ -126,6 +130,7 @@ export function VenueDetailPage() {
               <span className="text-primary-light font-medium">
                 {parseFloat((venue.ratingStats?.avg ?? 0).toFixed(1))}
               </span>
+              <span className="text-white/40">({reviewCount})</span>
             </div>
 
             <span className="text-white/25">•</span>
@@ -167,7 +172,7 @@ export function VenueDetailPage() {
           {/* Address block */}
           <div className="bg-muted/15 border-border/35 flex items-center gap-3 rounded-xl border px-4 py-3">
             <MapPin className="text-muted-foreground/35 size-4 shrink-0" />
-            <span className="text-muted-foreground/65 text-[14px]">
+            <span className="text-muted-foreground/65 text-sm">
               {venue.address}, {venue.city}
             </span>
           </div>
@@ -175,7 +180,7 @@ export function VenueDetailPage() {
           {/* Owner section */}
           {venue.owner && (
             <div className="border-border/50 bg-card/35 relative overflow-hidden rounded-xl border">
-              <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+              <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
               <div className="flex items-center gap-4 p-5 pl-7">
                 <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">
                   <Users className="text-primary/55 size-4" />
@@ -184,7 +189,7 @@ export function VenueDetailPage() {
                   <p className="text-muted-foreground/35 text-[10px] tracking-[0.18em] uppercase">
                     Egasi
                   </p>
-                  <p className="text-foreground/85 text-[14px] font-semibold">
+                  <p className="text-foreground/85 text-sm font-semibold">
                     {venue.owner.firstName} {venue.owner.lastName}
                   </p>
                 </div>
@@ -211,7 +216,7 @@ export function VenueDetailPage() {
                 {venue.characteristics!.map((c) => (
                   <div
                     key={c.id}
-                    className="text-primary/60 rounded-xl border-white/7 bg-white/3 px-3 py-2 text-[12px]"
+                    className="text-primary/60 rounded-xl border-white/7 bg-white/3 px-3 py-2 text-xs"
                   >
                     {c.name}
                   </div>
@@ -258,7 +263,7 @@ export function VenueDetailPage() {
             {!reviews?.data.length ? (
               <div className="border-border/35 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed py-10">
                 <Star className="text-muted-foreground/12 size-6" />
-                <p className="text-muted-foreground/35 text-[12px] tracking-wide">
+                <p className="text-muted-foreground/35 text-xs tracking-wide">
                   Hozircha sharhlar yo'q
                 </p>
                 {user && (
@@ -318,11 +323,11 @@ export function VenueDetailPage() {
                 {formatUZS(venue.pricePerDay)}
               </div>
 
-              <CardTitle className="text-muted-foreground/45 mt-1.5 text-[12px] font-normal">
+              <CardTitle className="text-muted-foreground/45 mt-1.5 text-xs font-normal">
                 kuniga ijarasi
               </CardTitle>
 
-              <CardDescription className="text-muted-foreground/35 mt-0 text-[12px]">
+              <CardDescription className="text-muted-foreground/35 mt-0 text-xs">
                 {venue.city} • {venue.category?.name ?? '—'}
               </CardDescription>
             </CardHeader>
@@ -360,7 +365,7 @@ export function VenueDetailPage() {
                 <div className="flex items-center justify-between py-3">
                   <span className="text-muted-foreground/50 text-[13px]">Manzil</span>
 
-                  <span className="text-cream/82 max-w-[160px] text-right text-[13px] leading-snug font-semibold">
+                  <span className="text-cream/82 max-w-40 text-right text-[13px] leading-snug font-semibold">
                     {venue.address}
                   </span>
                 </div>
@@ -369,7 +374,7 @@ export function VenueDetailPage() {
               <Separator className="my-4 opacity-8" />
 
               {user ? (
-                <div className="bg-primary/5 border-primary/10 text-primary/55 rounded-xl border px-4 py-3.5 text-center text-[12px] leading-relaxed">
+                <div className="bg-primary/5 border-primary/10 text-primary/55 rounded-xl border px-4 py-3.5 text-center text-xs leading-relaxed">
                   Maydonni band qilish uchun tadbir yaratishda foydalaning
                 </div>
               ) : (

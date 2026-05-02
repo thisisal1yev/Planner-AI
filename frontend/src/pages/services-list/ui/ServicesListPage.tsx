@@ -13,16 +13,6 @@ import { UZBEK_CITIES } from '@shared/lib/constants'
 import { categoriesApi } from '@shared/api/categoriesApi'
 import { categoryKeys } from '@shared/api/queryKeys'
 
-const selectCls =
-  'h-9 rounded-lg border border-input bg-background px-3 text-sm outline-none transition-colors focus-visible:border-ring text-foreground'
-
-const chipCls = (active: boolean) =>
-  `px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer border ${
-    active
-      ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]'
-      : 'bg-transparent border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
-  }`
-
 export function ServicesListPage() {
   const [category, setCategory] = useState('')
   const [city, setCity] = useState('')
@@ -66,10 +56,12 @@ export function ServicesListPage() {
           <h1 className="text-foreground font-serif text-4xl leading-none font-bold md:text-5xl">
             Xizmatlar katalogi
           </h1>
+
           <div className="shrink-0 text-right">
             <p className="text-primary font-serif text-3xl leading-none font-semibold">
               {total ?? '—'}
             </p>
+
             <p className="text-muted-foreground mt-0.5 text-xs">xizmat topildi</p>
           </div>
         </div>
@@ -79,7 +71,10 @@ export function ServicesListPage() {
       {/* ── Category pills + filter toggle ── */}
       <div className="flex flex-wrap items-center gap-2">
         {/* "Barchasi" chip */}
-        <button onClick={() => setCategory('')} className={chipCls(!category)}>
+        <button
+          onClick={() => setCategory('')}
+          className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200 ${!category ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]' : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent'}`}
+        >
           Barchasi
         </button>
 
@@ -92,7 +87,7 @@ export function ServicesListPage() {
               <button
                 key={c.id}
                 onClick={() => setCategory(c.name)}
-                className={chipCls(category === c.name)}
+                className={`cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition-all duration-200 ${category === c.name ? 'bg-primary text-navy border-primary shadow-[0_0_18px_rgba(76,140,167,0.3)]' : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-transparent'}`}
               >
                 {c.name}
               </button>
@@ -120,7 +115,11 @@ export function ServicesListPage() {
               Shahar
             </label>
 
-            <select value={city} onChange={(e) => setCity(e.target.value)} className={selectCls}>
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="border-input bg-background focus-visible:border-ring text-foreground h-9 rounded-lg border px-3 text-sm transition-colors outline-none"
+            >
               <option value="">Barcha shaharlar</option>
               {UZBEK_CITIES.map((c) => (
                 <option key={c} value={c}>

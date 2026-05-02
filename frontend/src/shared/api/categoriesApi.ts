@@ -14,4 +14,8 @@ export const categoriesApi = {
     const { data } = await apiClient.get('/service-categories')
     return data.data
   },
+  listVenueCategories: async (): Promise<Category[]> => {
+    const { data } = await apiClient.get('/venue-categories')
+    return data.data
+  },
 }

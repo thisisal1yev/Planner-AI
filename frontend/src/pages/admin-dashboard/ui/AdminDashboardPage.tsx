@@ -198,7 +198,7 @@ export function AdminDashboardPage() {
               placeholder="Qidirish..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-8 pl-7 pr-3 text-[12px] bg-muted/40 border border-border rounded-lg focus:outline-none focus:border-primary/40 focus:bg-card transition-colors w-44 placeholder:text-muted-foreground/40"
+              className="h-8 pl-7 pr-3 text-xs bg-muted/40 border border-border rounded-lg focus:outline-none focus:border-primary/40 focus:bg-card transition-colors w-44 placeholder:text-muted-foreground/40"
             />
           </div>
         </div>
@@ -239,10 +239,10 @@ export function AdminDashboardPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-[12px] text-muted-foreground hidden sm:table-cell">
+                    <td className="px-4 py-3 text-xs text-muted-foreground hidden sm:table-cell">
                       {e.organizer.firstName} {e.organizer.lastName}
                     </td>
-                    <td className="px-4 py-3 text-[12px] text-muted-foreground hidden md:table-cell">
+                    <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell">
                       {formatDateDefault(e.startDate)}
                     </td>
                     <td className="px-4 py-3">

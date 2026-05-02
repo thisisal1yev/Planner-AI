@@ -31,7 +31,7 @@ export function MyEventCard({
     >
       {/* Animated primary shimmer rule */}
       <div
-        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-[2px] origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-0.5 origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, #4c8ca7 40%, #7ab8cc 60%, transparent 100%)',
@@ -67,7 +67,7 @@ export function MyEventCard({
           {/* Capacity */}
           <div className="flex items-baseline gap-1 rounded-lg border border-white/10 bg-[rgba(8,15,25,0.55)] px-2.5 py-1.5 backdrop-blur-sm">
             <span
-              className="text-cream/90 text-[18px] leading-none font-bold"
+              className="text-cream/90 text-lg leading-none font-bold"
               style={{ fontVariantNumeric: 'tabular-nums' }}
             >
               {event.capacity.toLocaleString()}
@@ -100,7 +100,7 @@ export function MyEventCard({
             </div>
           )}
           <div className="pb-3.5">
-            <h3 className="leading- text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-[20px] font-bold transition-colors duration-200">
+            <h3 className="leading- text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-xl font-bold transition-colors duration-200">
               {event.title}
             </h3>
           </div>
@@ -110,7 +110,7 @@ export function MyEventCard({
       {/* ── Metadata strip ── */}
       <div className="flex flex-col gap-2 px-4 py-3">
         {/* Date & Location */}
-        <div className="text-cream/40 flex items-center gap-1.5 text-[12px]">
+        <div className="text-cream/40 flex items-center gap-1.5 text-xs">
           <Calendar className="text-primary/40 h-3 w-3 shrink-0" />
           <span className="group-hover:text-primary transition-colors duration-200">{start}</span>
 
@@ -130,7 +130,7 @@ export function MyEventCard({
         {/* Footer link */}
         <div className="flex items-center justify-between border-t border-white/5 pt-1">
           <span className="text-cream/30 text-[11px]">ID: {event.id.slice(0, 8)}</span>
-          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-[12px] font-medium transition-colors duration-200">
+          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-xs font-medium transition-colors duration-200">
             Ko'rish
             <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>

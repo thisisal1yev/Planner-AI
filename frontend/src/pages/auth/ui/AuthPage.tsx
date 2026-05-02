@@ -148,7 +148,7 @@ function SignInForm() {
           <input
             type="email"
             placeholder="name@example.com"
-            className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
             {...register('email', { required: 'Majburiy maydon' })}
           />
         </div>
@@ -162,7 +162,7 @@ function SignInForm() {
 
           <button
             type="button"
-            className="text-primary/60 hover:text-primary text-[12px] transition-colors duration-150"
+            className="text-primary/60 hover:text-primary text-xs transition-colors duration-150"
           >
             Unutdingizmi?
           </button>
@@ -174,7 +174,7 @@ function SignInForm() {
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
-            className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
+            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
             {...register('password', {
               required: 'Majburiy maydon',
               minLength: { value: 8, message: 'Min. 8 belgi' },
@@ -256,7 +256,7 @@ function CreateAccountForm() {
 
             <input
               placeholder="Ali"
-              className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+              className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
               {...register('firstName', { required: 'Majburiy' })}
             />
           </div>
@@ -268,7 +268,7 @@ function CreateAccountForm() {
 
             <input
               placeholder="Aliyev"
-              className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+              className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
               {...register('lastName', { required: 'Majburiy' })}
             />
           </div>
@@ -282,7 +282,7 @@ function CreateAccountForm() {
           <input
             type="email"
             placeholder="name@example.com"
-            className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
             {...register('email', { required: 'Majburiy maydon' })}
           />
         </div>
@@ -295,7 +295,7 @@ function CreateAccountForm() {
           <input
             type="tel"
             placeholder="+998901234567"
-            className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
             {...register('phone', {
               required: 'Majburiy maydon',
               pattern: { value: /^\+998\d{9}$/, message: 'Format: +998901234567' },
@@ -315,7 +315,7 @@ function CreateAccountForm() {
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
-            className="w-full h-11 rounded-[8px] bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-[14px] text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
+            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
             {...register('password', {
               required: 'Majburiy maydon',
               minLength: { value: 8, message: 'Min. 8 belgi' },
@@ -365,7 +365,7 @@ function CreateAccountForm() {
                 key={value}
                 type="button"
                 onClick={() => setValue('role', value)}
-                className={`rounded-[8px] border p-3 text-left transition-[border-color,background,box-shadow] duration-200 ${
+                className={`rounded-lg border p-3 text-left transition-[border-color,background,box-shadow] duration-200 ${
                   active
                     ? 'border-primary/45 bg-primary/5 shadow-[inset_0_0_0_1px_rgba(76,140,167,0.12)]'
                     : 'border-gray-200 bg-transparent hover:border-gray-300 hover:bg-gray-50 dark:border-white/8 dark:hover:border-white/16 dark:hover:bg-white/2'
@@ -442,7 +442,7 @@ export function AuthPage() {
         {/* Center content */}
         <div className="relative z-10 flex flex-col gap-6">
           <div>
-            <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-[6px] text-[12px] tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
+            <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
               <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
               O'zbekistondagi №1 tadbirlar marketi
             </div>
@@ -457,7 +457,7 @@ export function AuthPage() {
               tashkil eting.
             </h1>
 
-            <p className="text-slate max-w-[320px] text-[14px] leading-[1.8]">
+            <p className="text-slate max-w-80 text-sm leading-[1.8]">
               Maydonlar, xizmatlar, chiptalar — hammasi bir joyda. Minglab tashkilotchilarga
               qo'shiling.
             </p>
@@ -490,7 +490,7 @@ export function AuthPage() {
             </div>
 
             <div>
-              <div className="text-primary text-[12px] tracking-widest">★★★★★</div>
+              <div className="text-primary text-xs tracking-widest">★★★★★</div>
               <p className="text-slate mt-0.5 text-[11px]">Yetakchi agentliklar ishonadi</p>
             </div>
           </div>
@@ -502,12 +502,12 @@ export function AuthPage() {
 
       {/* ── Right auth panel ── */}
       <div className="flex flex-1 items-center justify-center overflow-y-auto p-6 sm:p-10">
-        <div className="w-full max-w-[400px]">
+        <div className="w-full max-w-100">
           {/* Mobile logo */}
           <h1 className="mb-8 flex items-center lg:hidden">
-            <span className="text-gray-900 dark:text-cream text-[18px] font-bold tracking-[-0.01em]">Planner</span>
+            <span className="text-gray-900 dark:text-cream text-lg font-bold tracking-[-0.01em]">Planner</span>
 
-            <span className="text-primary text-[18px] font-bold tracking-[-0.01em]">&nbsp;AI</span>
+            <span className="text-primary text-lg font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </h1>
 
           {/* Heading — re-animates on tab change via key */}
@@ -546,7 +546,7 @@ export function AuthPage() {
 
             {/* Sliding primary indicator */}
             <div
-              className={`from-primary to-primary-light absolute bottom-0 h-[2px] w-1/2 rounded-full bg-linear-to-r transition-all duration-300 ease-in-out ${tab === 'signin' ? 'left-0' : 'left-1/2'}`}
+              className={`from-primary to-primary-light absolute bottom-0 h-0.5 w-1/2 rounded-full bg-linear-to-r transition-all duration-300 ease-in-out ${tab === 'signin' ? 'left-0' : 'left-1/2'}`}
             />
           </div>
 
@@ -575,7 +575,7 @@ export function AuthPage() {
             onClick={() => {
               window.location.href = GOOGLE_AUTH_URL
             }}
-            className="text-slate hover:border-primary hover:bg-primary/10 group flex h-11 w-full animate-[auth-up_0.5s_ease-out_forwards] items-center justify-center gap-2.5 rounded-[8px] border border-gray-200 dark:border-white/8 text-[13px] font-medium opacity-0 transition-[color,border-color,background] duration-300 [animation-delay:0.3s]"
+            className="text-slate hover:border-primary hover:bg-primary/10 group flex h-11 w-full animate-[auth-up_0.5s_ease-out_forwards] items-center justify-center gap-2.5 rounded-lg border border-gray-200 dark:border-white/8 text-[13px] font-medium opacity-0 transition-[color,border-color,background] duration-300 [animation-delay:0.3s]"
           >
             <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
               <path
