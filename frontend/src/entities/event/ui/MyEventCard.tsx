@@ -128,8 +128,7 @@ export function MyEventCard({
         </div>
 
         {/* Footer link */}
-        <div className="flex items-center justify-between border-t border-white/5 pt-1">
-          <span className="text-cream/30 text-[11px]">ID: {event.id.slice(0, 8)}</span>
+        <div className="flex items-center justify-end border-t border-white/5 pt-1">
           <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-xs font-medium transition-colors duration-200">
             Ko'rish
             <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
