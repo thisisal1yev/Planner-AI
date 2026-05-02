@@ -17,14 +17,14 @@ export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
     <Link
       to={`/venues/${venue.id}`}
       className={cn(
-        `group bg-card hover:border-primary/30! relative flex animate-[svc-in_0.45s_ease-out_both] flex-col overflow-hidden rounded-2xl border border-white/8 transition-all duration-280 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:translate-y-[-5px] hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)]`,
+        `group bg-card hover:border-primary/30! relative flex animate-[svc-in_0.45s_ease-out_both] flex-col overflow-hidden rounded-2xl border border-white/8 transition-all duration-280 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.25 hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)]`,
         className
       )}
       style={{ animationDelay: `${(index % 12) * 0.04}s` }}
     >
       {/* Animated primary shimmer rule */}
       <div
-        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-[2px] origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-0.5 origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, #4c8ca7 40%, #7ab8cc 60%, transparent 100%)',
@@ -54,17 +54,23 @@ export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
           }}
         />
 
+        {/* Top badges */}
         <div className="absolute top-3 flex w-full items-center justify-between px-4">
-          {/* Capacity — top left stat */}
           <div className="flex items-baseline gap-1 rounded-lg border border-white/10 bg-[rgba(8,15,25,0.55)] px-2.5 py-1.5 backdrop-blur-sm">
             <span
-              className="text-cream/90 text-lg leading-none font-bold"
+              className="text-cream/90 text-[18px] leading-none font-bold"
               style={{ fontVariantNumeric: 'tabular-nums' }}
             >
               {venue.capacity.toLocaleString()}
             </span>
             <span className="text-cream/45 text-[10px]">o'rin</span>
           </div>
+
+          {venue.category && (
+            <div className="border-primary/30 text-primary/80 inline-flex items-center rounded-full border bg-[rgba(8,15,25,0.55)] px-2.25 py-0.75 text-[10px] font-medium backdrop-blur-sm">
+              {venue.category.name}
+            </div>
+          )}
 
           {/* Rating — top right */}
           {venue.ratingStats && venue.ratingStats.count > 0 ? (
