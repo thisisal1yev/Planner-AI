@@ -31,7 +31,7 @@ export function AdminUsersPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: userKeys.list({ page, search }),
-    queryFn: () => usersApi.list({ page, limit: 20, search: search || undefined }),
+    queryFn: () => usersApi.list({ page, limit: 12, search: search || undefined }),
   })
 
   const deleteMutation = useMutation({

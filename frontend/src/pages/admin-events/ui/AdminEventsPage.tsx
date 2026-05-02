@@ -26,7 +26,7 @@ export function AdminEventsPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: eventKeys.list({ page, search, status }),
-    queryFn: () => eventsApi.list({ page, limit: 20, status: status || undefined, title: search || undefined }),
+    queryFn: () => eventsApi.list({ page, limit: 12, status: status || undefined, title: search || undefined }),
   })
 
   const publishMutation = useMutation({
