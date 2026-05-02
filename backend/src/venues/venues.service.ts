@@ -32,7 +32,7 @@ export class VenuesService {
    */
   async findMany(query: QueryVenuesDto) {
     const page = query.page ?? 1;
-    const limit = query.limit ?? 20;
+    const limit = query.limit ?? 12;
     const skip = (page - 1) * limit;
 
     const where: Prisma.SquareWhereInput = {};
@@ -48,7 +48,7 @@ export class VenuesService {
         where,
         skip,
         take: limit,
-        include: { ratingStats: true },
+        include: { ratingStats: true, characteristics: true },
         orderBy: { createdAt: 'desc' },
       }),
       this.prisma.square.count({ where }),

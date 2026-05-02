@@ -42,6 +42,17 @@ export class VenuesController {
     return this.venuesService.findMany(query);
   }
 
+  @Get('my')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: "List current user's own venues" })
+  getMyVenues(
+    @CurrentUser('id') userId: string,
+    @Query() query: QueryVenuesDto,
+  ) {
+    return this.venuesService.findMany({ ...query, ownerId: userId });
+  }
+
   @Get(':id')
   @Public()
   @ApiOperation({ summary: 'Get venue details' })
