@@ -2,7 +2,7 @@ import { hashSync } from 'bcrypt';
 import type { Faker } from '@faker-js/faker';
 import { Role } from '../../../generated/prisma/enums';
 import { SEED_PASSWORD } from '../config';
-import { randomUzbekFullName, emailFromName } from '../helpers/faker';
+import { randomUzbekFullName, emailFromName, randomUzbekPhone } from '../helpers/faker';
 
 export type GeneratedUser = {
   email: string;
@@ -23,6 +23,7 @@ export function makeUser(f: Faker, role: Role, indexHint = 0): GeneratedUser {
     firstName,
     lastName,
     role,
+    phone: randomUzbekPhone(f),
     passwordHash: hashSync(SEED_PASSWORD, 10),
     avatarUrl: `https://i.pravatar.cc/150?img=${50 + indexHint}`,
     isVerified: f.datatype.boolean({ probability: 0.9 }),

@@ -33,7 +33,7 @@ export function AdminVenuesPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: venueKeys.list({ page }),
-    queryFn: () => venuesApi.list({ page, limit: 20 }),
+    queryFn: () => venuesApi.list({ page, limit: 12 }),
   })
 
   const deleteMutation = useMutation({

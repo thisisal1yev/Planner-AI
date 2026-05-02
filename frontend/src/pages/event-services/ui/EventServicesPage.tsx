@@ -57,7 +57,7 @@ function AttachModal({ eventId, onClose }: { eventId: string; onClose: () => voi
 
   const { data: allServices } = useQuery({
     queryKey: serviceKeys.allFlat(),
-    queryFn: () => servicesApi.list({ limit: 100 }),
+    queryFn: () => servicesApi.list({ limit: 12 }),
   })
 
   const attachMutation = useMutation({

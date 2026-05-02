@@ -30,7 +30,7 @@ export class ServicesService {
    */
   async findMany(query: QueryServicesDto) {
     const page = query.page ?? 1;
-    const limit = query.limit ?? 20;
+    const limit = query.limit ?? 12;
     const skip = (page - 1) * limit;
 
     const where: Prisma.ServiceWhereInput = {};

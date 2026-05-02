@@ -24,7 +24,7 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 import { ServicesService } from './services.service';
 
 @ApiTags('Services')
-@Controller()
+@Controller('services')
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
@@ -37,21 +37,32 @@ export class ServicesController {
     return this.servicesService.create(userId, dto);
   }
 
-  @Get('services')
+  @Get()
   @Public()
   @ApiOperation({ summary: 'List services with filters' })
   findMany(@Query() query: QueryServicesDto) {
     return this.servicesService.findMany(query);
   }
 
-  @Get('services/:id')
+  @Get('my')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: "List current user's own services" })
+  getMyServices(
+    @CurrentUser('id') userId: string,
+    @Query() query: QueryServicesDto,
+  ) {
+    return this.servicesService.findMany({ ...query, vendorId: userId });
+  }
+
+  @Get(':id')
   @Public()
   @ApiOperation({ summary: 'Get service details' })
   findOne(@Param('id') id: string) {
     return this.servicesService.findOne(id);
   }
 
-  @Patch('services/:id')
+  @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'VENDOR')
   @ApiBearerAuth()
@@ -83,7 +94,7 @@ export class ServicesController {
     return this.servicesService.getEventServices(eventId);
   }
 
-  @Delete('events/:eventId/services/:eventServiceId')
+  @Delete('events/:eventId/:eventServiceId')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)

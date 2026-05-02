@@ -30,6 +30,10 @@ export const venuesApi = {
     const { data } = await apiClient.get('/venues', { params })
     return { data: data.data, meta: data.meta }
   },
+  myList: async (params?: QueryVenuesDto): Promise<PaginatedResponse<Venue>> => {
+    const { data } = await apiClient.get('/venues/my', { params })
+    return { data: data.data, meta: data.meta }
+  },
   get: async (id: string): Promise<Venue> => {
     const { data } = await apiClient.get(`/venues/${id}`)
     return data.data

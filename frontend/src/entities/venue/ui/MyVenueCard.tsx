@@ -4,18 +4,18 @@ import { formatUZS } from '@shared/lib/dateUtils'
 import { cn } from '@/shared/lib/utils'
 import type { Venue } from '../model/types'
 
-interface VenueCardProps {
+interface MyVenueCardProps {
   venue: Venue
   index: number
   className?: string
 }
 
-export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
+export function MyVenueCard({ venue, className, index = 0 }: MyVenueCardProps) {
   const amenities = (venue.characteristics ?? []).map((c) => ({ key: c.id, label: c.name }))
 
   return (
     <Link
-      to={`/venues/${venue.id}`}
+      to={`/my-venues/${venue.id}`}
       className={cn(
         `group bg-card hover:border-primary/30! relative flex animate-[svc-in_0.45s_ease-out_both] flex-col overflow-hidden rounded-2xl border border-white/8 transition-all duration-280 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.25 hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)]`,
         className
@@ -31,7 +31,7 @@ export function VenueCard({ venue, className, index = 0 }: VenueCardProps) {
         }}
       />
 
-      {/* ── Image ── */}
+      {/* Image */}
       <div className="relative h-52 shrink-0 overflow-hidden">
         {venue.imageUrls[0] ? (
           <img

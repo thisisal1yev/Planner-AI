@@ -1,21 +1,21 @@
 import { Link } from 'react-router'
-import { ArrowRight, MapPin, Star } from 'lucide-react'
+import { MapPin, Star, ArrowRight } from 'lucide-react'
 import { formatUZS } from '@shared/lib/dateUtils'
 import { cn } from '@/shared/lib/utils'
 import type { Service } from '../model/types'
 
-interface ServiceCardProps {
+interface MyServiceCardProps {
   service: Service
   index: number
   className?: string
 }
 
-export function ServiceCard({ service, className, index = 0 }: ServiceCardProps) {
+export function MyServiceCard({ service, className, index = 0 }: MyServiceCardProps) {
   return (
     <Link
-      to={`/services/${service.id}`}
+      to={`/my-services/${service.id}`}
       className={cn(
-        `group bg-card hover:border-primary/30! relative flex animate-[svc-in_0.45s_ease-out_both] flex-col overflow-hidden rounded-2xl border border-white/8 transition-all duration-280 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.25 hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)]`,
+        'group bg-card hover:border-primary/30! relative flex animate-[svc-in_0.45s_ease-out_both] flex-col overflow-hidden rounded-2xl border border-white/8 transition-all duration-280 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.25 hover:shadow-[0_14px_40px_rgba(0,0,0,0.14),0_0_0_1px_rgba(76,140,167,0.28)]',
         className
       )}
       style={{ animationDelay: `${(index % 12) * 0.04}s` }}
@@ -29,7 +29,7 @@ export function ServiceCard({ service, className, index = 0 }: ServiceCardProps)
         }}
       />
 
-      {/* ── Image ── */}
+      {/* Image */}
       <div className="relative h-52 shrink-0 overflow-hidden">
         {service.imageUrls[0] ? (
           <img

@@ -39,3 +39,11 @@ export function randomUzbekFullName(f: Faker): { firstName: string; lastName: st
     lastName: f.helpers.arrayElement(UZ_LAST_NAMES),
   };
 }
+
+const UZ_OPERATOR_CODES = ['90', '91', '93', '94', '95', '97', '98', '99', '33', '50', '55', '77', '88'];
+
+export function randomUzbekPhone(f: Faker): string {
+  const code = f.helpers.arrayElement(UZ_OPERATOR_CODES);
+  const number = f.string.numeric(7);
+  return `+998${code}${number}`;
+}
