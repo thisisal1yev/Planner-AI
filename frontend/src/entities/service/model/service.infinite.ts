@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { servicesApi, type QueryServicesDto } from '../api/servicesApi'
 import { serviceKeys } from '@shared/api/queryKeys'
+import { useAuthStore } from '@shared/model/auth.store'
 
 export function useInfiniteServices(filters: Omit<QueryServicesDto, 'page' | 'limit'> = {}) {
   return useInfiniteQuery({
@@ -10,5 +11,18 @@ export function useInfiniteServices(filters: Omit<QueryServicesDto, 'page' | 'li
     initialPageParam: 1,
     getNextPageParam: (last) =>
       last.meta.page < last.meta.totalPages ? last.meta.page + 1 : undefined,
+  })
+}
+
+export function useInfiniteMyServices() {
+  const userId = useAuthStore((s) => s.user?.id)
+  return useInfiniteQuery({
+    queryKey: [...serviceKeys.myList(), userId],
+    queryFn: ({ pageParam }) =>
+      servicesApi.myList({ page: pageParam as number, limit: 12 }),
+    initialPageParam: 1,
+    getNextPageParam: (last) =>
+      last.meta.page < last.meta.totalPages ? last.meta.page + 1 : undefined,
+    enabled: !!userId,
   })
 }

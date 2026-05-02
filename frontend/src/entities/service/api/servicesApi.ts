@@ -33,6 +33,10 @@ export const servicesApi = {
     const { data } = await apiClient.get('/services', { params })
     return { data: data.data, meta: data.meta }
   },
+  myList: async (params?: Omit<QueryServicesDto, 'vendorId'>): Promise<PaginatedResponse<Service>> => {
+    const { data } = await apiClient.get('/services/my', { params })
+    return { data: data.data, meta: data.meta }
+  },
   get: async (id: string): Promise<Service> => {
     const { data } = await apiClient.get(`/services/${id}`)
     return data.data
