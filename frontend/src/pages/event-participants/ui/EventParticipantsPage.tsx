@@ -68,7 +68,7 @@ function QrModal({ onClose }: { onClose: () => void }) {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <QrCode className="size-4 text-primary/70" />
-            <p className="font-semibold text-[14px] text-foreground">{STRINGS.qrModalTitle}</p>
+            <p className="font-semibold text-sm text-foreground">{STRINGS.qrModalTitle}</p>
           </div>
           <button onClick={onClose} className="text-muted-foreground/50 hover:text-foreground transition-colors">
             <X className="size-4" />
@@ -94,7 +94,7 @@ function QrModal({ onClose }: { onClose: () => void }) {
               {mutation.data.valid
                 ? <CheckCircle2 className="size-4 shrink-0" />
                 : <XCircle className="size-4 shrink-0" />}
-              <span className="text-[12px] font-medium">
+              <span className="text-xs font-medium">
                 {mutation.data.valid ? STRINGS.valid : STRINGS.invalid}
               </span>
               {mutation.data.valid && mutation.data.ticket && (
@@ -108,7 +108,7 @@ function QrModal({ onClose }: { onClose: () => void }) {
           {mutation.isError && (
             <div className="flex items-center gap-2 rounded-lg border border-destructive/20 bg-destructive/8 px-3 py-2">
               <XCircle className="size-4 text-destructive shrink-0" />
-              <span className="text-[12px] text-destructive">{STRINGS.invalid}</span>
+              <span className="text-xs text-destructive">{STRINGS.invalid}</span>
             </div>
           )}
 
@@ -165,7 +165,7 @@ export function EventParticipantsPage() {
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex items-center gap-2.5 flex-1 min-w-0">
           <Users className="size-5 text-primary/70 shrink-0" />
-          <h1 className="text-[18px] font-bold text-foreground tracking-tight">{STRINGS.title}</h1>
+          <h1 className="text-lg font-bold text-foreground tracking-tight">{STRINGS.title}</h1>
           <span className="text-[11px] font-medium text-muted-foreground/50 border border-border rounded-full px-2.5 py-0.5 bg-muted/20">
             {participants?.length ?? 0} ta
           </span>
@@ -173,7 +173,7 @@ export function EventParticipantsPage() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setQrOpen(true)}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-[12px] font-medium border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium border border-border text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
           >
             <QrCode className="size-3.5" />
             {STRINGS.validateQr}
@@ -181,7 +181,7 @@ export function EventParticipantsPage() {
           <button
             onClick={() => exportCsv(filtered)}
             disabled={filtered.length === 0}
-            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-[12px] font-medium bg-primary/10 border border-primary/20 text-primary hover:bg-primary/15 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium bg-primary/10 border border-primary/20 text-primary hover:bg-primary/15 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <Download className="size-3.5" />
             {STRINGS.export}
@@ -244,9 +244,9 @@ export function EventParticipantsPage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-[12px] text-muted-foreground/70 hidden sm:table-cell">{u.email}</td>
-                  <td className="px-4 py-3 text-[12px] text-muted-foreground/60 hidden md:table-cell">{u.phone ?? '—'}</td>
-                  <td className="px-4 py-3 text-[12px] text-muted-foreground/50 hidden lg:table-cell">
+                  <td className="px-4 py-3 text-xs text-muted-foreground/70 hidden sm:table-cell">{u.email}</td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground/60 hidden md:table-cell">{u.phone ?? '—'}</td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground/50 hidden lg:table-cell">
                     {formatDateDefault(u.createdAt)}
                   </td>
                 </tr>

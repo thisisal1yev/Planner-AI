@@ -46,7 +46,7 @@ export function AdminVenuesPage() {
 
       {/* ── Header ── */}
       <div className="flex items-center gap-3">
-        <h1 className="text-[18px] font-bold text-foreground tracking-tight">Maydonlar</h1>
+        <h1 className="text-lg font-bold text-foreground tracking-tight">Maydonlar</h1>
         {data?.meta && (
           <span className="text-[11px] font-medium text-muted-foreground/60 border border-border rounded-full px-2.5 py-0.5 bg-muted/30">
             {data.meta.total} ta
@@ -110,12 +110,12 @@ export function AdminVenuesPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden sm:table-cell">{v.city}</td>
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden md:table-cell">
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden sm:table-cell">{v.city}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell">
                         {v.capacity.toLocaleString()} kishi
                       </td>
                       
-                      <td className="px-4 py-3 text-[12px] text-muted-foreground hidden lg:table-cell">
+                      <td className="px-4 py-3 text-xs text-muted-foreground hidden lg:table-cell">
                         {formatUZS(v.pricePerDay)}
                       </td>
 
@@ -133,12 +133,12 @@ export function AdminVenuesPage() {
 
                       <td className="mr-auto px-4 py-3 hidden md:table-cell">
                         {v.ratingStats?.avg ?? 0 > 0 ? (
-                          <span className="inline-flex items-center gap-1 text-[12px] fill-amber-400 text-amber-400">
+                          <span className="inline-flex items-center gap-1 text-xs fill-amber-400 text-amber-400">
                             <Star className="size-3 fill-amber-400 text-amber-400" />
                             {parseFloat((v.ratingStats?.avg ?? 0).toFixed(1))}
                           </span>
                         ) : (
-                          <span className="text-[12px] text-muted-foreground/30">—</span>
+                          <span className="text-xs text-muted-foreground/30">—</span>
                         )}
                       </td>
 

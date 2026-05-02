@@ -100,7 +100,7 @@ export function MyEventDetailPage() {
   return (
     <div className="flex flex-col pb-16">
       {/* ── Cinematic hero ── */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {event.bannerUrls && event.bannerUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -137,7 +137,7 @@ export function MyEventDetailPage() {
         {/* Status badge */}
         <div className="absolute top-5 right-5 z-20">
           <div
-            className="inline-flex items-center gap-[5px] rounded-full border px-[10px] py-[4px] text-[10px] font-medium backdrop-blur-sm"
+            className="inline-flex items-center gap-[5px] rounded-full border px-2.5 py-1 text-[10px] font-medium backdrop-blur-sm"
             style={{
               color: statusColor,
               borderColor: `${statusColor}44`,
@@ -268,7 +268,7 @@ export function MyEventDetailPage() {
               </h2>
               <Link to={`/venues/${event.venue.id}`} className="group block">
                 <div className="border-border/50 hover:border-primary/25 bg-card/35 relative overflow-hidden rounded-xl border transition-all duration-300">
-                  <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                  <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
                   <div className="flex items-center justify-between gap-3 p-5 pl-7">
                     <div className="flex items-center gap-4">
                       <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">
@@ -307,7 +307,7 @@ export function MyEventDetailPage() {
                       key={tier.id}
                       className="border-border/50 bg-card/35 relative overflow-hidden rounded-xl border"
                     >
-                      <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                      <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
                       <div className="flex items-center justify-between gap-3 p-5 pl-7">
                         <div className="flex items-center gap-3">
                           <div className="bg-primary/8 border-primary/12 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border">
@@ -355,7 +355,7 @@ export function MyEventDetailPage() {
               {navTiles.map(({ to, icon: Icon, label, sub }) => (
                 <Link key={to} to={to} className="group block">
                   <div className="border-border/50 hover:border-primary/25 bg-card/35 relative overflow-hidden rounded-xl border transition-all duration-300">
-                    <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-[2px] bg-linear-to-b to-transparent" />
+                    <div className="from-primary/60 via-primary/25 absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b to-transparent" />
                     <div className="flex items-center justify-between gap-3 p-5 pl-7">
                       <div className="flex items-center gap-4">
                         <div className="bg-primary/8 border-primary/12 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border">

@@ -28,7 +28,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
             {initials}
           </div>
         )}
-        <span className="text-[14px] font-semibold text-foreground/85">
+        <span className="text-sm font-semibold text-foreground/85">
           {fullName}
         </span>
       </div>

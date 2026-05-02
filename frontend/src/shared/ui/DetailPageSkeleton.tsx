@@ -5,7 +5,7 @@ export function DetailPageSkeleton() {
     <div className="flex flex-col gap-0 pb-16">
       <Skeleton className="mb-6 h-4 w-32" />
       <Skeleton
-        className="h-[480px] w-full"
+        className="h-120 w-full"
         style={{ clipPath: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)' }}
       />
       <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-12">

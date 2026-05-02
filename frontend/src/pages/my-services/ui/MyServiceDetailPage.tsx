@@ -63,7 +63,7 @@ export function MyServiceDetailPage() {
   return (
     <div className="flex flex-col pb-16">
       {/* ── Cinematic hero ── */}
-      <div className="relative h-[58vh] max-h-[560px] min-h-[380px] w-full overflow-hidden rounded-2xl">
+      <div className="relative h-[58vh] max-h-140 min-h-95 w-full overflow-hidden rounded-2xl">
         {service.imageUrls && service.imageUrls.length > 0 ? (
           <Swiper
             modules={[Autoplay]}
@@ -105,7 +105,7 @@ export function MyServiceDetailPage() {
 
         {/* Category badge */}
         <div className="absolute top-5 right-5 z-20">
-          <div className="inline-flex items-center gap-1.5 rounded-full border bg-[rgba(8,15,25,0.65)] px-[10px] py-[4px] text-[10px] font-medium backdrop-blur-sm">
+          <div className="inline-flex items-center gap-1.5 rounded-full border bg-[rgba(8,15,25,0.65)] px-2.5 py-1 text-[10px] font-medium backdrop-blur-sm">
             <span>◆</span>
             {service.category?.name}
           </div>
@@ -140,15 +140,16 @@ export function MyServiceDetailPage() {
           </h1>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="text-primary/60 h-3.5 w-3.5" />
-              <span>{service.city}</span>
-            </div>
-
-            <span className="text-white/25">•</span>
             <div className="flex items-center gap-1">
               <StarRating rating={rating} />
               <span className="text-white/40">({reviewCount})</span>
+            </div>
+
+            <span className="text-white/25">•</span>
+
+            <div className="flex items-center gap-1.5">
+              <MapPin className="text-primary/60 h-3.5 w-3.5" />
+              <span>{service.city}</span>
             </div>
           </div>
         </div>
@@ -163,10 +164,11 @@ export function MyServiceDetailPage() {
             <h2 className="text-muted-foreground/35 mb-5 text-[10px] font-semibold tracking-[0.22em] uppercase">
               Ma'lumotlar
             </h2>
+
             <div className="bg-border/30 grid grid-cols-3 gap-px overflow-hidden rounded-xl">
               <div className="bg-card/50 flex flex-col gap-2.5 px-5 py-5">
                 <div className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full" />
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
                   <span className="text-muted-foreground/35 text-[10px] tracking-[0.18em] uppercase">
                     Kategoriya
                   </span>
@@ -194,6 +196,7 @@ export function MyServiceDetailPage() {
                     Reyting
                   </span>
                 </div>
+
                 <p className="text-foreground/85 font-mono text-sm font-semibold tracking-tight">
                   {rating > 0 ? `${rating.toFixed(1)} / 5` : '—'}
                 </p>

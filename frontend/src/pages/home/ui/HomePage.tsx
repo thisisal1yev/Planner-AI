@@ -152,7 +152,7 @@ function Ornament({ size = 380, op = 0.13 }: { size?: number; op?: number }) {
 
 function Label({ text }: { text: string }) {
   return (
-    <p className="text-primary mb-[10px] text-[11px] font-medium tracking-[0.18em] uppercase">
+    <p className="text-primary mb-2.5 text-[11px] font-medium tracking-[0.18em] uppercase">
       {text}
     </p>
   )
@@ -187,7 +187,7 @@ export function HomePage() {
 
         <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-28 text-center">
           {/* Badge */}
-          <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-[6px] text-[12px] tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
+          <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
             <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
             O'zbekistondagi №1 tadbirlar marketi
           </div>
@@ -203,13 +203,13 @@ export function HomePage() {
           </h1>
 
           {/* Sub */}
-          <p className="text-slate mx-auto mb-[44px] max-w-[520px] animate-[lp-up_0.75s_ease-out_forwards] text-lg leading-[1.75] opacity-0 [animation-delay:0.36s]">
+          <p className="text-slate mx-auto mb-11 max-w-130 animate-[lp-up_0.75s_ease-out_forwards] text-lg leading-[1.75] opacity-0 [animation-delay:0.36s]">
             Maydonlar, xizmatlar, chiptalar — hammasi bir joyda. Planner AI tashkilotchilarga
             tadbirlarni tez va samarali ishga tushirishga yordam beradi.
           </p>
 
           {/* CTAs */}
-          <div className="mb-[68px] flex animate-[lp-up_0.75s_ease-out_forwards] flex-col justify-center gap-3 opacity-0 [animation-delay:0.5s] sm:flex-row">
+          <div className="mb-17 flex animate-[lp-up_0.75s_ease-out_forwards] flex-col justify-center gap-3 opacity-0 [animation-delay:0.5s] sm:flex-row">
             <Link to="/events" className="btn-primary">
               Tadbirlarni ko'rish →
             </Link>
@@ -226,17 +226,17 @@ export function HomePage() {
                 key={s.l}
                 className="bg-primary/4 border-primary/15 rounded-xl border px-3 py-[18px]"
               >
-                <div className="text-primary-light font-serif text-[30px] leading-none font-bold">
+                <div className="text-primary-light font-serif text-3xl leading-none font-bold">
                   {s.v}
                 </div>
-                <div className="text-slate mt-[5px] text-[12px] tracking-[0.04em]">{s.l}</div>
+                <div className="text-slate mt-[5px] text-xs tracking-[0.04em]">{s.l}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* bottom fade */}
-        <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[100px] bg-[linear-gradient(to_bottom,transparent,#ffffff)] dark:bg-[linear-gradient(to_bottom,transparent,#0C1520)]" />
+        <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-25 bg-[linear-gradient(to_bottom,transparent,#ffffff)] dark:bg-[linear-gradient(to_bottom,transparent,#0C1520)]" />
       </section>
 
       {/* ════════════════════════════════ MARQUEE ════════════════════════════ */}
@@ -245,7 +245,7 @@ export function HomePage() {
           {[...MQ, ...MQ, ...MQ, ...MQ].map((item, i) => (
             <span
               key={i}
-              className="text-slate mr-[44px] flex items-center gap-[44px] text-[12px] tracking-[0.14em] whitespace-nowrap uppercase"
+              className="text-slate mr-11 flex items-center gap-11 text-xs tracking-[0.14em] whitespace-nowrap uppercase"
             >
               {item}
               <span className="text-primary text-[7px]">◆</span>
@@ -255,8 +255,8 @@ export function HomePage() {
       </div>
 
       {/* ════════════════════════════════ CATEGORIES ════════════════════════ */}
-      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
-        <div className="mx-auto max-w-[1100px]">
+      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-22">
+        <div className="mx-auto max-w-275">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Kategoriyalar" />
@@ -276,10 +276,10 @@ export function HomePage() {
               <Link
                 key={c.l}
                 to={c.to}
-                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-[10px] rounded-xl border bg-gray-50 px-[10px] py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px] dark:bg-white/[0.018]"
+                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-2.5 rounded-xl border bg-gray-50 px-2.5 py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px] dark:bg-white/[0.018]"
               >
                 <span className="text-[26px]">{c.e}</span>
-                <span className="dark:text-cream text-center text-[12px] leading-[1.3] font-medium text-gray-900">
+                <span className="dark:text-cream text-center text-xs leading-[1.3] font-medium text-gray-900">
                   {c.l}
                 </span>
               </Link>
@@ -289,8 +289,8 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ EVENTS ════════════════════════════ */}
-      <section className="dark:bg-navy bg-white px-6 py-[88px]">
-        <div className="mx-auto max-w-[1100px]">
+      <section className="dark:bg-navy bg-white px-6 py-22">
+        <div className="mx-auto max-w-275">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Tadbirlar" />
@@ -325,15 +325,15 @@ export function HomePage() {
       {/* ════════════════════════════════ HOW IT WORKS ══════════════════════ */}
       <section
         id="how-it-works"
-        className="dark:bg-navy-3 border-primary/15 border-y bg-slate-50 px-6 py-[88px]"
+        className="dark:bg-navy-3 border-primary/15 border-y bg-slate-50 px-6 py-22"
       >
-        <div className="mx-auto max-w-[1100px]">
-          <div className="mb-[72px] text-center">
+        <div className="mx-auto max-w-275">
+          <div className="mb-18 text-center">
             <Label text="Jarayon" />
             <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
               Bu qanday ishlaydi
             </h2>
-            <p className="text-slate mx-auto mt-3 max-w-[380px] text-[15px] leading-relaxed">
+            <p className="text-slate mx-auto mt-3 max-w-95 text-[15px] leading-relaxed">
               Uch oddiy qadam — va tadbiringiz ishga tushishga tayyor
             </p>
           </div>
@@ -352,7 +352,7 @@ export function HomePage() {
 
                 <div className="bg-primary mb-4 h-0.5 w-9 opacity-55" />
 
-                <h3 className="dark:text-cream mb-[10px] text-[19px] font-semibold text-gray-900">
+                <h3 className="dark:text-cream mb-2.5 text-[19px] font-semibold text-gray-900">
                   {s.t}
                 </h3>
 
@@ -364,8 +364,8 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ VENUES ════════════════════════════ */}
-      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
-        <div className="mx-auto max-w-[1100px]">
+      <section className="dark:bg-navy-2 bg-gray-50 px-6 py-22">
+        <div className="mx-auto max-w-275">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
             <div>
               <Label text="Maydonlar" />
@@ -400,8 +400,8 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ FEATURES ══════════════════════════ */}
-      <section id="features" className="dark:bg-navy bg-white px-6 py-[88px]">
-        <div className="mx-auto max-w-[1100px]">
+      <section id="features" className="dark:bg-navy bg-white px-6 py-22">
+        <div className="mx-auto max-w-275">
           <div className="mb-16 text-center">
             <Label text="Imkoniyatlar" />
             <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
@@ -417,10 +417,10 @@ export function HomePage() {
                 key={f.t}
                 className="card-hover bg-primary/2.5 border-primary/15 rounded-2xl border px-[22px] py-7"
               >
-                <div className="bg-primary/6 border-primary/15 mb-[18px] inline-flex h-[52px] w-[52px] items-center justify-center rounded-xl border text-[26px]">
+                <div className="bg-primary/6 border-primary/15 mb-[18px] inline-flex h-13 w-13 items-center justify-center rounded-xl border text-[26px]">
                   {f.e}
                 </div>
-                <h3 className="dark:text-cream mb-2 text-[16px] font-semibold text-gray-900">
+                <h3 className="dark:text-cream mb-2 text-base font-semibold text-gray-900">
                   {f.t}
                 </h3>
                 <p className="text-slate text-sm leading-[1.65]">{f.d}</p>
@@ -433,9 +433,9 @@ export function HomePage() {
       {/* ════════════════════════════════ PRICING ═══════════════════════════ */}
       <section
         id="pricing"
-        className="dark:bg-navy-3 border-primary/15 border-t bg-slate-50 px-6 py-[88px]"
+        className="dark:bg-navy-3 border-primary/15 border-t bg-slate-50 px-6 py-22"
       >
-        <div className="mx-auto max-w-[960px]">
+        <div className="mx-auto max-w-240">
           <div className="mb-16 text-center">
             <Label text="Narxlar" />
             <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
@@ -464,7 +464,7 @@ export function HomePage() {
                   </div>
                 )}
 
-                <p className="text-slate mb-[10px] text-[11px] tracking-[0.12em] uppercase">
+                <p className="text-slate mb-2.5 text-[11px] tracking-[0.12em] uppercase">
                   {p.n}
                 </p>
                 <div className="mb-1 flex items-baseline gap-1">
@@ -476,13 +476,13 @@ export function HomePage() {
 
                 <p className="text-slate mb-6 text-[13px]">{p.desc}</p>
 
-                <ul className="m-0 mb-7 flex flex-1 list-none flex-col gap-[10px] p-0">
+                <ul className="m-0 mb-7 flex flex-1 list-none flex-col gap-2.5 p-0">
                   {p.fs.map((f) => (
                     <li
                       key={f}
-                      className="dark:text-cream flex items-start gap-[10px] text-sm text-gray-700"
+                      className="dark:text-cream flex items-start gap-2.5 text-sm text-gray-700"
                     >
-                      <span className="text-primary mt-[2px] shrink-0 text-[12px] font-bold">
+                      <span className="text-primary mt-0.5 shrink-0 text-xs font-bold">
                         ✓
                       </span>
                       {f}
@@ -508,8 +508,8 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ CONTACT ═══════════════════════════ */}
-      <section id="contact" className="dark:bg-navy-2 bg-gray-50 px-6 py-[88px]">
-        <div className="mx-auto max-w-[1000px]">
+      <section id="contact" className="dark:bg-navy-2 bg-gray-50 px-6 py-22">
+        <div className="mx-auto max-w-250">
           <div className="mb-14 text-center">
             <Label text="Aloqa" />
             <h2 className="dark:text-cream font-serif text-[clamp(32px,5vw,48px)] font-bold text-gray-900">
@@ -521,7 +521,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="flex flex-col gap-[14px]">
+            <div className="flex flex-col gap-3.5">
               {[
                 { ic: '📍', t: 'Manzil', v: "Toshkent, Amir Temur ko'chasi, 107B" },
                 { ic: '📞', t: 'Telefon', v: '+998 71 200 00 00' },
@@ -535,7 +535,7 @@ export function HomePage() {
                   <span className="shrink-0 text-[22px]">{x.ic}</span>
 
                   <div>
-                    <p className="text-primary-light mb-[3px] text-[12px] font-semibold tracking-[0.06em] uppercase">
+                    <p className="text-primary-light mb-[3px] text-xs font-semibold tracking-[0.06em] uppercase">
                       {x.t}
                     </p>
 
@@ -589,7 +589,7 @@ export function HomePage() {
 
       {/* ════════════════════════════════ CTA ═══════════════════════════════ */}
       <section className="dark:bg-navy bg-white px-6 py-20">
-        <div className="mx-auto max-w-[1100px]">
+        <div className="mx-auto max-w-275">
           <div className="lp-noise border-primary/[0.28] relative overflow-hidden rounded-3xl border bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(76,140,167,0.07),transparent_70%)] px-[clamp(24px,5vw,80px)] py-[clamp(48px,8vw,88px)] text-center">
             <div className="pointer-events-none absolute top-[-30px] right-[-30px]">
               <Ornament size={200} op={1} />
@@ -609,7 +609,7 @@ export function HomePage() {
                 </em>
               </h2>
 
-              <p className="text-slate mx-auto mb-11 max-w-[480px] text-[17px] leading-[1.75]">
+              <p className="text-slate mx-auto mb-11 max-w-120 text-[17px] leading-[1.75]">
                 Planner AI orqali muvaffaqiyatli tadbirlarni allaqachon o'tkazayotgan yuzlab
                 tashkilotchilarga qo'shiling
               </p>

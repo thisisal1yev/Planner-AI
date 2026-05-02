@@ -15,15 +15,15 @@ export function EmptyState({ icon: Icon = SlidersHorizontal, title, description,
         <Icon className="size-5 text-primary/50" />
       </div>
       <div className="text-center">
-        <p className="text-[14px] font-medium text-foreground">{title}</p>
+        <p className="text-sm font-medium text-foreground">{title}</p>
         {description && (
-          <p className="text-[12px] text-muted-foreground/50 mt-1">{description}</p>
+          <p className="text-xs text-muted-foreground/50 mt-1">{description}</p>
         )}
       </div>
       {action && (
         <button
           onClick={action.onClick}
-          className="h-8 px-4 rounded-lg border border-border text-[12px] text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
+          className="h-8 px-4 rounded-lg border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors"
         >
           {action.label}
         </button>

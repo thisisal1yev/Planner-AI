@@ -41,7 +41,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
     >
       {/* Animated primary shimmer rule at card bottom */}
       <div
-        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-[2px] origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
+        className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-0.5 origin-center scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
         style={{
           background:
             'linear-gradient(90deg, transparent 0%, #4c8ca7 40%, #7ab8cc 60%, transparent 100%)',
@@ -77,7 +77,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
           {/* Capacity — top left stat */}
           <div className="flex items-baseline gap-1 rounded-lg border border-white/10 bg-[rgba(8,15,25,0.55)] px-2.5 py-1.5 backdrop-blur-sm">
             <span
-              className="text-cream/90 text-[18px] leading-none font-bold"
+              className="text-cream/90 text-lg leading-none font-bold"
               style={{ fontVariantNumeric: 'tabular-nums' }}
             >
               {event.capacity.toLocaleString()}
@@ -112,7 +112,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
 
           {/* Title bleeds over image bottom */}
           <div className="pb-3.5">
-            <h3 className="leading- text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-[20px] font-bold transition-colors duration-200">
+            <h3 className="leading- text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-xl font-bold transition-colors duration-200">
               {event.title}
             </h3>
           </div>
@@ -121,7 +121,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
 
       {/* ── Metadata strip ── */}
       <div className="flex flex-col gap-2 px-4 py-3">
-        <div className="text-cream/40 flex items-center gap-1.5 text-[12px]">
+        <div className="text-cream/40 flex items-center gap-1.5 text-xs">
           {/* Date */}
           <Calendar className="text-primary/40 h-3 w-3 shrink-0" />
 
@@ -144,7 +144,7 @@ export function EventCard({ event, className, index = 0 }: EventCardProps) {
 
         {/* Footer */}
         <div className="group-hover:border-t-primary-dark/30 flex items-center justify-between border-t border-white/5 pt-2 transition-colors duration-200">
-          <span className="text-primary/70 group-hover:text-primary ml-auto flex items-center gap-1 text-[12px] font-medium transition-colors duration-200">
+          <span className="text-primary/70 group-hover:text-primary ml-auto flex items-center gap-1 text-xs font-medium transition-colors duration-200">
             Batafsil
             <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>

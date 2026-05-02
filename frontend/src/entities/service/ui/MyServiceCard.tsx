@@ -77,7 +77,7 @@ export function MyServiceCard({ service, className, index = 0 }: MyServiceCardPr
 
         {/* Name bleeds over image bottom */}
         <div className="absolute right-0 bottom-0 left-0 px-4 pb-3.5">
-          <h3 className="text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-[20px] leading-[1.22] font-bold transition-colors duration-200">
+          <h3 className="text-cream/95 group-hover:text-primary-light line-clamp-2 font-serif text-xl leading-[1.22] font-bold transition-colors duration-200">
             {service.name}
           </h3>
         </div>
@@ -86,7 +86,7 @@ export function MyServiceCard({ service, className, index = 0 }: MyServiceCardPr
       {/* ── Metadata strip ── */}
       <div className="flex flex-col gap-2 px-4 py-3">
         {/* Location */}
-        <div className="text-cream/40 flex items-center gap-1.5 text-[12px]">
+        <div className="text-cream/40 flex items-center gap-1.5 text-xs">
           <MapPin className="text-primary/40 h-3 w-3 shrink-0" />
           {service.city}
         </div>
@@ -98,12 +98,12 @@ export function MyServiceCard({ service, className, index = 0 }: MyServiceCardPr
               Narxdan boshlab
             </p>
 
-            <span className="text-primary text-[14px] leading-none font-semibold">
+            <span className="text-primary text-sm leading-none font-semibold">
               {formatUZS(service.priceFrom)}
             </span>
           </div>
 
-          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-[12px] font-medium transition-colors duration-200">
+          <span className="text-primary/70 group-hover:text-primary flex items-center gap-1 text-xs font-medium transition-colors duration-200">
             Batafsil
             <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
           </span>
