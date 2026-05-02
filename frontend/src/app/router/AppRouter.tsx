@@ -45,10 +45,10 @@ import { EventVolunteersPage } from '@pages/event-volunteers'
 import { EventServicesPage } from '@pages/event-services'
 
 // Vendor
-import { MyVenuesPage } from '@pages/my-venues'
+import { MyVenuesPage, MyVenueDetailPage } from '@pages/my-venues'
 import { CreateVenuePage } from '@pages/create-venue'
 import { EditVenuePage } from '@pages/edit-venue'
-import { MyServicesPage } from '@pages/my-services'
+import { MyServicesPage, MyServiceDetailPage } from '@pages/my-services'
 import { CreateServicePage } from '@pages/create-service'
 import { EditServicePage } from '@pages/edit-service'
 
@@ -117,9 +117,11 @@ export function AppRouter() {
         {/* VENDOR */}
         <Route path="/my-venues"           element={<RequireAuth><RequireRole role="VENDOR"><MyVenuesPage /></RequireRole></RequireAuth>} />
         <Route path="/my-venues/create"    element={<RequireAuth><RequireRole role="VENDOR"><CreateVenuePage /></RequireRole></RequireAuth>} />
+        <Route path="/my-venues/:id"       element={<RequireAuth><RequireRole role="VENDOR"><MyVenueDetailPage /></RequireRole></RequireAuth>} />
         <Route path="/my-venues/:id/edit"  element={<RequireAuth><RequireRole role="VENDOR"><EditVenuePage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services"         element={<RequireAuth><RequireRole role="VENDOR"><MyServicesPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services/create"  element={<RequireAuth><RequireRole role="VENDOR"><CreateServicePage /></RequireRole></RequireAuth>} />
+        <Route path="/my-services"          element={<RequireAuth><RequireRole role="VENDOR"><MyServicesPage /></RequireRole></RequireAuth>} />
+        <Route path="/my-services/create"   element={<RequireAuth><RequireRole role="VENDOR"><CreateServicePage /></RequireRole></RequireAuth>} />
+        <Route path="/my-services/:id"      element={<RequireAuth><RequireRole role="VENDOR"><MyServiceDetailPage /></RequireRole></RequireAuth>} />
         <Route path="/my-services/:id/edit" element={<RequireAuth><RequireRole role="VENDOR"><EditServicePage /></RequireRole></RequireAuth>} />
       </Route>
 
