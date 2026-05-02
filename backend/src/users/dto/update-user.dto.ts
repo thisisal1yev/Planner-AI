@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString, IsUrl } from 'class-validator';
 import { Role } from '../../../generated/prisma/enums';
 
 export class UpdateUserDto {
@@ -22,4 +22,9 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(Role)
   activeRole?: Role;
+
+  @ApiPropertyOptional({ example: 'https://i.ibb.co/xyz/photo.jpg' })
+  @IsOptional()
+  @IsUrl()
+  avatarUrl?: string;
 }

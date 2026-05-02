@@ -22,6 +22,7 @@ export interface UpdateUserDto {
   lastName?: string
   phone?: string
   role?: Role
+  avatarUrl?: string
 }
 
 export type SwitchRoleDto = Pick<UpdateUserDto, 'role'>

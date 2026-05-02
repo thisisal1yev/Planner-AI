@@ -98,12 +98,13 @@ export class UsersService {
   async updateSelf(userId: string, dto: UpdateUserDto) {
     await this.findOne(userId);
 
-    const { activeRole, firstName, lastName, phone } = dto;
+    const { activeRole, firstName, lastName, phone, avatarUrl } = dto;
     const data: Record<string, unknown> = {};
-    if (firstName !== undefined) data.firstName = firstName;
-    if (lastName  !== undefined) data.lastName  = lastName;
-    if (phone     !== undefined) data.phone      = phone;
-    if (activeRole !== undefined) data.role      = activeRole;
+    if (firstName  !== undefined) data.firstName  = firstName;
+    if (lastName   !== undefined) data.lastName   = lastName;
+    if (phone      !== undefined) data.phone       = phone;
+    if (activeRole !== undefined) data.role        = activeRole;
+    if (avatarUrl  !== undefined) data.avatarUrl   = avatarUrl;
 
     return this.prisma.extended.user.update({
       where: { id: userId },
