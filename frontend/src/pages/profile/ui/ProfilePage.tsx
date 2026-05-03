@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo } from 'react'
-import { Link } from 'react-router'
+import { data, Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { useQuery, useQueries, useMutation, useQueryClient } from '@tanstack/react-query'
 import { usersApi } from '@entities/user'
@@ -356,7 +356,7 @@ export function ProfilePage() {
   return (
     <div className="flex flex-col gap-10">
       {/* ══════════════════ PROFILE INFO ══════════════════ */}
-      <div>
+      <div className="space-y-5">
         <h1 className="text-foreground mb-6 text-2xl font-bold">Profil</h1>
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[280px_1fr]">
@@ -445,7 +445,6 @@ export function ProfilePage() {
 
                 <div>
                   <p className="text-muted-foreground text-xs">Telefon</p>
-
                   <p className="text-foreground font-medium">
                     {data?.phone ? (
                       <span className="flex items-center gap-1">
@@ -497,7 +496,6 @@ export function ProfilePage() {
               <div className="border-border flex items-center justify-between border-b px-6 py-4">
                 <div>
                   <h2 className="text-foreground font-semibold">Shaxsiy ma'lumotlar</h2>
-
                   <p className="text-muted-foreground mt-0.5 text-xs">
                     Ism, familiya va aloqa ma'lumotlaringiz
                   </p>
@@ -556,7 +554,7 @@ export function ProfilePage() {
                         Saqlashda xatolik yuz berdi
                       </p>
                     )}
-                    
+
                     <div className="flex gap-2 pt-1">
                       <Button type="submit" loading={mutation.isPending} size="sm">
                         Saqlash
@@ -616,154 +614,156 @@ export function ProfilePage() {
               <div className="p-6">
                 <p className="text-muted-foreground mb-1 text-xs">Email manzil</p>
 
-                <div className="flex items-center gap-2">
-                  <p className="text-foreground font-medium">{data?.email}</p>
-                  {data?.isVerified && (
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
-                  )}
+                <div className="p-6">
+                  <p className="text-muted-foreground mb-1 text-xs">Email manzil</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-foreground font-medium">{data?.email}</p>
+                    {data?.isVerified && (
+                      <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* ══════════════════ EVENTS ══════════════════ */}
+        {canHaveEvents && (
+          <div>
+            <SectionHeader
+              icon={<CalendarRange className="text-primary h-4 w-4" />}
+              title="Mening tadbirlarim"
+              count={eventsData?.meta.total}
+              href="/my-events"
+              createHref="/my-events/create"
+              createLabel="Yaratish"
+            />
+            {eventsLoading ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <CardSkeleton key={i} />
+                ))}
+              </div>
+            ) : events.length === 0 ? (
+              <div className="border-border rounded-2xl border border-dashed py-12 text-center">
+                <CalendarRange className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
+                <p className="text-muted-foreground mb-4 text-sm">Hozircha tadbirlar yo'q</p>
+
+                <Link to="/my-events/create">
+                  <Button size="sm" variant="outline">
+                    Birinchi tadbir yaratish
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {events.map((event, index) => (
+                  <MyEventCard key={event.id} event={event} index={index} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ══════════════════ SERVICES ══════════════════ */}
+        {canHaveServices && (
+          <div>
+            <SectionHeader
+              icon={<Wrench className="text-primary h-4 w-4" />}
+              title="Mening xizmatlarim"
+              count={servicesData?.meta.total}
+              href="/my-services"
+              createHref="/my-services/create"
+              createLabel="Yaratish"
+            />
+            {servicesLoading ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <CardSkeleton key={i} />
+                ))}
+              </div>
+            ) : services.length === 0 ? (
+              <div className="border-border rounded-2xl border border-dashed py-12 text-center">
+                <Wrench className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
+                <p className="text-muted-foreground mb-4 text-sm">Hozircha xizmatlar yo'q</p>
+
+                <Link to="/my-services/create">
+                  <Button size="sm" variant="outline">
+                    Birinchi xizmat yaratish
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {services.map((service, index) => (
+                  <MyServiceCard key={service.id} service={service} index={index} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ══════════════════ VENUES ══════════════════ */}
+        {canHaveVenues && (
+          <div>
+            <SectionHeader
+              icon={<Building2 className="text-primary h-4 w-4" />}
+              title="Mening maydonlarim"
+              count={venuesData?.meta.total}
+              href="/my-venues"
+              createHref="/my-venues/create"
+              createLabel="Yaratish"
+            />
+            {venuesLoading ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <CardSkeleton key={i} />
+                ))}
+              </div>
+            ) : venues.length === 0 ? (
+              <div className="border-border rounded-2xl border border-dashed py-12 text-center">
+                <Building2 className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
+                <p className="text-muted-foreground mb-4 text-sm">Hozircha maydonlar yo'q</p>
+
+                <Link to="/my-venues/create">
+                  <Button size="sm" variant="outline">
+                    Birinchi maydon yaratish
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {venues.map((venue, index) => (
+                  <MyVenueCard key={venue.id} venue={venue} index={index} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ══════════════════ REVIEWS ══════════════════ */}
+        {allReviews.length > 0 && (
+          <div>
+            <div className="mb-5 flex items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-500/10">
+                <MessageSquare className="h-4 w-4 text-amber-600" />
+              </div>
+
+              <h2 className="text-foreground text-xl font-bold">So'nggi sharhlar</h2>
+              <span className="text-muted-foreground bg-muted rounded-full px-2 py-0.5 text-xs font-medium">
+                {allReviews.length}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {allReviews.map((review) => (
+                <ProfileReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* ══════════════════ EVENTS ══════════════════ */}
-      {canHaveEvents && (
-        <div>
-          <SectionHeader
-            icon={<CalendarRange className="text-primary h-4 w-4" />}
-            title="Mening tadbirlarim"
-            count={eventsData?.meta.total}
-            href="/my-events"
-            createHref="/my-events/create"
-            createLabel="Yaratish"
-          />
-          {eventsLoading ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <CardSkeleton key={i} />
-              ))}
-            </div>
-          ) : events.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <CalendarRange className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha tadbirlar yo'q</p>
-
-              <Link to="/my-events/create">
-                <Button size="sm" variant="outline">
-                  Birinchi tadbir yaratish
-                </Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {events.map((event, index) => (
-                <MyEventCard key={event.id} event={event} index={index} />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════ SERVICES ══════════════════ */}
-      {canHaveServices && (
-        <div>
-          <SectionHeader
-            icon={<Wrench className="text-primary h-4 w-4" />}
-            title="Mening xizmatlarim"
-            count={servicesData?.meta.total}
-            href="/my-services"
-            createHref="/my-services/create"
-            createLabel="Yaratish"
-          />
-          {servicesLoading ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <CardSkeleton key={i} />
-              ))}
-            </div>
-          ) : services.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <Wrench className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha xizmatlar yo'q</p>
-
-              <Link to="/my-services/create">
-                <Button size="sm" variant="outline">
-                  Birinchi xizmat yaratish
-                </Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {services.map((service, index) => (
-                <MyServiceCard key={service.id} service={service} index={index} />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════ VENUES ══════════════════ */}
-      {canHaveVenues && (
-        <div>
-          <SectionHeader
-            icon={<Building2 className="text-primary h-4 w-4" />}
-            title="Mening maydonlarim"
-            count={venuesData?.meta.total}
-            href="/my-venues"
-            createHref="/my-venues/create"
-            createLabel="Yaratish"
-          />
-          {venuesLoading ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <CardSkeleton key={i} />
-              ))}
-            </div>
-          ) : venues.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <Building2 className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha maydonlar yo'q</p>
-
-              <Link to="/my-venues/create">
-                <Button size="sm" variant="outline">
-                  Birinchi maydon yaratish
-                </Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {venues.map((venue, index) => (
-                <MyVenueCard key={venue.id} venue={venue} index={index} />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ══════════════════ REVIEWS ══════════════════ */}
-      {allReviews.length > 0 && (
-        <div>
-          <div className="mb-5 flex items-center gap-2.5">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-500/10">
-              <MessageSquare className="h-4 w-4 text-amber-600" />
-            </div>
-
-            <h2 className="text-foreground text-xl font-bold">So'nggi sharhlar</h2>
-
-            <span className="text-muted-foreground bg-muted rounded-full px-2 py-0.5 text-xs font-medium">
-              {allReviews.length}
-            </span>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {allReviews.map((review) => (
-              <ProfileReviewCard key={review.id} review={review} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
