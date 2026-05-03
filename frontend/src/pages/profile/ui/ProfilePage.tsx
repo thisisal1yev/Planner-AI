@@ -556,7 +556,7 @@ export function ProfilePage() {
                         Saqlashda xatolik yuz berdi
                       </p>
                     )}
-                    
+
                     <div className="flex gap-2 pt-1">
                       <Button type="submit" loading={mutation.isPending} size="sm">
                         Saqlash
@@ -756,7 +756,7 @@ export function ProfilePage() {
               {allReviews.length}
             </span>
           </div>
-          
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {allReviews.map((review) => (
               <ProfileReviewCard key={review.id} review={review} />
