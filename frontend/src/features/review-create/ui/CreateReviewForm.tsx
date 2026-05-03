@@ -7,19 +7,19 @@ import { Textarea } from '@shared/ui/Textarea'
 
 interface CreateReviewFormProps {
   eventId?: string
-  squareId?: string   // was venueId
+  venueId?: string
   serviceId?: string
   queryKey: readonly string[]
   onSuccess?: () => void
 }
 
-export function CreateReviewForm({ eventId, squareId, serviceId, queryKey, onSuccess }: CreateReviewFormProps) {
+export function CreateReviewForm({ eventId, venueId, serviceId, queryKey, onSuccess }: CreateReviewFormProps) {
   const [rating, setRating] = useState(5)
   const [comment, setComment] = useState('')
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: () => reviewsApi.create({ eventId, squareId, serviceId, rating, comment }),
+    mutationFn: () => reviewsApi.create({ eventId, venueId, serviceId, rating, comment }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey })
       setComment('')

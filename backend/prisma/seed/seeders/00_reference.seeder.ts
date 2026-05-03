@@ -1,17 +1,17 @@
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { SeedRegistry } from '../types';
 import {
-  SQUARE_CATEGORIES,
+  VENUE_CATEGORIES,
   SERVICE_CATEGORIES,
   EVENT_CATEGORIES,
   VOLUNTEER_SKILLS,
-  SQUARE_CHARACTERISTICS,
+  VENUE_CHARACTERISTICS,
 } from '../fixtures/reference.fixture';
 
 export async function seedReference(prisma: PrismaClient, registry: SeedRegistry): Promise<void> {
-  for (const name of SQUARE_CATEGORIES) {
-    const c = await prisma.squareCategory.create({ data: { name } });
-    registry.setSquareCategory(name, c.id);
+  for (const name of VENUE_CATEGORIES) {
+    const c = await prisma.venueCategory.create({ data: { name } });
+    registry.setVenueCategory(name, c.id);
   }
 
   for (const name of SERVICE_CATEGORIES) {
@@ -29,9 +29,9 @@ export async function seedReference(prisma: PrismaClient, registry: SeedRegistry
     registry.setVolunteerSkill(name, s.id);
   }
 
-  for (const name of SQUARE_CHARACTERISTICS) {
-    const s = await prisma.squareCharacteristic.create({ data: { name } });
-    registry.setSquareCharacteristic(name, s.id);
+  for (const name of VENUE_CHARACTERISTICS) {
+    const s = await prisma.venueCharacteristic.create({ data: { name } });
+    registry.setVenueCharacteristic(name, s.id);
   }
 
   console.log('✅ Reference data seeded');

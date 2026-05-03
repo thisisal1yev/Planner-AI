@@ -19,23 +19,23 @@ export class VenuesService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Creates a new square (admin or vendor)
+   * Creates a new venue (admin or vendor)
    */
   async create(ownerId: string, dto: CreateVenueDto) {
-    return this.prisma.square.create({
+    return this.prisma.venue.create({
       data: { ...dto, ownerId },
     });
   }
 
   /**
-   * Returns paginated list of squares with optional filters
+   * Returns paginated list of venues with optional filters
    */
   async findMany(query: QueryVenuesDto) {
     const page = query.page ?? 1;
     const limit = query.limit ?? 12;
     const skip = (page - 1) * limit;
 
-    const where: Prisma.SquareWhereInput = {};
+    const where: Prisma.VenueWhereInput = {};
 
     if (query.ownerId) where.ownerId = query.ownerId;
     if (query.city) where.city = { contains: query.city, mode: 'insensitive' };
@@ -44,14 +44,14 @@ export class VenuesService {
       where.pricePerDay = { lte: new Decimal(query.maxPrice) };
 
     const [items, total] = await this.prisma.$transaction([
-      this.prisma.square.findMany({
+      this.prisma.venue.findMany({
         where,
         skip,
         take: limit,
         include: { ratingStats: true, characteristics: true },
         orderBy: { createdAt: 'desc' },
       }),
-      this.prisma.square.count({ where }),
+      this.prisma.venue.count({ where }),
     ]);
 
     return {
@@ -61,10 +61,10 @@ export class VenuesService {
   }
 
   /**
-   * Returns square details by ID
+   * Returns venue details by ID
    */
   async findOne(id: string) {
-    const square = await this.prisma.square.findUnique({
+    const venue = await this.prisma.venue.findUnique({
       where: { id },
       include: {
         ratingStats: true,
@@ -81,36 +81,36 @@ export class VenuesService {
       },
     });
 
-    if (!square) throw new NotFoundException('Square not found');
+    if (!venue) throw new NotFoundException('Venue not found');
 
-    return square;
+    return venue;
   }
 
   /**
-   * Updates a square (owner or admin)
+   * Updates a venue (owner or admin)
    */
-  async update(userId: string, squareId: string, dto: UpdateVenueDto) {
-    const square = await this.findOne(squareId);
+  async update(userId: string, venueId: string, dto: UpdateVenueDto) {
+    const venue = await this.findOne(venueId);
 
-    if (square.ownerId !== userId)
-      throw new ForbiddenException('Only the square owner can update it');
+    if (venue.ownerId !== userId)
+      throw new ForbiddenException('Only the venue owner can update it');
 
-    return this.prisma.square.update({ where: { id: squareId }, data: dto });
+    return this.prisma.venue.update({ where: { id: venueId }, data: dto });
   }
 
   /**
-   * Books a square for an event — checks availability and calculates total cost
+   * Books a venue for an event — checks availability and calculates total cost
    */
-  async book(userId: string, squareId: string, dto: BookVenueDto) {
-    const square = await this.findOne(squareId);
+  async book(userId: string, venueId: string, dto: BookVenueDto) {
+    const venue = await this.findOne(venueId);
 
     const start = new Date(dto.startDate);
     const end = new Date(dto.endDate);
 
-    // Check if square is available for requested dates
+    // Check if venue is available for requested dates
     const conflict = await this.prisma.booking.findFirst({
       where: {
-        squareId,
+        venueId,
         status: { not: BookingStatus.CANCELLED },
         OR: [{ startDate: { lte: end }, endDate: { gte: start } }],
       },
@@ -118,16 +118,16 @@ export class VenuesService {
 
     if (conflict)
       throw new BadRequestException(
-        'Square is not available for selected dates',
+        'Venue is not available for selected dates',
       );
 
     const days =
       Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) || 1;
-    const totalCost = new Decimal(square.pricePerDay).mul(days);
+    const totalCost = new Decimal(venue.pricePerDay).mul(days);
 
     return this.prisma.booking.create({
       data: {
-        squareId,
+        venueId,
         userId,
         startDate: start,
         endDate: end,
@@ -137,17 +137,17 @@ export class VenuesService {
   }
 
   /**
-   * Checks if square is available for given dates
+   * Checks if venue is available for given dates
    */
-  async checkAvailability(squareId: string, dto: CheckAvailabilityDto) {
-    await this.findOne(squareId);
+  async checkAvailability(venueId: string, dto: CheckAvailabilityDto) {
+    await this.findOne(venueId);
 
     const start = new Date(dto.startDate);
     const end = new Date(dto.endDate);
 
     const conflict = await this.prisma.booking.findFirst({
       where: {
-        squareId,
+        venueId,
         status: { not: BookingStatus.CANCELLED },
         OR: [{ startDate: { lte: end }, endDate: { gte: start } }],
       },

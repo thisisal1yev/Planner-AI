@@ -4,7 +4,7 @@ export const COMMISSION_RATE = 0.1;
 
 export const SEED_CONFIG = {
   extraUsers: 8,
-  extraSquares: 5,
+  extraVenues: 5,
   extraServices: 6,
   extraEvents: 5,
   ticketsPerEvent: { min: 3, max: 8 },

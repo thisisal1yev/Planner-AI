@@ -69,10 +69,10 @@ export class CreateEventDto {
   @IsString()
   city: string;
 
-  @ApiPropertyOptional({ description: 'Square ID to associate with the event' })
+  @ApiPropertyOptional({ description: 'Venue ID to associate with the event' })
   @IsOptional()
   @IsString()
-  squareId?: string;
+  venueId?: string;
 
   @ApiPropertyOptional({ type: [CreateTicketTierDto] })
   @IsOptional()

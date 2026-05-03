@@ -1,8 +1,8 @@
-import { CuratedUserKey, CuratedSquareKey, type SquareSeed } from '../types';
+import { CuratedUserKey, CuratedVenueKey, type VenueSeed } from '../types';
 
-export const CURATED_SQUARES: SquareSeed[] = [
+export const CURATED_VENUES: VenueSeed[] = [
   {
-    key: CuratedSquareKey.TASHKENT_CITY_HALL,
+    key: CuratedVenueKey.TASHKENT_CITY_HALL,
     name: 'Tashkent City Hall',
     description:
       "Toshkentning markazida zamonaviy jihozlangan premium maydon. 500 kishigacha sig'imi mavjud.",
@@ -27,7 +27,7 @@ export const CURATED_SQUARES: SquareSeed[] = [
     ],
   },
   {
-    key: CuratedSquareKey.SAMARKAND_GARDEN,
+    key: CuratedVenueKey.SAMARKAND_GARDEN,
     name: 'Samarkand Garden',
     description:
       'Samarqandning tarixiy yodgorliklariga qarab turadigan manzarali ochiq maydon.',
@@ -46,7 +46,7 @@ export const CURATED_SQUARES: SquareSeed[] = [
     characteristicNames: ['Wifi', 'Ochiq maydon', 'Sahna'],
   },
   {
-    key: CuratedSquareKey.BUKHARA_CONFERENCE,
+    key: CuratedVenueKey.BUKHARA_CONFERENCE,
     name: 'Bukhara Conference Hall',
     description:
       "Buxoroning tarixiy markazida an'anaviy me'morchilik uslubidagi zamonaviy konferens-markaz.",
@@ -65,7 +65,7 @@ export const CURATED_SQUARES: SquareSeed[] = [
     characteristicNames: ['Wifi', 'Yopiq zal', 'Ovoz dinamikalari'],
   },
   {
-    key: CuratedSquareKey.NAVOI_PALACE,
+    key: CuratedVenueKey.NAVOI_PALACE,
     name: 'Navoi Palace',
     description:
       "Tantanali tadbirlar, to'ylar va korporativ gala-kechalar uchun hashamatli saroy.",
@@ -90,7 +90,7 @@ export const CURATED_SQUARES: SquareSeed[] = [
     ],
   },
   {
-    key: CuratedSquareKey.ANDIJAN_EXPO,
+    key: CuratedVenueKey.ANDIJAN_EXPO,
     name: 'Andijan Expo Center',
     description:
       "Ko'rgazmalar, yarmarkalar va ommaviy tadbirlar uchun moslashuvchan expo markazi.",

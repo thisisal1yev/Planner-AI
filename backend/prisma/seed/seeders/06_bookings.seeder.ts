@@ -16,33 +16,40 @@ export async function seedBookings(
   registry: SeedRegistry,
   f: Faker,
 ): Promise<void> {
-  // ── 1. Square bookings ────────────────────────────────────────────────────────
-  const eventsWithSquares = await prisma.event.findMany({
+  // ── 1. Venue bookings ────────────────────────────────────────────────────────
+  const eventsWithVenues = await prisma.event.findMany({
     where: {
       status: { in: ['PUBLISHED', 'COMPLETED'] },
-      squareId: { not: null },
+      venueId: { not: null },
     },
-    include: { square: true },
+    include: { venue: true },
   });
 
-  let squareBookingCount = 0;
-  for (const event of eventsWithSquares) {
-    if (!event.square) continue;
+  let venueBookingCount: number = 0;
+  for (const event of eventsWithVenues) {
+    if (!event.venue) continue;
 
-    const pricePerDay = Number(event.square.pricePerDay);
+    const pricePerDay = Number(event.venue.pricePerDay);
     const durationDays = Math.max(
       1,
-      Math.ceil((event.endDate.getTime() - event.startDate.getTime()) / 86_400_000),
+      Math.ceil(
+        (event.endDate.getTime() - event.startDate.getTime()) / 86_400_000,
+      ),
     );
     const totalCost = pricePerDay * durationDays;
-    const isPending = f.datatype.boolean({ probability: SEED_CONFIG.pendingBookingRatio });
+    const isPending = f.datatype.boolean({
+      probability: SEED_CONFIG.pendingBookingRatio,
+    });
     const status = isPending ? BookingStatus.PENDING : BookingStatus.CONFIRMED;
-    const provider = f.helpers.arrayElement([PaymentProvider.CLICK, PaymentProvider.PAYME]);
+    const provider = f.helpers.arrayElement([
+      PaymentProvider.CLICK,
+      PaymentProvider.PAYME,
+    ]);
 
     const booking = await prisma.booking.create({
       data: {
         user: { connect: { id: event.organizerId } },
-        square: { connect: { id: event.square.id } },
+        venue: { connect: { id: event.venue.id } },
         startDate: event.startDate,
         endDate: event.endDate,
         status,
@@ -53,16 +60,16 @@ export async function seedBookings(
     await prisma.payment.create({
       data: {
         user: { connect: { id: event.organizerId } },
-        type: PaymentType.SQUARE,
+        type: PaymentType.VENUE,
         booking: { connect: { id: booking.id } },
         amount: totalCost,
         commission: totalCost * COMMISSION_RATE,
         provider,
-        providerTxId: isPending ? null : `TX-SQUARE-${randomUUID()}`,
+        providerTxId: isPending ? null : `TX-VENUE-${randomUUID()}`,
         status: isPending ? PaymentStatus.PENDING : PaymentStatus.PAID,
       },
     });
-    squareBookingCount++;
+    venueBookingCount++;
   }
 
   // ── 2. EventService bookings ──────────────────────────────────────────────────
@@ -77,7 +84,7 @@ export async function seedBookings(
 
   if (services.length === 0) {
     console.log('⚠️  No services found, skipping EventService bookings');
-    console.log(`✅ Bookings seeded: ${squareBookingCount} square + 0 service`);
+    console.log(`✅ Bookings seeded: ${venueBookingCount} venue + 0 service`);
     return;
   }
 
@@ -88,10 +95,18 @@ export async function seedBookings(
       const priceFrom = Number(service.priceFrom);
       const markup = f.number.float({ min: 1.0, max: 1.5 });
       const agreedPrice = Math.round(priceFrom * markup);
-      validateAgreedPrice(agreedPrice, priceFrom, `EventService event=${event.id}`);
+      validateAgreedPrice(
+        agreedPrice,
+        priceFrom,
+        `EventService event=${event.id}`,
+      );
 
-      const isPending = f.datatype.boolean({ probability: SEED_CONFIG.pendingBookingRatio });
-      const status = isPending ? BookingStatus.PENDING : BookingStatus.CONFIRMED;
+      const isPending = f.datatype.boolean({
+        probability: SEED_CONFIG.pendingBookingRatio,
+      });
+      const status = isPending
+        ? BookingStatus.PENDING
+        : BookingStatus.CONFIRMED;
 
       try {
         const es = await prisma.eventService.create({
@@ -119,7 +134,10 @@ export async function seedBookings(
             booking: { connect: { id: booking.id } },
             amount: agreedPrice,
             commission: agreedPrice * COMMISSION_RATE,
-            provider: f.helpers.arrayElement([PaymentProvider.CLICK, PaymentProvider.PAYME]),
+            provider: f.helpers.arrayElement([
+              PaymentProvider.CLICK,
+              PaymentProvider.PAYME,
+            ]),
             providerTxId: isPending ? null : `TX-SERVICE-${randomUUID()}`,
             status: isPending ? PaymentStatus.PENDING : PaymentStatus.PAID,
           },
@@ -132,5 +150,7 @@ export async function seedBookings(
     }
   }
 
-  console.log(`✅ Bookings seeded: ${squareBookingCount} square + ${eventServiceCount} service`);
+  console.log(
+    `✅ Bookings seeded: ${venueBookingCount} venue + ${eventServiceCount} service`,
+  );
 }

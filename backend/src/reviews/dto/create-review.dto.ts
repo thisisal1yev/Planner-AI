@@ -7,10 +7,10 @@ export class CreateReviewDto {
   @IsString()
   eventId?: string;
 
-  @ApiPropertyOptional({ description: 'Square ID to review' })
+  @ApiPropertyOptional({ description: 'Venue ID to review' })
   @IsOptional()
   @IsString()
-  squareId?: string;
+  venueId?: string;
 
   @ApiPropertyOptional({ description: 'Service ID to review' })
   @IsOptional()

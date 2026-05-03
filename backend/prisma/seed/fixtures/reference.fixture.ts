@@ -1,4 +1,4 @@
-export const SQUARE_CATEGORIES = [
+export const VENUE_CATEGORIES = [
   'Konferens-zal',
   'Ochiq maydon',
   'Saroy',
@@ -47,7 +47,7 @@ export const VOLUNTEER_SKILLS = [
   'multilingual support',
 ];
 
-export const SQUARE_CHARACTERISTICS = [
+export const VENUE_CHARACTERISTICS = [
   'Wifi',
   'Avtomobil turar joy',
   'Yopiq zal',

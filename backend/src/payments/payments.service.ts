@@ -23,7 +23,7 @@ export class PaymentsService {
           },
         },
         booking: {
-          include: { square: { select: { id: true, name: true } } },
+          include: { venue: { select: { id: true, name: true } } },
         },
       },
       orderBy: { createdAt: 'desc' },

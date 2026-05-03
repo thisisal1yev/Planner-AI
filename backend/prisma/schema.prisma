@@ -32,7 +32,7 @@ enum PaymentStatus {
 
 enum PaymentType {
   TICKET
-  SQUARE
+  VENUE
   SERVICE
   BOOST
 }
@@ -80,7 +80,7 @@ model User {
   tickets       Ticket[]
   reviews       Review[]
   volunteers    Volunteer[]
-  ownedSquares  Square[]    @relation("SquareOwner")
+  ownedVenues  Venue[]    @relation("VenueOwner")
   ownedServices Service[]   @relation("ServiceVendor")
   bookings      Booking[]
   payments      Payment[]
@@ -108,8 +108,8 @@ model Event {
   capacity    Int
   city        String
   status      EventStatus   @default(DRAFT)
-  squareId    String?
-  square      Square?       @relation(fields: [squareId], references: [id])
+  venueId    String?
+  venue      Venue?       @relation(fields: [venueId], references: [id])
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
@@ -122,7 +122,7 @@ model Event {
   @@index([status, startDate])
   @@index([status, categoryId, startDate])
   @@index([organizerId, createdAt(sort: Desc)])
-  @@index([squareId])
+  @@index([venueId])
 }
 
 model TicketTier {
@@ -161,29 +161,29 @@ model Ticket {
   @@index([eventId, tierId])
 }
 
-model SquareCategory {
+model VenueCategory {
   id        String   @id @default(uuid())
   name      String   @unique
   createdAt DateTime @default(now())
 
-  squares Square[]
+  venues Venue[]
 }
 
-model SquareCharacteristic {
+model VenueCharacteristic {
   id        String   @id @default(uuid())
   name      String   @unique
   createdAt DateTime @default(now())
 
-  squares Square[]
+  venues Venue[]
 }
 
-model Square {
+model Venue {
   id      String @id @default(uuid())
   ownerId String
-  owner   User   @relation("SquareOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  owner   User   @relation("VenueOwner", fields: [ownerId], references: [id], onDelete: Restrict)
 
   categoryId String
-  category   SquareCategory @relation(fields: [categoryId], references: [id])
+  category   VenueCategory @relation(fields: [categoryId], references: [id])
 
   name        String
   description String?
@@ -193,7 +193,7 @@ model Square {
   longitude   Float?
   capacity    Int
 
-  characteristics SquareCharacteristic[]
+  characteristics VenueCharacteristic[]
 
   pricePerDay Decimal  @db.Decimal(12, 2)
   imageUrls   String[]
@@ -205,7 +205,7 @@ model Square {
   reviews     Review[]
   ratingStats RatingStats?
   boosts      Boost[]
-  badges      SquareBadge[]
+  badges      VenueBadge[]
 
   @@index([city, categoryId])
   @@index([city, capacity]) // фильтр по вместимости
@@ -267,8 +267,8 @@ model Booking {
   id             String        @id @default(uuid())
   userId         String
   user           User          @relation(fields: [userId], references: [id], onDelete: Restrict)
-  squareId       String?
-  square         Square?       @relation(fields: [squareId], references: [id])
+  venueId       String?
+  venue         Venue?       @relation(fields: [venueId], references: [id])
   eventServiceId String?       @unique
   eventService   EventService? @relation(fields: [eventServiceId], references: [id])
   startDate      DateTime?
@@ -282,8 +282,8 @@ model Booking {
 
   @@index([userId, status, createdAt(sort: Desc)])
   // КРИТИЧЕСКИЙ: проверка доступности площадки
-  // WHERE squareId=? AND status='CONFIRMED' AND (startDate, endDate) overlaps (?, ?)
-  @@index([squareId, status, startDate, endDate])
+  // WHERE venueId=? AND status='CONFIRMED' AND (startDate, endDate) overlaps (?, ?)
+  @@index([venueId, status, startDate, endDate])
 }
 
 model Payment {
@@ -313,8 +313,8 @@ model Boost {
   id        String   @id @default(uuid())
   paymentId String   @unique
   payment   Payment  @relation(fields: [paymentId], references: [id])
-  squareId  String?
-  square    Square?  @relation(fields: [squareId], references: [id])
+  venueId  String?
+  venue    Venue?  @relation(fields: [venueId], references: [id])
   serviceId String?
   service   Service? @relation(fields: [serviceId], references: [id])
   startTime DateTime
@@ -330,21 +330,21 @@ model Badge {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  squareBadges  SquareBadge[]
+  venueBadges  VenueBadge[]
   serviceBadges ServiceBadge[]
 }
 
-model SquareBadge {
+model VenueBadge {
   id        String      @id @default(uuid())
-  squareId  String
-  square    Square      @relation(fields: [squareId], references: [id])
+  venueId  String
+  venue    Venue      @relation(fields: [venueId], references: [id])
   badgeId   String
   badge     Badge       @relation(fields: [badgeId], references: [id])
   status    BadgeStatus @default(PENDING)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
-  @@unique([squareId, badgeId])
+  @@unique([venueId, badgeId])
 }
 
 model ServiceBadge {
@@ -362,8 +362,8 @@ model ServiceBadge {
 
 model RatingStats {
   id        String   @id @default(uuid())
-  squareId  String?  @unique
-  square    Square?  @relation(fields: [squareId], references: [id])
+  venueId  String?  @unique
+  venue    Venue?  @relation(fields: [venueId], references: [id])
   serviceId String?  @unique
   service   Service? @relation(fields: [serviceId], references: [id])
   avg       Float    @default(0)
@@ -382,8 +382,8 @@ model Review {
   author    User     @relation(fields: [authorId], references: [id], onDelete: Restrict)
   eventId   String?
   event     Event?   @relation(fields: [eventId], references: [id])
-  squareId  String?
-  square    Square?  @relation(fields: [squareId], references: [id])
+  venueId  String?
+  venue    Venue?  @relation(fields: [venueId], references: [id])
   serviceId String?
   service   Service? @relation(fields: [serviceId], references: [id])
   rating    Int
@@ -391,7 +391,7 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([squareId, createdAt(sort: Desc)])
+  @@index([venueId, createdAt(sort: Desc)])
   @@index([serviceId, createdAt(sort: Desc)])
   @@index([eventId, createdAt(sort: Desc)])
 }

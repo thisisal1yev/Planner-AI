@@ -4,7 +4,7 @@ import type { Review } from '../model/types'
 
 export interface CreateReviewDto {
   eventId?: string
-  squareId?: string   // was venueId — backend field is squareId
+  venueId?: string
   serviceId?: string
   rating: number
   comment?: string
@@ -21,8 +21,8 @@ export const reviewsApi = {
     const { data } = await apiClient.post('/reviews', dto)
     return data.data
   },
-  forVenue: async (squareId: string, params?: QueryReviewsDto): Promise<PaginatedResponse<Review>> => {
-    const { data } = await apiClient.get(`/squares/${squareId}/reviews`, { params })
+  forVenue: async (venueId: string, params?: QueryReviewsDto): Promise<PaginatedResponse<Review>> => {
+    const { data } = await apiClient.get(`/venues/${venueId}/reviews`, { params })
     return { data: data.data, meta: data.meta }
   },
   forService: async (serviceId: string, params?: QueryReviewsDto): Promise<PaginatedResponse<Review>> => {

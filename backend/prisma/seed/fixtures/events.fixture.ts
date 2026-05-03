@@ -1,7 +1,7 @@
 import { EventStatus } from '../../../generated/prisma/enums';
 import {
   CuratedUserKey,
-  CuratedSquareKey,
+  CuratedVenueKey,
   CuratedEventKey,
   type EventSeed,
 } from '../types';
@@ -23,7 +23,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
-    squareKey: CuratedSquareKey.TASHKENT_CITY_HALL,
+    venueKey: CuratedVenueKey.TASHKENT_CITY_HALL,
     city: 'Toshkent',
   },
   {
@@ -42,7 +42,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
-    squareKey: CuratedSquareKey.SAMARKAND_GARDEN,
+    venueKey: CuratedVenueKey.SAMARKAND_GARDEN,
     city: 'Samarqand',
   },
   {
@@ -61,7 +61,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
-    squareKey: CuratedSquareKey.NAVOI_PALACE,
+    venueKey: CuratedVenueKey.NAVOI_PALACE,
     city: 'Toshkent',
   },
   {
@@ -80,7 +80,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
-    squareKey: CuratedSquareKey.BUKHARA_CONFERENCE,
+    venueKey: CuratedVenueKey.BUKHARA_CONFERENCE,
     city: 'Buxoro',
   },
   {
@@ -99,7 +99,7 @@ export const PUBLISHED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.PUBLISHED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
-    squareKey: CuratedSquareKey.ANDIJAN_EXPO,
+    venueKey: CuratedVenueKey.ANDIJAN_EXPO,
     city: 'Andijon',
   },
 ];
@@ -121,7 +121,7 @@ export const COMPLETED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.COMPLETED,
     organizerKey: CuratedUserKey.ORGANIZER_1,
-    squareKey: CuratedSquareKey.TASHKENT_CITY_HALL,
+    venueKey: CuratedVenueKey.TASHKENT_CITY_HALL,
     city: 'Toshkent',
   },
   {
@@ -140,7 +140,7 @@ export const COMPLETED_EVENTS: EventSeed[] = [
     ],
     status: EventStatus.COMPLETED,
     organizerKey: CuratedUserKey.ORGANIZER_2,
-    squareKey: CuratedSquareKey.ANDIJAN_EXPO,
+    venueKey: CuratedVenueKey.ANDIJAN_EXPO,
     city: 'Andijon',
   },
 ];

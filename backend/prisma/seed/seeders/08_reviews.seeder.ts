@@ -2,7 +2,11 @@ import type { Faker } from '@faker-js/faker';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { SeedRegistry } from '../types';
 import { SEED_CONFIG } from '../config';
-import { SQUARE_REVIEWS, SERVICE_REVIEWS, EVENT_REVIEWS } from '../fixtures/reviews.fixture';
+import {
+  VENUE_REVIEWS,
+  SERVICE_REVIEWS,
+  EVENT_REVIEWS,
+} from '../fixtures/reviews.fixture';
 import { makeReview } from '../factories/review.factory';
 
 export async function seedReviews(
@@ -11,12 +15,12 @@ export async function seedReviews(
   f: Faker,
 ): Promise<void> {
   // ── 1. Curated reviews ────────────────────────────────────────────────────────
-  for (const r of SQUARE_REVIEWS) {
+  for (const r of VENUE_REVIEWS) {
     try {
       await prisma.review.create({
         data: {
           author: { connect: { id: registry.getUser(r.userKey) } },
-          square: { connect: { id: registry.getSquare(r.squareKey) } },
+          venue: { connect: { id: registry.getVenue(r.venueKey) } },
           rating: r.rating,
           comment: r.comment,
         },
@@ -64,13 +68,14 @@ export async function seedReviews(
     where: { event: { status: 'COMPLETED' }, isUsed: true },
     select: {
       userId: true,
-      event: { select: { id: true, squareId: true } },
+      event: { select: { id: true, venueId: true } },
     },
   });
 
   let generatedCount = 0;
   for (const ticket of usedTickets) {
-    if (f.number.float({ min: 0, max: 1 }) > SEED_CONFIG.reviewProbability) continue;
+    if (f.number.float({ min: 0, max: 1 }) > SEED_CONFIG.reviewProbability)
+      continue;
 
     // Review on the event
     try {
@@ -88,14 +93,14 @@ export async function seedReviews(
       if (err.code !== 'P2002') throw err;
     }
 
-    // 50% chance: also review the square
-    if (ticket.event.squareId && f.datatype.boolean({ probability: 0.5 })) {
+    // 50% chance: also review the venue
+    if (ticket.event.venueId && f.datatype.boolean({ probability: 0.5 })) {
       try {
         const review = makeReview(f);
         await prisma.review.create({
           data: {
             author: { connect: { id: ticket.userId } },
-            square: { connect: { id: ticket.event.squareId } },
+            venue: { connect: { id: ticket.event.venueId } },
             rating: review.rating,
             comment: review.comment,
           },
@@ -110,6 +115,9 @@ export async function seedReviews(
   // RatingStats are maintained automatically by the DB trigger (recalc_rating_stats_for_target)
   // which fires on every review INSERT/DELETE. No explicit seeding needed.
 
-  const curatedTotal = SQUARE_REVIEWS.length + SERVICE_REVIEWS.length + EVENT_REVIEWS.length;
-  console.log(`✅ Reviews seeded: ${curatedTotal} curated + ${generatedCount} generated`);
+  const curatedTotal =
+    VENUE_REVIEWS.length + SERVICE_REVIEWS.length + EVENT_REVIEWS.length;
+  console.log(
+    `✅ Reviews seeded: ${curatedTotal} curated + ${generatedCount} generated`,
+  );
 }

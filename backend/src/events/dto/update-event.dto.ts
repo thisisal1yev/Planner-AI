@@ -51,5 +51,5 @@ export class UpdateEventDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  squareId?: string;
+  venueId?: string;
 }

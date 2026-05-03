@@ -391,7 +391,7 @@ export function VenueDetailPage() {
 
       <Modal open={reviewModal} onClose={() => setReviewModal(false)} title="Sharh yozish">
         <CreateReviewForm
-          squareId={venue.id}
+          venueId={venue.id}
           queryKey={venueKeys.reviews(id!)}
           onSuccess={() => setReviewModal(false)}
         />

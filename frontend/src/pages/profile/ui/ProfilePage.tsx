@@ -111,13 +111,16 @@ function SectionHeader({
         <div className="bg-primary/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl">
           {icon}
         </div>
+
         <h2 className="text-foreground text-xl font-bold">{title}</h2>
+
         {count !== undefined && count > 0 && (
           <span className="text-muted-foreground bg-muted rounded-full px-2 py-0.5 text-xs font-medium">
             {count}
           </span>
         )}
       </div>
+
       <div className="flex items-center gap-2">
         {createHref && (
           <Link
@@ -128,6 +131,7 @@ function SectionHeader({
             {createLabel ?? 'Yaratish'}
           </Link>
         )}
+
         <Link
           to={href}
           className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
@@ -170,14 +174,18 @@ function ProfileReviewCard({ review }: { review: ReviewWithCtx }) {
               {initials}
             </div>
           )}
+
           <div className="min-w-0">
             <p className="text-foreground truncate text-sm font-semibold">{fullName}</p>
+
             <div className="text-muted-foreground mt-0.5 flex items-center gap-1">
               {entityIcon}
+
               <span className="max-w-40 truncate text-xs">{review.entityName}</span>
             </div>
           </div>
         </div>
+
         <span className="text-muted-foreground mt-0.5 shrink-0 text-xs">
           {formatRelativeDate(review.createdAt)}
         </span>
@@ -369,6 +377,7 @@ export function ProfilePage() {
                     lastName={data?.lastName ?? ''}
                     avatarUrl={data?.avatarUrl}
                   />
+
                   {isUploadingAvatar ? (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                       <LoaderCircle className="h-7 w-7 animate-spin text-white" />
@@ -379,6 +388,7 @@ export function ProfilePage() {
                     </div>
                   )}
                 </div>
+
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -386,20 +396,24 @@ export function ProfilePage() {
                   className="hidden"
                   onChange={handleAvatarFileChange}
                 />
+
                 {data?.isVerified && (
                   <div className="absolute -right-1.5 -bottom-1.5 rounded-full bg-emerald-500 p-0.5 shadow">
                     <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />
                   </div>
                 )}
               </div>
+
               <div className="text-center">
                 <p className="text-foreground text-lg leading-tight font-semibold">{fullName}</p>
+
                 <span
                   className={`mt-1.5 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${roleColor}`}
                 >
                   {roleLabel}
                 </span>
               </div>
+
               {avatarUploadError && (
                 <p className="text-destructive bg-destructive/8 border-destructive/20 w-full rounded-lg border px-3 py-2 text-center text-xs">
                   {avatarUploadError}
@@ -412,21 +426,26 @@ export function ProfilePage() {
               <p className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
                 Ma'lumotlar
               </p>
+
               <div className="flex items-center gap-2.5 text-sm">
                 <div className="bg-primary/8 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
                   <Shield className="text-primary h-3.5 w-3.5" />
                 </div>
+
                 <div>
                   <p className="text-muted-foreground text-xs">Email</p>
                   <p className="text-foreground max-w-45 truncate font-medium">{data?.email}</p>
                 </div>
               </div>
+
               <div className="flex items-center gap-2.5 text-sm">
                 <div className="bg-primary/8 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
                   <Phone className="text-primary h-3.5 w-3.5" />
                 </div>
+
                 <div>
                   <p className="text-muted-foreground text-xs">Telefon</p>
+
                   <p className="text-foreground font-medium">
                     {data?.phone ? (
                       <span className="flex items-center gap-1">
@@ -439,10 +458,12 @@ export function ProfilePage() {
                   </p>
                 </div>
               </div>
+
               <div className="flex items-center gap-2.5 text-sm">
                 <div className="bg-primary/8 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg">
                   <Calendar className="text-primary h-3.5 w-3.5" />
                 </div>
+
                 <div>
                   <p className="text-muted-foreground text-xs">A'zo bo'lgan sana</p>
                   <p className="text-foreground font-medium">
@@ -460,6 +481,7 @@ export function ProfilePage() {
                 <div
                   className={`h-2 w-2 shrink-0 rounded-full ${data?.isVerified ? 'bg-emerald-500' : 'bg-amber-500'}`}
                 />
+
                 <p
                   className={`text-sm font-medium ${data?.isVerified ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}
                 >
@@ -475,10 +497,12 @@ export function ProfilePage() {
               <div className="border-border flex items-center justify-between border-b px-6 py-4">
                 <div>
                   <h2 className="text-foreground font-semibold">Shaxsiy ma'lumotlar</h2>
+
                   <p className="text-muted-foreground mt-0.5 text-xs">
                     Ism, familiya va aloqa ma'lumotlaringiz
                   </p>
                 </div>
+
                 {!isEditing ? (
                   <button
                     onClick={() => setIsEditing(true)}
@@ -513,26 +537,31 @@ export function ProfilePage() {
                         error={errors.firstName?.message}
                         {...register('firstName', { required: 'Majburiy maydon' })}
                       />
+
                       <Input
                         label="Familiya"
                         error={errors.lastName?.message}
                         {...register('lastName', { required: 'Majburiy maydon' })}
                       />
                     </div>
+
                     <Input
                       label="Telefon raqami"
                       placeholder="+998 90 123 45 67"
                       {...register('phone')}
                     />
+
                     {mutation.isError && (
                       <p className="text-destructive bg-destructive/8 border-destructive/20 rounded-lg border px-3 py-2 text-sm">
                         Saqlashda xatolik yuz berdi
                       </p>
                     )}
+                    
                     <div className="flex gap-2 pt-1">
                       <Button type="submit" loading={mutation.isPending} size="sm">
                         Saqlash
                       </Button>
+
                       <Button
                         type="button"
                         variant="outline"
@@ -553,11 +582,13 @@ export function ProfilePage() {
                         <p className="text-muted-foreground mb-1 text-xs">Ism</p>
                         <p className="text-foreground font-medium">{data?.firstName || '—'}</p>
                       </div>
+
                       <div>
                         <p className="text-muted-foreground mb-1 text-xs">Familiya</p>
                         <p className="text-foreground font-medium">{data?.lastName || '—'}</p>
                       </div>
                     </div>
+
                     <div>
                       <p className="text-muted-foreground mb-1 text-xs">Telefon raqami</p>
                       <p className="text-foreground font-medium">
@@ -576,12 +607,15 @@ export function ProfilePage() {
             <div className="bg-card border-border overflow-hidden rounded-2xl border">
               <div className="border-border border-b px-6 py-4">
                 <h2 className="text-foreground font-semibold">Kirish ma'lumotlari</h2>
+
                 <p className="text-muted-foreground mt-0.5 text-xs">
                   Hisobingizga kirish uchun ishlatiladigan email
                 </p>
               </div>
+
               <div className="p-6">
                 <p className="text-muted-foreground mb-1 text-xs">Email manzil</p>
+
                 <div className="flex items-center gap-2">
                   <p className="text-foreground font-medium">{data?.email}</p>
                   {data?.isVerified && (
@@ -615,6 +649,7 @@ export function ProfilePage() {
             <div className="border-border rounded-2xl border border-dashed py-12 text-center">
               <CalendarRange className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
               <p className="text-muted-foreground mb-4 text-sm">Hozircha tadbirlar yo'q</p>
+
               <Link to="/my-events/create">
                 <Button size="sm" variant="outline">
                   Birinchi tadbir yaratish
@@ -690,6 +725,7 @@ export function ProfilePage() {
             <div className="border-border rounded-2xl border border-dashed py-12 text-center">
               <Building2 className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
               <p className="text-muted-foreground mb-4 text-sm">Hozircha maydonlar yo'q</p>
+
               <Link to="/my-venues/create">
                 <Button size="sm" variant="outline">
                   Birinchi maydon yaratish
@@ -713,11 +749,14 @@ export function ProfilePage() {
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-500/10">
               <MessageSquare className="h-4 w-4 text-amber-600" />
             </div>
+
             <h2 className="text-foreground text-xl font-bold">So'nggi sharhlar</h2>
+
             <span className="text-muted-foreground bg-muted rounded-full px-2 py-0.5 text-xs font-medium">
               {allReviews.length}
             </span>
           </div>
+          
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {allReviews.map((review) => (
               <ProfileReviewCard key={review.id} review={review} />
