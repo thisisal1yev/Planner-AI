@@ -1,5 +1,5 @@
 import { useState, useRef, useMemo } from 'react'
-import { data, Link } from 'react-router'
+import { Link } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { useQuery, useQueries, useMutation, useQueryClient } from '@tanstack/react-query'
 import { usersApi } from '@entities/user'
