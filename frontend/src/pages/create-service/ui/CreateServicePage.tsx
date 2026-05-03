@@ -1,20 +1,58 @@
-import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router'
+import { useNavigate, Link } from 'react-router'
 import { servicesApi } from '@entities/service'
+import type { CreateServiceDto } from '@entities/service'
 import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
-import type { CreateServiceDto } from '@entities/service'
+import { Combobox } from '@shared/ui/Combobox'
+import { ImageDropZone } from '@shared/ui/ImageDropZone'
 import { serviceKeys, categoryKeys } from '@shared/api/queryKeys'
 import { categoriesApi } from '@shared/api/categoriesApi'
-import { Card, CardContent } from '@/shared/ui/primitives/card'
-import { Select } from '@/shared/ui/Select'
+import { UZBEK_CITIES } from '@shared/lib/uzbekCities'
+import { ArrowLeft, Wrench, MapPin, Upload } from 'lucide-react'
+
+function SectionCard({
+  step,
+  icon,
+  title,
+  children,
+}: {
+  step: number
+  icon: React.ReactNode
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="bg-card border-border overflow-hidden rounded-2xl border">
+      <div className="border-border flex items-center gap-3 border-b px-6 py-4">
+        <div className="bg-primary text-primary-foreground flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+          {step}
+        </div>
+        <div className="flex items-center gap-2">
+          {icon}
+          <h2 className="text-foreground font-semibold">{title}</h2>
+        </div>
+      </div>
+      <div className="flex flex-col gap-4 p-6">{children}</div>
+    </div>
+  )
+}
 
 export function CreateServicePage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateServiceDto>()
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateServiceDto>()
 
   const { data: categories = [] } = useQuery({
     queryKey: categoryKeys.serviceCategories(),
@@ -29,31 +67,127 @@ export function CreateServicePage() {
     },
   })
 
+  const categoryOptions = categories.map((c) => ({ value: c.id, label: c.name }))
+
   return (
-    <div className="max-w-xl">
-      <h1 className="text-2xl font-bold text-foreground mb-6">Xizmat qo'shish</h1>
+    <div>
+      <div className="mb-8">
+        <Link
+          to="/my-services"
+          className="text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1.5 text-sm transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Mening xizmatlarim
+        </Link>
+        <h1 className="text-foreground text-2xl font-bold">Xizmat qo'shish</h1>
+        <p className="text-muted-foreground mt-1 text-sm">
+          Yangi xizmat yaratish uchun barcha kerakli ma'lumotlarni kiriting
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-6">
-        <Card>
-          <CardContent className="flex flex-col gap-4 pt-6">
-            <Input label="Nomi" error={errors.name?.message} {...register('name', { required: 'Majburiy maydon' })} />
-              <Select
+      <form
+        onSubmit={handleSubmit((data) => mutation.mutate({ ...data, imageUrls }))}
+        className="flex flex-col gap-5"
+      >
+        <SectionCard
+          step={1}
+          icon={<Wrench className="text-primary h-4 w-4" />}
+          title="Asosiy ma'lumotlar"
+        >
+          <Input
+            label="Xizmat nomi"
+            placeholder="Masalan: Professional fotograf"
+            error={errors.name?.message}
+            {...register('name', { required: 'Majburiy maydon' })}
+          />
+          <Controller
+            name="categoryId"
+            control={control}
+            rules={{ required: 'Majburiy maydon' }}
+            render={({ field }) => (
+              <Combobox
                 label="Turkum"
+                options={categoryOptions}
+                value={field.value ?? ''}
+                onChange={field.onChange}
                 error={errors.categoryId?.message}
-                options={categories.map((cat) => ({ value: cat.id, label: cat.name }))}
-                {...register('categoryId', { required: 'Majburiy maydon' })}
+                placeholder="Turkumni tanlang..."
               />
-            <Textarea label="Tavsif" rows={3} {...register('description')} />
-            <Input label="Shahar" error={errors.city?.message} {...register('city', { required: 'Majburiy maydon' })} />
-            <Input label="Narx dan (so'm)" type="number" min={0} {...register('priceFrom', { required: true, valueAsNumber: true })} />
-          </CardContent>
-        </Card>
+            )}
+          />
+          <Textarea
+            label="Tavsif"
+            placeholder="Xizmat haqida qisqacha ma'lumot..."
+            rows={3}
+            {...register('description')}
+          />
+        </SectionCard>
 
-        {mutation.isError && <p className="text-sm text-destructive">Xizmat yaratishda xatolik</p>}
+        <SectionCard
+          step={2}
+          icon={<MapPin className="h-4 w-4 text-emerald-500" />}
+          title="Joylashuv va narx"
+        >
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Controller
+              name="city"
+              control={control}
+              rules={{ required: 'Majburiy maydon' }}
+              render={({ field }) => (
+                <Combobox
+                  label="Shahar"
+                  options={UZBEK_CITIES}
+                  value={field.value ?? ''}
+                  onChange={field.onChange}
+                  error={errors.city?.message}
+                  placeholder="Shaharni tanlang..."
+                />
+              )}
+            />
+            <Input
+              label="Narx dan (so'm)"
+              placeholder="50 000"
+              type="number"
+              min={0}
+              error={errors.priceFrom?.message}
+              {...register('priceFrom', {
+                required: 'Majburiy maydon',
+                valueAsNumber: true,
+                min: { value: 0, message: "Narx manfiy bo'lishi mumkin emas" },
+              })}
+            />
+          </div>
+        </SectionCard>
 
-        <div className="flex gap-3">
-          <Button type="submit" loading={mutation.isPending}>Xizmat yaratish</Button>
-          <Button type="button" variant="secondary" onClick={() => navigate('/my-services')}>Bekor qilish</Button>
+        <SectionCard step={3} icon={<Upload className="h-4 w-4 text-violet-500" />} title="Rasmlar">
+          <p className="text-muted-foreground -mt-1 text-sm">
+            Xizmatni yaxshiroq ko'rsatish uchun rasmlar yuklang.
+          </p>
+          <ImageDropZone
+            onChange={setImageUrls}
+            onUploadingChange={setIsUploadingImages}
+            maxImages={3}
+          />
+        </SectionCard>
+
+        <div className="bg-card border-border flex flex-wrap items-center justify-between gap-3 rounded-2xl border p-5">
+          {mutation.isError ? (
+            <p className="text-destructive text-sm">Xizmat yaratishda xatolik yuz berdi</p>
+          ) : (
+            <p className="text-muted-foreground text-sm">
+              {isUploadingImages
+                ? 'Rasmlar yuklanmoqda, iltimos kuting...'
+                : "Barcha majburiy maydonlar to'ldirilganiga ishonch hosil qiling"}
+            </p>
+          )}
+          <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={() => navigate('/my-services')}>
+              Bekor qilish
+            </Button>
+            <Button type="submit" loading={mutation.isPending} disabled={isUploadingImages}>
+              Xizmat yaratish
+            </Button>
+          </div>
         </div>
       </form>
     </div>
