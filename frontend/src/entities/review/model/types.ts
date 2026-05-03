@@ -5,7 +5,7 @@ export interface Review {
   authorId: string
   author?: User
   eventId?: string
-  squareId?: string   // was venueId
+  venueId?: string
   serviceId?: string
   rating: number
   comment?: string

@@ -5,7 +5,7 @@ import { SeedRegistry } from './seed/types';
 import { initFaker } from './seed/helpers/faker';
 import { seedReference } from './seed/seeders/00_reference.seeder';
 import { seedUsers } from './seed/seeders/01_users.seeder';
-import { seedSquares } from './seed/seeders/02_squares.seeder';
+import { seedVenues } from './seed/seeders/02_venues.seeder';
 import { seedServices } from './seed/seeders/03_services.seeder';
 import { seedEvents } from './seed/seeders/04_events.seeder';
 import { seedTicketsAndPayments } from './seed/seeders/05_tickets.seeder';
@@ -23,7 +23,7 @@ async function up() {
 
   await seedReference(prisma, registry);
   await seedUsers(prisma, registry, f);
-  await seedSquares(prisma, registry, f);
+  await seedVenues(prisma, registry, f);
   await seedServices(prisma, registry, f);
   await seedEvents(prisma, registry, f);
   await seedTicketsAndPayments(prisma, registry, f);
@@ -43,9 +43,9 @@ async function down() {
       "Review",
       "Volunteer",
       "VolunteerSkill",
-      "SquareCharacteristic",
+      "VenueCharacteristic",
       "ServiceBadge",
-      "SquareBadge",
+      "VenueBadge",
       "Badge",
       "Boost",
       "Payment",
@@ -55,9 +55,9 @@ async function down() {
       "TicketTier",
       "Event",
       "EventCategory",
-      "Square",
+      "Venue",
       "Service",
-      "SquareCategory",
+      "VenueCategory",
       "ServiceCategory",
       "User"
     RESTART IDENTITY CASCADE

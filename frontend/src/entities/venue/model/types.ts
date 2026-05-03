@@ -1,6 +1,6 @@
 import type { BookingStatus, RatingStats } from '@shared/types'
 
-export interface SquareCategory {
+export interface VenueCategory {
   id: string
   name: string
 }
@@ -9,7 +9,7 @@ export interface Venue {
   id: string
   ownerId: string
   categoryId: string
-  category?: SquareCategory
+  category?: VenueCategory
   owner?: { id: string; firstName: string; lastName: string }
   name: string
   description?: string
@@ -27,7 +27,7 @@ export interface Venue {
 
 export interface VenueBooking {
   id: string
-  squareId: string
+  venueId: string
   venue?: Venue
   eventServiceId?: string
   userId: string

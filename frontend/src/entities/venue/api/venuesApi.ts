@@ -3,7 +3,7 @@ import type { PaginatedResponse } from '@shared/types'
 import type { Venue, VenueBooking } from '../model/types'
 
 export interface CreateVenueDto {
-  categoryId: string  // UUID of SquareCategory (required by backend)
+  categoryId: string  // UUID of VenueCategory (required by backend)
   name: string
   description?: string
   address: string

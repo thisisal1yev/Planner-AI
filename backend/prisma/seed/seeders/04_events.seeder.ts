@@ -37,8 +37,8 @@ async function insertCuratedEvent(
       status: e.status,
       city: e.city,
       organizer: { connect: { id: registry.getUser(e.organizerKey) } },
-      ...(e.squareKey
-        ? { square: { connect: { id: registry.getSquare(e.squareKey) } } }
+      ...(e.venueKey
+        ? { venue: { connect: { id: registry.getVenue(e.venueKey) } } }
         : {}),
     },
   });
@@ -85,7 +85,7 @@ export async function seedEvents(
     where: { role: 'ORGANIZER' },
     select: { id: true },
   });
-  const squares = await prisma.square.findMany({
+  const venues = await prisma.venue.findMany({
     select: { id: true, city: true },
   });
 
@@ -96,7 +96,7 @@ export async function seedEvents(
       status: EventStatus.PUBLISHED,
     });
     const organizer = f.helpers.arrayElement(organizers);
-    const square = f.helpers.arrayElement(squares);
+    const venue = f.helpers.arrayElement(venues);
 
     const created = await prisma.event.create({
       data: {
@@ -110,9 +110,9 @@ export async function seedEvents(
         capacity: generated.capacity,
         bannerUrls: generated.bannerUrls,
         status: generated.status,
-        city: square.city,
+        city: venue.city,
         organizer: { connect: { id: organizer.id } },
-        square: { connect: { id: square.id } },
+        venue: { connect: { id: venue.id } },
       },
     });
     registry.setEvent(`generated_event_${i}`, created.id);

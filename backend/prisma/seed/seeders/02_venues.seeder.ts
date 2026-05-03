@@ -2,10 +2,10 @@ import type { Faker } from '@faker-js/faker';
 import type { PrismaClient } from '../../../generated/prisma/client';
 import type { SeedRegistry } from '../types';
 import { SEED_CONFIG } from '../config';
-import { CURATED_SQUARES } from '../fixtures/squares.fixture';
+import { CURATED_VENUES } from '../fixtures/venues.fixture';
 import {
-  SQUARE_CATEGORIES,
-  SQUARE_CHARACTERISTICS,
+  VENUE_CATEGORIES,
+  VENUE_CHARACTERISTICS,
 } from '../fixtures/reference.fixture';
 
 const CITIES = [
@@ -18,17 +18,17 @@ const CITIES = [
 ];
 const VENUE_TYPES = ['Center', 'Hall', 'Hub', 'Plaza', 'Arena', 'Garden'];
 
-export async function seedSquares(
+export async function seedVenues(
   prisma: PrismaClient,
   registry: SeedRegistry,
   f: Faker,
 ): Promise<void> {
-  for (const s of CURATED_SQUARES) {
+  for (const s of CURATED_VENUES) {
     const charIds = s.characteristicNames.map((name) => ({
-      id: registry.getSquareCharacteristic(name),
+      id: registry.getVenueCharacteristic(name),
     }));
 
-    const created = await prisma.square.create({
+    const created = await prisma.venue.create({
       data: {
         name: s.name,
         description: s.description,
@@ -41,31 +41,31 @@ export async function seedSquares(
         imageUrls: s.imageUrls,
         owner: { connect: { id: registry.getUser(s.ownerKey) } },
         category: {
-          connect: { id: registry.getSquareCategory(s.categoryName) },
+          connect: { id: registry.getVenueCategory(s.categoryName) },
         },
         characteristics: { connect: charIds },
       },
     });
-    registry.setSquare(s.key, created.id);
+    registry.setVenue(s.key, created.id);
   }
 
   const vendors = await prisma.user.findMany({
     where: { role: 'VENDOR' },
     select: { id: true },
   });
-  if (vendors.length === 0) throw new Error('[seedSquares] No vendors found');
+  if (vendors.length === 0) throw new Error('[seedVenues] No vendors found');
 
-  for (let i = 0; i < SEED_CONFIG.extraSquares; i++) {
+  for (let i = 0; i < SEED_CONFIG.extraVenues; i++) {
     const city = f.helpers.arrayElement(CITIES);
     const type = f.helpers.arrayElement(VENUE_TYPES);
-    const categoryName = f.helpers.arrayElement(SQUARE_CATEGORIES);
-    const charNames = f.helpers.arrayElements(SQUARE_CHARACTERISTICS, {
+    const categoryName = f.helpers.arrayElement(VENUE_CATEGORIES);
+    const charNames = f.helpers.arrayElements(VENUE_CHARACTERISTICS, {
       min: 2,
       max: 4,
     });
     const owner = f.helpers.arrayElement(vendors);
 
-    const created = await prisma.square.create({
+    const created = await prisma.venue.create({
       data: {
         name: `${city} ${type} ${i + 1}`,
         description: f.lorem.paragraph(),
@@ -79,18 +79,18 @@ export async function seedSquares(
           'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1200&q=80',
         ],
         owner: { connect: { id: owner.id } },
-        category: { connect: { id: registry.getSquareCategory(categoryName) } },
+        category: { connect: { id: registry.getVenueCategory(categoryName) } },
         characteristics: {
           connect: charNames.map((n) => ({
-            id: registry.getSquareCharacteristic(n),
+            id: registry.getVenueCharacteristic(n),
           })),
         },
       },
     });
-    registry.setSquare(`generated_square_${i}`, created.id);
+    registry.setVenue(`generated_venue_${i}`, created.id);
   }
 
   console.log(
-    `✅ Squares seeded: ${CURATED_SQUARES.length} curated + ${SEED_CONFIG.extraSquares} generated`,
+    `✅ Venues seeded: ${CURATED_VENUES.length} curated + ${SEED_CONFIG.extraVenues} generated`,
   );
 }

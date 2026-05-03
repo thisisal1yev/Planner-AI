@@ -24,7 +24,7 @@ export enum CuratedUserKey {
   PARTICIPANT_5 = 'PARTICIPANT_5',
 }
 
-export enum CuratedSquareKey {
+export enum CuratedVenueKey {
   TASHKENT_CITY_HALL = 'TASHKENT_CITY_HALL',
   SAMARKAND_GARDEN = 'SAMARKAND_GARDEN',
   BUKHARA_CONFERENCE = 'BUKHARA_CONFERENCE',
@@ -64,8 +64,8 @@ export type UserSeed = {
   createdAt?: Date;
 };
 
-export type SquareSeed = {
-  key: CuratedSquareKey;
+export type VenueSeed = {
+  key: CuratedVenueKey;
   name: string;
   description: string;
   address: string;
@@ -103,7 +103,7 @@ export type EventSeed = {
   bannerUrls: string[];
   status: EventStatus;
   organizerKey: CuratedUserKey;
-  squareKey?: CuratedSquareKey;
+  venueKey?: CuratedVenueKey;
   city: string;
 };
 
@@ -113,9 +113,9 @@ export type TicketTierSeed = {
   quantity: number;
 };
 
-export type SquareReviewSeed = {
+export type VenueReviewSeed = {
   userKey: CuratedUserKey;
-  squareKey: CuratedSquareKey;
+  venueKey: CuratedVenueKey;
   rating: number;
   comment: string;
 };
@@ -134,8 +134,8 @@ export type EventReviewSeed = {
   comment: string;
 };
 
-export type SquareBookingSeed = {
-  squareKey: CuratedSquareKey;
+export type VenueBookingSeed = {
+  venueKey: CuratedVenueKey;
   eventKey: CuratedEventKey;
   userKey: CuratedUserKey;
   status: BookingStatus;
@@ -162,15 +162,15 @@ export type VolunteerAppSeed = {
 
 export class SeedRegistry {
   private users = new Map<string, string>();
-  private squares = new Map<string, string>();
+  private venues = new Map<string, string>();
   private services = new Map<string, string>();
   private events = new Map<string, string>();
   private tiers = new Map<string, string[]>();
-  private squareCategories = new Map<string, string>();
+  private venueCategories = new Map<string, string>();
   private serviceCategories = new Map<string, string>();
   private eventCategories = new Map<string, string>();
   private volunteerSkills = new Map<string, string>();
-  private squareCharacteristics = new Map<string, string>();
+  private venueCharacteristics = new Map<string, string>();
 
   private participantIds: string[] = [];
 
@@ -198,20 +198,20 @@ export class SeedRegistry {
     return [...this.participantIds];
   }
 
-  // ── Squares ────────────────────────────────────────────────────────────────
+  // ── Venues ────────────────────────────────────────────────────────────────
 
-  setSquare(key: CuratedSquareKey | string, id: string) {
-    this.squares.set(key, id);
+  setVenue(key: CuratedVenueKey | string, id: string) {
+    this.venues.set(key, id);
   }
 
-  getSquare(key: CuratedSquareKey | string): string {
-    const id = this.squares.get(key);
-    if (!id) throw new SeedValidationError(`Square not found: ${key}`);
+  getVenue(key: CuratedVenueKey | string): string {
+    const id = this.venues.get(key);
+    if (!id) throw new SeedValidationError(`Venue not found: ${key}`);
     return id;
   }
 
-  getAllSquareIds(): string[] {
-    return Array.from(this.squares.values());
+  getAllVenueIds(): string[] {
+    return Array.from(this.venues.values());
   }
 
   // ── Services ───────────────────────────────────────────────────────────────
@@ -254,19 +254,20 @@ export class SeedRegistry {
 
   getTiers(eventId: string): string[] {
     const t = this.tiers.get(eventId);
-    if (!t) throw new SeedValidationError(`Tiers not found for event: ${eventId}`);
+    if (!t)
+      throw new SeedValidationError(`Tiers not found for event: ${eventId}`);
     return t;
   }
 
   // ── Categories ─────────────────────────────────────────────────────────────
 
-  setSquareCategory(name: string, id: string) {
-    this.squareCategories.set(name, id);
+  setVenueCategory(name: string, id: string) {
+    this.venueCategories.set(name, id);
   }
 
-  getSquareCategory(name: string): string {
-    const id = this.squareCategories.get(name);
-    if (!id) throw new SeedValidationError(`SquareCategory not found: ${name}`);
+  getVenueCategory(name: string): string {
+    const id = this.venueCategories.get(name);
+    if (!id) throw new SeedValidationError(`VenueCategory not found: ${name}`);
     return id;
   }
 
@@ -276,7 +277,8 @@ export class SeedRegistry {
 
   getServiceCategory(name: string): string {
     const id = this.serviceCategories.get(name);
-    if (!id) throw new SeedValidationError(`ServiceCategory not found: ${name}`);
+    if (!id)
+      throw new SeedValidationError(`ServiceCategory not found: ${name}`);
     return id;
   }
 
@@ -306,17 +308,18 @@ export class SeedRegistry {
     return Array.from(this.volunteerSkills.values());
   }
 
-  setSquareCharacteristic(name: string, id: string) {
-    this.squareCharacteristics.set(name, id);
+  setVenueCharacteristic(name: string, id: string) {
+    this.venueCharacteristics.set(name, id);
   }
 
-  getSquareCharacteristic(name: string): string {
-    const id = this.squareCharacteristics.get(name);
-    if (!id) throw new SeedValidationError(`SquareCharacteristic not found: ${name}`);
+  getVenueCharacteristic(name: string): string {
+    const id = this.venueCharacteristics.get(name);
+    if (!id)
+      throw new SeedValidationError(`VenueCharacteristic not found: ${name}`);
     return id;
   }
 
-  getAllSquareCharacteristicIds(): string[] {
-    return Array.from(this.squareCharacteristics.values());
+  getAllVenueCharacteristicIds(): string[] {
+    return Array.from(this.venueCharacteristics.values());
   }
 }

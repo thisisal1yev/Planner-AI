@@ -30,7 +30,7 @@ export class EventsService {
       },
       include: {
         ticketTiers: { include: { _count: { select: { tickets: true } } } },
-        square: true,
+        venue: true,
         category: { select: { id: true, name: true } },
       },
     });
@@ -67,7 +67,7 @@ export class EventsService {
         orderBy: { startDate: 'asc' },
         include: {
           organizer: { select: { id: true, firstName: true, lastName: true } },
-          square: { select: { id: true, name: true, city: true } },
+          venue: { select: { id: true, name: true, city: true } },
           ticketTiers: { include: { _count: { select: { tickets: true } } } },
           category: { select: { id: true, name: true } },
         },
@@ -97,7 +97,7 @@ export class EventsService {
             avatarUrl: true,
           },
         },
-        square: true,
+        venue: true,
         ticketTiers: { include: { _count: { select: { tickets: true } } } },
         category: { select: { id: true, name: true } },
         eventServices: { include: { service: true } },
@@ -127,7 +127,7 @@ export class EventsService {
       data,
       include: {
         ticketTiers: { include: { _count: { select: { tickets: true } } } },
-        square: true,
+        venue: true,
         category: { select: { id: true, name: true } },
       },
     });
