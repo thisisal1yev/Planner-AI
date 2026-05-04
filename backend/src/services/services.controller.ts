@@ -28,7 +28,7 @@ import { ServicesService } from './services.service';
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
-  @Post('services')
+  @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'VENDOR')
   @ApiBearerAuth()

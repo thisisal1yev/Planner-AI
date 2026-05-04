@@ -55,4 +55,10 @@ export class CreateVenueDto {
   @IsArray()
   @IsString({ each: true })
   imageUrls?: string[];
+
+  @ApiPropertyOptional({ type: [String], description: 'Array of VenueCharacteristic UUIDs' })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  characteristicIds?: string[];
 }

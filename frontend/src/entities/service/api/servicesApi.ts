@@ -17,6 +17,7 @@ export interface UpdateServiceDto {
   description?: string
   priceFrom?: number
   city?: string
+  imageUrls?: string[]
 }
 
 export interface QueryServicesDto {

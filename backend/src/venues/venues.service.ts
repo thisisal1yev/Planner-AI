@@ -22,9 +22,21 @@ export class VenuesService {
    * Creates a new venue (admin or vendor)
    */
   async create(ownerId: string, dto: CreateVenueDto) {
+    const { characteristicIds, ...rest } = dto;
     return this.prisma.venue.create({
-      data: { ...dto, ownerId },
+      data: {
+        ...rest,
+        ownerId,
+        ...(characteristicIds?.length && {
+          characteristics: { connect: characteristicIds.map((id) => ({ id })) },
+        }),
+      },
+      include: { characteristics: true },
     });
+  }
+
+  async listCharacteristics() {
+    return this.prisma.venueCharacteristic.findMany({ orderBy: { name: 'asc' } });
   }
 
   /**

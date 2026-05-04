@@ -1,5 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsArray,
   IsInt,
   IsNumber,
   IsOptional,
@@ -21,6 +22,11 @@ export class UpdateVenueDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
+  city?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
   address?: string;
 
   @ApiPropertyOptional()
@@ -35,4 +41,9 @@ export class UpdateVenueDto {
   @Min(0)
   pricePerDay?: number;
 
+  @ApiPropertyOptional({ type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  imageUrls?: string[];
 }
