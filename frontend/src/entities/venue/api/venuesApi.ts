@@ -2,8 +2,13 @@ import { apiClient } from '@shared/api/client'
 import type { PaginatedResponse } from '@shared/types'
 import type { Venue, VenueBooking } from '../model/types'
 
+export interface VenueCharacteristic {
+  id: string
+  name: string
+}
+
 export interface CreateVenueDto {
-  categoryId: string  // UUID of VenueCategory (required by backend)
+  categoryId: string
   name: string
   description?: string
   address: string
@@ -13,6 +18,7 @@ export interface CreateVenueDto {
   capacity: number
   pricePerDay: number
   imageUrls?: string[]
+  characteristicIds?: string[]
 }
 
 export type UpdateVenueDto = Partial<CreateVenueDto>
@@ -59,6 +65,10 @@ export const venuesApi = {
     endDate: string,
   ): Promise<{ available: boolean; conflicts: VenueBooking[] }> => {
     const { data } = await apiClient.get(`/venues/${id}/availability`, { params: { startDate, endDate } })
+    return data.data
+  },
+  listCharacteristics: async (): Promise<VenueCharacteristic[]> => {
+    const { data } = await apiClient.get('/venues/characteristics')
     return data.data
   },
 }

@@ -16,6 +16,7 @@ export const venueKeys = {
   detail: (id: string) => ['venue', id] as const,
   myList: () => ['my-venues'] as const,
   reviews: (id: string) => ['venue-reviews', id] as const,
+  characteristics: () => ['venue-characteristics'] as const,
 }
 
 export const serviceKeys = {

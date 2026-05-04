@@ -35,6 +35,13 @@ export class VenuesController {
     return this.venuesService.create(userId, dto);
   }
 
+  @Get('characteristics')
+  @Public()
+  @ApiOperation({ summary: 'List all venue characteristics' })
+  listCharacteristics() {
+    return this.venuesService.listCharacteristics();
+  }
+
   @Get()
   @Public()
   @ApiOperation({ summary: 'List venues with filters' })
