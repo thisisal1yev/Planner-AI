@@ -229,6 +229,11 @@
   to   { transform: translateX(-50%); }
 }
 
+@keyframes feedback-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Ornament & marquee animation helpers ────────── */
 
 .lp-spin  { animation: lp-spin    18s linear      infinite; }

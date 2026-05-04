@@ -39,7 +39,6 @@ const BROWSE_LINKS: NavItem[] = [
   { to: '/services', label: 'Xizmatlar', icon: Wrench },
 ]
 
-
 const ROLE_LINKS: Record<string, NavItem[]> = {
   PARTICIPANT: [{ to: '/tickets', label: 'Chiptalarim', icon: Ticket }],
   ORGANIZER: [
@@ -109,7 +108,7 @@ function MobileNavLink({
           : 'text-foreground/70 hover:text-foreground hover:bg-muted/40'
       )}
     >
-      <Icon className={cn('size-[15px]', active ? 'text-primary' : 'text-muted-foreground/60')} />
+      <Icon className={cn('size-3.75', active ? 'text-primary' : 'text-muted-foreground/60')} />
       {label}
     </Link>
   )
@@ -199,7 +198,7 @@ function UserMenu({ className }: { className?: string }) {
 
           <nav className="space-y-1">
             <div className="px-0.5 pt-0.5">
-              <div className="flex items-center gap-1 rounded-lg bg-muted/40 p-1">
+              <div className="bg-muted/40 flex items-center gap-1 rounded-lg p-1">
                 {ROLES.map((role) => {
                   const isActive = user?.role === role
                   const label =
@@ -290,7 +289,9 @@ export function Header() {
 
         <div className="mx-auto flex h-15 max-w-360 items-center justify-between gap-4 px-4 sm:px-6">
           <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
+            <span className="dark:text-cream text-xl font-bold tracking-[-0.01em] text-gray-900">
+              Planner
+            </span>
 
             <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </Link>
@@ -354,7 +355,7 @@ export function Header() {
             {user && (
               <>
                 <div className="bg-border/40 my-1.5 h-px" />
-                <div className="flex items-center gap-1 rounded-lg bg-muted/40 p-1">
+                <div className="bg-muted/40 flex items-center gap-1 rounded-lg p-1">
                   {ROLES.map((role) => {
                     const isActive = user.role === role
                     const label =
