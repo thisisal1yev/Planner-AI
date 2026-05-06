@@ -23,7 +23,8 @@ export interface Event {
   bannerUrls?: string[]
   startDate: string
   endDate: string
-  eventType: string
+  categoryId: string
+  city: string
   capacity: number
   status: EventStatus
   venueId?: string

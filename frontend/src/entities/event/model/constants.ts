@@ -14,6 +14,3 @@ export const EVENT_STATUS_LABEL: Record<string, string> = {
   COMPLETED: 'Tugallandi',
 }
 
-export const EVENT_TYPES = [
-  'Konsert', 'Konferensiya', "Ko'rgazma", 'Trening', 'Sport', 'Festival', 'Ziyofat', 'Boshqa',
-]

@@ -11,6 +11,7 @@ import type { Review } from '@entities/review'
 import { useAuthStore } from '@shared/model/auth.store'
 import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
+import { EmptyState } from '@shared/ui/EmptyState'
 import { Spinner } from '@shared/ui/Spinner'
 import { CardSkeleton } from '@shared/ui/CardSkeleton'
 import { StarRating } from '@shared/ui/StarRating'
@@ -614,15 +615,12 @@ export function ProfilePage() {
               ))}
             </div>
           ) : events.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <CalendarRange className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha tadbirlar yo'q</p>
-              <Link to="/my-events/create">
-                <Button size="sm" variant="outline">
-                  Birinchi tadbir yaratish
-                </Button>
-              </Link>
-            </div>
+            <EmptyState
+              variant="section"
+              icon={CalendarRange}
+              title="Hozircha tadbirlar yo'q"
+              action={{ label: 'Birinchi tadbir yaratish', href: '/my-events/create' }}
+            />
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {events.map((event, index) => (
@@ -651,15 +649,12 @@ export function ProfilePage() {
               ))}
             </div>
           ) : services.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <Wrench className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha xizmatlar yo'q</p>
-              <Link to="/my-services/create">
-                <Button size="sm" variant="outline">
-                  Birinchi xizmat yaratish
-                </Button>
-              </Link>
-            </div>
+            <EmptyState
+              variant="section"
+              icon={Wrench}
+              title="Hozircha xizmatlar yo'q"
+              action={{ label: 'Birinchi xizmat yaratish', href: '/my-services/create' }}
+            />
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {services.map((service, index) => (
@@ -688,15 +683,12 @@ export function ProfilePage() {
               ))}
             </div>
           ) : venues.length === 0 ? (
-            <div className="border-border rounded-2xl border border-dashed py-12 text-center">
-              <Building2 className="text-muted-foreground/30 mx-auto mb-3 h-10 w-10" />
-              <p className="text-muted-foreground mb-4 text-sm">Hozircha maydonlar yo'q</p>
-              <Link to="/my-venues/create">
-                <Button size="sm" variant="outline">
-                  Birinchi maydon yaratish
-                </Button>
-              </Link>
-            </div>
+            <EmptyState
+              variant="section"
+              icon={Building2}
+              title="Hozircha maydonlar yo'q"
+              action={{ label: 'Birinchi maydon yaratish', href: '/my-venues/create' }}
+            />
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {venues.map((venue, index) => (

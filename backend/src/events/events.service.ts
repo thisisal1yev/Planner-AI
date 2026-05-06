@@ -64,7 +64,7 @@ export class EventsService {
         where,
         skip,
         take: limit,
-        orderBy: { startDate: 'asc' },
+        orderBy: { startDate: 'desc' },
         include: {
           organizer: { select: { id: true, firstName: true, lastName: true } },
           venue: { select: { id: true, name: true, city: true } },

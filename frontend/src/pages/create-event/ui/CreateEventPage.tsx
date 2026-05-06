@@ -1,43 +1,74 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router'
-import { eventsApi, EVENT_TYPES } from '@entities/event'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate, Link } from 'react-router'
+import { eventsApi } from '@entities/event'
 import { Input } from '@shared/ui/Input'
 import { Select } from '@shared/ui/Select'
 import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
+import { ImageDropZone } from '@shared/ui/ImageDropZone'
 import type { CreateEventDto } from '@entities/event'
-import { eventKeys } from '@shared/api/queryKeys'
-import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/primitives/card'
+import { eventKeys, categoryKeys } from '@shared/api/queryKeys'
+import { categoriesApi } from '@shared/api/categoriesApi'
+import { ArrowLeft, CalendarDays, Info, Ticket, ImageIcon } from 'lucide-react'
 
-function parseBannerUrls(raw?: string): string[] {
-  return (raw ?? '')
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean)
+type CreateEventFormValues = Omit<CreateEventDto, 'bannerUrls' | 'ticketTiers'>
+
+interface TierInput {
+  name: string
+  price: number
+  quantity: number
 }
 
-type CreateEventFormValues = Omit<CreateEventDto, 'bannerUrls' | 'ticketTiers'> & {
-  bannerUrlRaw?: string
+interface SectionCardProps {
+  step: number
+  icon: React.ReactNode
+  title: string
+  children: React.ReactNode
+  headerAction?: React.ReactNode
 }
-
-
-interface TierInput { name: string; price: number; quantity: number }
+function SectionCard({ step, icon, title, children, headerAction }: SectionCardProps) {
+  return (
+    <div className="bg-card border-border overflow-hidden rounded-2xl border">
+      <div className="border-border flex items-center justify-between border-b px-6 py-4">
+        <div className="flex items-center gap-3">
+          <span className="bg-primary text-primary-foreground flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold">
+            {step}
+          </span>
+          <div className="text-foreground flex items-center gap-2 font-semibold">
+            {icon}
+            {title}
+          </div>
+        </div>
+        {headerAction}
+      </div>
+      <div className="flex flex-col gap-4 p-6">{children}</div>
+    </div>
+  )
+}
 
 export function CreateEventPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [tiers, setTiers] = useState<TierInput[]>([{ name: 'Standard', price: 0, quantity: 100 }])
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [isUploadingImages, setIsUploadingImages] = useState(false)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateEventFormValues>()
+  const { data: categories = [] } = useQuery({
+    queryKey: categoryKeys.eventCategories(),
+    queryFn: categoriesApi.listEventCategories,
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateEventFormValues>()
 
   const mutation = useMutation({
-    mutationFn: (values: CreateEventFormValues) => {
-      const bannerUrl = parseBannerUrls(values.bannerUrlRaw)
-      const { bannerUrlRaw, ...rest } = values
-      return eventsApi.create({ ...rest, bannerUrls: bannerUrl, ticketTiers: tiers })
-    },
+    mutationFn: (values: CreateEventFormValues) =>
+      eventsApi.create({ ...values, bannerUrls: imageUrls, ticketTiers: tiers }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: eventKeys.myList() })
       navigate('/my-events')
@@ -50,31 +81,53 @@ export function CreateEventPage() {
     setTiers(tiers.map((t, idx) => (idx === i ? { ...t, [field]: value } : t)))
 
   return (
-    <div className="max-w-2xl">
-      <h1 className="text-2xl font-bold text-foreground mb-6">Tadbir yaratish</h1>
+    <div>
+      <div className="mb-8">
+        <Link
+          to="/my-events"
+          className="text-muted-foreground hover:text-foreground mb-4 flex items-center gap-2 text-sm"
+        >
+          <ArrowLeft className="h-4 w-4" /> Mening tadbirlarim
+        </Link>
+        <h1 className="text-foreground text-3xl font-bold">Tadbir yaratish</h1>
+        <p className="text-muted-foreground mt-1">Yangi tadbir ma'lumotlarini kiriting</p>
+      </div>
 
-      <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">Asosiy ma'lumot</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4 pt-0">
-            <Input
-              label="Nomi"
-              placeholder="Yozgi festival"
-              error={errors.title?.message}
-              {...register('title', { required: 'Majburiy maydon', minLength: { value: 3, message: 'Min. 3 belgi' } })}
-            />
-            <Textarea
-              label="Tavsif"
-              rows={4}
-              placeholder="Tadbir tavsifi..."
-              {...register('description')}
-            />
+      <form
+        onSubmit={handleSubmit((data) => mutation.mutate(data))}
+        className="flex flex-col gap-5"
+      >
+        <SectionCard
+          step={1}
+          icon={<Info className="h-4 w-4 text-sky-500" />}
+          title="Asosiy ma'lumotlar"
+        >
+          <Input
+            label="Nomi"
+            placeholder="Yozgi festival"
+            error={errors.title?.message}
+            {...register('title', {
+              required: 'Majburiy maydon',
+              minLength: { value: 3, message: 'Min. 3 belgi' },
+            })}
+          />
+          <Textarea
+            label="Tavsif"
+            rows={4}
+            placeholder="Tadbir tavsifi..."
+            {...register('description')}
+          />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <Select
-              label="Tadbir turi"
-              options={EVENT_TYPES.map((t) => ({ value: t, label: t }))}
-              {...register('eventType', { required: true })}
+              label="Kategoriya"
+              options={categories.map((c) => ({ value: c.id, label: c.name }))}
+              {...register('categoryId', { required: true })}
+            />
+            <Input
+              label="Shahar"
+              placeholder="Toshkent"
+              error={errors.city?.message}
+              {...register('city', { required: 'Majburiy maydon' })}
             />
             <Input
               label="Sig'imi"
@@ -83,77 +136,107 @@ export function CreateEventPage() {
               error={errors.capacity?.message}
               {...register('capacity', { required: true, valueAsNumber: true, min: 1 })}
             />
-            <Input label="Banner URL (ixtiyoriy, vergul bilan ajrating)" {...register('bannerUrlRaw')} />
-          </CardContent>
-        </Card>
+          </div>
+        </SectionCard>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base font-semibold">Sanalar</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="grid grid-cols-2 gap-4">
+        <SectionCard
+          step={2}
+          icon={<CalendarDays className="h-4 w-4 text-emerald-500" />}
+          title="Sanalar"
+        >
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Input
+              label="Boshlanish"
+              type="datetime-local"
+              error={errors.startDate?.message}
+              {...register('startDate', { required: 'Majburiy maydon' })}
+            />
+            <Input
+              label="Tugash"
+              type="datetime-local"
+              error={errors.endDate?.message}
+              {...register('endDate', { required: 'Majburiy maydon' })}
+            />
+          </div>
+        </SectionCard>
+
+        <SectionCard
+          step={3}
+          icon={<Ticket className="h-4 w-4 text-violet-500" />}
+          title="Chipta turlari"
+          headerAction={
+            <Button type="button" variant="secondary" size="sm" onClick={addTier}>
+              + Qo'shish
+            </Button>
+          }
+        >
+          {tiers.map((tier, i) => (
+            <div key={i} className="grid grid-cols-3 items-end gap-3">
               <Input
-                label="Boshlanish"
-                type="datetime-local"
-                error={errors.startDate?.message}
-                {...register('startDate', { required: 'Majburiy maydon' })}
+                label="Nomi"
+                value={tier.name}
+                onChange={(e) => updateTier(i, 'name', e.target.value)}
+                placeholder="VIP / Standard"
               />
               <Input
-                label="Tugash"
-                type="datetime-local"
-                error={errors.endDate?.message}
-                {...register('endDate', { required: 'Majburiy maydon' })}
+                label="Narx (so'm)"
+                type="number"
+                min={0}
+                value={tier.price}
+                onChange={(e) => updateTier(i, 'price', parseFloat(e.target.value) || 0)}
               />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold">Chipta turlari</CardTitle>
-              <Button type="button" variant="secondary" size="sm" onClick={addTier}>+ Qo'shish</Button>
-            </div>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3 pt-0">
-            {tiers.map((tier, i) => (
-              <div key={i} className="grid grid-cols-3 gap-3 items-end">
+              <div className="flex items-end gap-2">
                 <Input
-                  label="Nomi"
-                  value={tier.name}
-                  onChange={(e) => updateTier(i, 'name', e.target.value)}
-                  placeholder="VIP / Standard"
-                />
-                <Input
-                  label="Narx (so'm)"
+                  label="Miqdor"
                   type="number"
-                  min={0}
-                  value={tier.price}
-                  onChange={(e) => updateTier(i, 'price', parseFloat(e.target.value) || 0)}
+                  min={1}
+                  value={tier.quantity}
+                  onChange={(e) => updateTier(i, 'quantity', parseInt(e.target.value) || 1)}
                 />
-                <div className="flex gap-2 items-end">
-                  <Input
-                    label="Miqdor"
-                    type="number"
-                    min={1}
-                    value={tier.quantity}
-                    onChange={(e) => updateTier(i, 'quantity', parseInt(e.target.value) || 1)}
-                  />
-                  {tiers.length > 1 && (
-                    <Button type="button" variant="danger" size="sm" onClick={() => removeTier(i)}>✕</Button>
-                  )}
-                </div>
+                {tiers.length > 1 && (
+                  <Button type="button" variant="danger" size="sm" onClick={() => removeTier(i)}>
+                    ✕
+                  </Button>
+                )}
               </div>
-            ))}
-          </CardContent>
-        </Card>
+            </div>
+          ))}
+        </SectionCard>
 
-        {mutation.isError && <p className="text-sm text-destructive">Tadbir yaratishda xatolik</p>}
+        <SectionCard
+          step={4}
+          icon={<ImageIcon className="h-4 w-4 text-amber-500" />}
+          title="Rasmlar"
+        >
+          <p className="text-muted-foreground text-sm">
+            Tadbir banneri uchun rasm yuklang (ixtiyoriy)
+          </p>
 
-        <div className="flex gap-3">
-          <Button type="submit" loading={mutation.isPending}>Tadbir yaratish</Button>
-          <Button type="button" variant="secondary" onClick={() => navigate('/my-events')}>Bekor qilish</Button>
+          <ImageDropZone
+            onChange={setImageUrls}
+            onUploadingChange={setIsUploadingImages}
+            maxImages={3}
+          />
+        </SectionCard>
+
+        <div className="bg-card border-border flex items-center justify-between rounded-2xl border px-6 py-4">
+          <div className="text-muted-foreground text-sm">
+            {isUploadingImages ? (
+              'Rasmlar yuklanmoqda...'
+            ) : mutation.isError ? (
+              <span className="text-destructive">Xatolik yuz berdi</span>
+            ) : (
+              "Barcha maydonlarni to'ldiring"
+            )}
+          </div>
+          <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={() => navigate('/my-events')}>
+              Bekor qilish
+            </Button>
+            <Button type="submit" loading={mutation.isPending} disabled={isUploadingImages}>
+              Tadbir yaratish
+            </Button>
+          </div>
         </div>
       </form>
     </div>

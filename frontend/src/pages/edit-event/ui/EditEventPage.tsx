@@ -1,14 +1,15 @@
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router'
-import { eventsApi, EVENT_TYPES } from '@entities/event'
+import { eventsApi } from '@entities/event'
 import { Input } from '@shared/ui/Input'
 import { Select } from '@shared/ui/Select'
 import { Button } from '@shared/ui/Button'
 import { Spinner } from '@shared/ui/Spinner'
 import { Textarea } from '@shared/ui/Textarea'
 import type { UpdateEventDto } from '@entities/event'
-import { eventKeys } from '@shared/api/queryKeys'
+import { eventKeys, categoryKeys } from '@shared/api/queryKeys'
+import { categoriesApi } from '@shared/api/categoriesApi'
 import { Card, CardContent } from '@/shared/ui/primitives/card'
 
 function parseBannerUrls(raw?: string): string[] {
@@ -34,6 +35,11 @@ export function EditEventPage() {
     enabled: !!id,
   })
 
+  const { data: categories = [] } = useQuery({
+    queryKey: categoryKeys.eventCategories(),
+    queryFn: categoriesApi.listEventCategories,
+  })
+
   const { register, handleSubmit, formState: { errors } } = useForm<EditEventFormValues>({
     values: event ? {
       title: event.title,
@@ -41,7 +47,7 @@ export function EditEventPage() {
       bannerUrlRaw: event.bannerUrls?.join(', ') ?? '',
       startDate: event.startDate.slice(0, 16),
       endDate: event.endDate.slice(0, 16),
-      eventType: event.eventType,
+      categoryId: event.categoryId,
       capacity: event.capacity,
     } : undefined,
   })
@@ -80,9 +86,9 @@ export function EditEventPage() {
               {...register('description')}
             />
             <Select
-              label="Tadbir turi"
-              options={EVENT_TYPES.map((t) => ({ value: t, label: t }))}
-              {...register('eventType')}
+              label="Kategoriya"
+              options={categories.map((c) => ({ value: c.id, label: c.name }))}
+              {...register('categoryId')}
             />
             <Input label="Sig'imi" type="number" min={1} {...register('capacity', { valueAsNumber: true })} />
             <Input label="Banner URLs (vergul bilan)" {...register('bannerUrlRaw')} />

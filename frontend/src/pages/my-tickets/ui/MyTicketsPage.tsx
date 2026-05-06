@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, TicketX } from 'lucide-react'
 import { ticketsApi } from '@entities/ticket'
 import { Badge } from '@shared/ui/Badge'
+import { EmptyState } from '@shared/ui/EmptyState'
 import { Spinner } from '@shared/ui/Spinner'
 import { ticketKeys } from '@shared/api/queryKeys'
 import { formatUZS } from '@shared/lib/dateUtils'
@@ -20,10 +21,12 @@ export function MyTicketsPage() {
       <h1 className="text-2xl font-bold text-foreground">Mening chiptalаrim</h1>
 
       {tickets?.length === 0 && (
-        <div className="text-center py-16">
-          <p className="text-muted-foreground mb-4">Sizda hozircha chiptalar yo'q</p>
-          <Link to="/events" className="text-primary hover:underline text-sm">Tadbirlarni topish →</Link>
-        </div>
+        <EmptyState
+          icon={TicketX}
+          title="Chiptalar yo'q"
+          description="Hali birorta chipta sotib olmagansiz"
+          action={{ label: 'Tadbirlarni topish', href: '/events' }}
+        />
       )}
 
       <div className="flex flex-col gap-3">

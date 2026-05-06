@@ -11,20 +11,20 @@ export interface CreateEventDto {
   bannerUrls?: string[]
   startDate: string
   endDate: string
-  eventType: string
+  categoryId: string
+  city: string
   capacity: number
   venueId?: string
   ticketTiers?: { name: string; price: number; quantity: number }[]
 }
 
-export type UpdateEventDto = Partial<Omit<CreateEventDto, 'ticketTiers'>>
+export type UpdateEventDto = Partial<Omit<CreateEventDto, 'ticketTiers' | 'city'>>
 
 export interface QueryEventsDto {
   page?: number
   limit?: number
   city?: string
   categoryId?: string
-  eventType?: string
   dateFrom?: string
   dateTo?: string
   status?: string

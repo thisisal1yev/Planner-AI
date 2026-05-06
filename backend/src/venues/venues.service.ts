@@ -36,7 +36,9 @@ export class VenuesService {
   }
 
   async listCharacteristics() {
-    return this.prisma.venueCharacteristic.findMany({ orderBy: { name: 'asc' } });
+    return this.prisma.venueCharacteristic.findMany({
+      orderBy: { name: 'asc' },
+    });
   }
 
   /**
