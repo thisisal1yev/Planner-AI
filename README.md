@@ -8,7 +8,7 @@ A full-stack platform connecting event organizers with venues, service providers
 ![React](https://img.shields.io/badge/React-v19-61dafb?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-v5.9-3178c6?logo=typescript)
 ![Prisma](https://img.shields.io/badge/Prisma-v7.8-2d3748?logo=prisma)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-4169e1?logo=postgresql)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-4169e1?logo=postgresql)
 
 ---
 
@@ -33,8 +33,8 @@ A full-stack platform connecting event organizers with venues, service providers
 
 ### Backend
 - **NestJS v11** — framework
-- **Prisma v7.7** — ORM
-- **PostgreSQL 14+** — database
+- **Prisma v7.8** — ORM
+- **PostgreSQL 17+** — database
 - **Passport + JWT** — authentication
 - **Click / Payme** — payment providers
 - **Nodemailer** — email delivery
@@ -62,6 +62,7 @@ planner-ai/
 │   ├── src/
 │   │   ├── analytics/
 │   │   ├── auth/
+│   │   ├── categories/
 │   │   ├── events/
 │   │   ├── payments/
 │   │   ├── reviews/
@@ -91,7 +92,7 @@ planner-ai/
 ### Prerequisites
 
 - Node.js v18+
-- PostgreSQL v14+
+- PostgreSQL v17+
 - Bun (recommended) or npm
 
 ### Setup
@@ -112,7 +113,7 @@ bun run prisma:seed    # optional
 # 3. Frontend
 cd ../frontend
 bun install
-echo "VITE_API_URL=http://localhost:3000" > .env
+cp .env.example .env   # fill in VITE_API_URL, VITE_IMGBB_UPLOAD_URL, VITE_IMGBB_API_KEY
 ```
 
 ### Run
@@ -159,6 +160,8 @@ cd frontend && bun run dev
 | Variable | Description |
 |----------|-------------|
 | `VITE_API_URL` | Backend base URL |
+| `VITE_IMGBB_UPLOAD_URL` | imgbb upload endpoint (`https://api.imgbb.com/1/upload`) |
+| `VITE_IMGBB_API_KEY` | imgbb API key for image uploads |
 
 ---
 

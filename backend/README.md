@@ -5,7 +5,7 @@ NestJS REST API for the Event Organization Marketplace.
 [![NestJS](https://img.shields.io/badge/NestJS-v11-ea2845?logo=nestjs)](https://nestjs.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-v5.9-3178c6?logo=typescript)](https://www.typescriptlang.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-v7.8-2d3748?logo=prisma)](https://www.prisma.io/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-4169e1?logo=postgresql)](https://www.postgresql.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17+-4169e1?logo=postgresql)](https://www.postgresql.org/)
 
 ---
 
@@ -16,7 +16,7 @@ NestJS REST API for the Event Organization Marketplace.
 | NestJS | v11 | Framework |
 | TypeScript | v5.9 | Type safety |
 | Prisma | v7.8 | ORM |
-| PostgreSQL | 14+ | Database |
+| PostgreSQL | 17+ | Database |
 | Passport + JWT | — | Authentication |
 | bcrypt | v6 | Password hashing |
 | Swagger | — | API documentation |
@@ -39,13 +39,14 @@ backend/
 │   │   ├── strategies/     # Access + refresh JWT strategies
 │   │   ├── guards/         # JwtAuthGuard
 │   │   └── decorators/     # @CurrentUser, @Public
+│   ├── categories/         # Event / service / venue category lookups
 │   ├── common/             # Shared utilities
 │   │   ├── filters/        # GlobalExceptionFilter
 │   │   ├── guards/         # RolesGuard, ThrottlerGuard
 │   │   ├── interceptors/   # Logging, ResponseTransform
 │   │   └── decorators/     # @Roles
 │   ├── config/             # DB, JWT, mailer config
-│   ├── events/             # Event CRUD & management
+│   ├── events/             # Event CRUD & management (city, category, tickets)
 │   ├── payments/           # Click & Payme integrations
 │   ├── prisma/             # PrismaService & module
 │   ├── reviews/            # Reviews & ratings
@@ -71,7 +72,7 @@ backend/
 ### Prerequisites
 
 - Node.js v18+
-- PostgreSQL v14+
+- PostgreSQL v17+
 - Bun (recommended)
 
 ### Installation
@@ -156,12 +157,36 @@ module/
     └── update-*.dto.ts
 ```
 
+### NestJS Decorators
+
+NestJS requires `emitDecoratorMetadata` and `experimentalDecorators` in `tsconfig.json` for decorators like `@Module`, `@Controller`, `@Injectable`, `@UseGuards` to work:
+
+```json
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+Role-based access control with `@Roles` + `RolesGuard`:
+
+```typescript
+@Post()
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('ORGANIZER')
+create(@CurrentUser('id') organizerId: string, @Body() dto: CreateEventDto) {
+  return this.eventsService.create(organizerId, dto);
+}
+```
+
 ### Global Middleware
 
 | Name | Purpose |
 |------|---------|
 | **JwtAuthGuard** | Applied globally; opt-out with `@Public()` |
-| **RolesGuard** | Role-based authorization |
+| **RolesGuard** | Role-based authorization via `@Roles()` decorator |
 | **ThrottlerGuard** | Rate limiting |
 | **LoggingInterceptor** | Request/response logging |
 | **ResponseTransformInterceptor** | Unified response shape |
@@ -244,14 +269,23 @@ createEvent(@Body() dto: CreateEventDto) { ... }
 ### Prisma Commands
 
 ```bash
-# New migration
-bun exec prisma migrate dev --name <name>
+# Create + apply a new migration
+bun exec prisma migrate dev --name <migration_name>
 
-# Reset database (deletes all data)
+# Apply pending migrations (CI / production)
+bun exec prisma migrate deploy
+
+# Create migration file without applying
+bun exec prisma migrate dev --name <name> --create-only
+
+# Reset database — drops all data and re-runs migrations
 bun exec prisma migrate reset
 
 # Visual DB browser
 bun run prisma:studio
+
+# Pull schema from existing database
+bun exec prisma db pull
 ```
 
 ---
@@ -287,7 +321,8 @@ CORS_ORIGIN=http://localhost:5173
 |--------|-----------|
 | **Auth** | `POST /auth/register` · `POST /auth/login` · `POST /auth/refresh` · `POST /auth/logout` |
 | **Users** | `GET /users/me` · `PATCH /users/me` · `GET /users` (admin) · `GET /users/:id` |
-| **Events** | `GET /events` · `POST /events` · `GET /events/:id` · `PATCH /events/:id` · `PATCH /events/:id/publish` |
+| **Events** | `GET /events` · `POST /events` · `GET /events/my` · `GET /events/:id` · `PATCH /events/:id` · `PATCH /events/:id/publish` · `DELETE /events/:id` |
+| **Categories** | `GET /event-categories` · `GET /service-categories` · `GET /venue-categories` (all public) |
 | **Venues (Squares)** | `GET /venues` · `POST /venues` · `GET /venues/:id` · `PATCH /venues/:id` · `POST /venues/:id/book` · `GET /venues/:id/availability` |
 | **Services** | `GET /services` · `POST /services` · `GET /services/:id` · `PATCH /services/:id` · `POST /events/:id/services` · `DELETE /events/:id/services/:sid` |
 | **Tickets** | `POST /events/:id/tickets/purchase` · `GET /tickets/my` · `GET /tickets/:id` · `POST /tickets/validate` |

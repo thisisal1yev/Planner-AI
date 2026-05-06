@@ -150,15 +150,40 @@ App: **http://localhost:5173**
 | **Zustand** | Client state — auth, UI flags |
 
 ```typescript
-// Server state
-export function useEvents() {
-  return useQuery({
-    queryKey: ['events'],
-    queryFn: eventApi.getAll,
-  })
-}
+// Server state — TanStack Query v5 (single object arg, isPending not isLoading)
+const { isPending, isError, data, error } = useQuery({
+  queryKey: ['events'],
+  queryFn: eventsApi.list,
+  staleTime: 5 * 60 * 1000, // fresh for 5 min
+  gcTime: 10 * 60 * 1000,   // cache kept for 10 min (was cacheTime in v4)
+})
 
-// Auth store (persisted to localStorage)
+const mutation = useMutation({
+  mutationFn: eventsApi.create,
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: ['events'] }),
+})
+```
+
+```typescript
+// Client state — Zustand v5 with persist middleware
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
+
+const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      login: (user) => set({ user }),
+      logout: () => set({ user: null }),
+    }),
+    {
+      name: 'auth-storage',                        // localStorage key
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+)
+
+// Usage in components
 const { user, isAuthenticated, login, logout } = useAuthStore()
 ```
 
@@ -174,17 +199,29 @@ const { user, isAuthenticated, login, logout } = useAuthStore()
 ```typescript
 import { apiClient } from '@shared/api/client'
 
-const response = await apiClient.get('/events')
+const { data } = await apiClient.get('/events')
 ```
 
-Each entity owns its API calls:
+Each entity owns its API calls and types:
 
 ```
 entities/event/
-├── api/event.api.ts       # getAll, getById, create...
-├── model/types.ts
-├── model/event.queries.ts # TanStack Query hooks
-└── ui/EventCard.tsx
+├── api/eventsApi.ts   # typed CRUD methods (list, get, create, update…)
+├── model/types.ts     # Event, TicketTier interfaces
+├── model/constants.ts # EVENT_STATUS_COLOR, EVENT_STATUS_LABEL
+├── ui/EventCard.tsx   # presentational cards
+└── index.ts           # public barrel exports
+```
+
+React Router v7 — imports from `"react-router"` (not `"react-router-dom"`):
+
+```typescript
+import { createBrowserRouter, Link, useNavigate, useParams } from 'react-router'
+
+const router = createBrowserRouter([
+  { path: '/', Component: HomePage },
+  { path: '/events/:id', Component: EventDetailPage },
+])
 ```
 
 ---
@@ -211,13 +248,38 @@ import { cn } from '@shared/lib/utils'
 <div className={cn('base', condition && 'extra')} />
 ```
 
+**tsconfig.json** — required Vite + React settings:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
+    "strict": true,
+    "noEmit": true
+  }
+}
+```
+
 ---
 
 ## Environment Variables
 
 ```env
 VITE_API_URL=http://localhost:3000
+VITE_IMGBB_UPLOAD_URL=https://api.imgbb.com/1/upload
+VITE_IMGBB_API_KEY=your-imgbb-api-key
 ```
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_API_URL` | Backend base URL |
+| `VITE_IMGBB_UPLOAD_URL` | imgbb upload endpoint |
+| `VITE_IMGBB_API_KEY` | imgbb API key — get one free at [imgbb.com](https://api.imgbb.com/) |
 
 ```typescript
 const apiUrl = import.meta.env.VITE_API_URL
