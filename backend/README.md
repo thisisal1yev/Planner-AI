@@ -92,7 +92,10 @@ bun run prisma:generate
 # Run migrations
 bun run prisma:migrate
 
-# Seed sample data (optional)
+# Create admin account — run once on first deploy
+ADMIN_EMAIL=admin@myapp.com ADMIN_PASSWORD=strongpass bun run bootstrap
+
+# Seed sample data (optional, dev only)
 bun run prisma:seed
 ```
 
@@ -125,7 +128,8 @@ Swagger: **http://localhost:3000/api/docs**
 | `bun run prisma:generate` | Generate Prisma client |
 | `bun run prisma:migrate` | Run migrations |
 | `bun run prisma:studio` | Open Prisma Studio |
-| `bun run prisma:seed` | Seed database |
+| `bun run prisma:seed` | Seed database (dev only) |
+| `bun run bootstrap` | Create admin user from env vars (idempotent) |
 | `bun run test` | Unit tests |
 | `bun run test:watch` | Tests in watch mode |
 | `bun run test:cov` | Tests with coverage |

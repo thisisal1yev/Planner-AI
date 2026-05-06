@@ -19,7 +19,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "bun prisma/seed.ts"
+    "prisma:seed": "bun prisma/seed.ts",
+    "bootstrap": "bun prisma/seed/bootstrap.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.19",
