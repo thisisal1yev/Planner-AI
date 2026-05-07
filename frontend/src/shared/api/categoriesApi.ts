@@ -18,4 +18,16 @@ export const categoriesApi = {
     const { data } = await apiClient.get('/venue-categories')
     return data.data
   },
+  createEventCategory: async (name: string): Promise<Category> => {
+    const { data } = await apiClient.post('/event-categories', { name })
+    return data.data
+  },
+  createServiceCategory: async (name: string): Promise<Category> => {
+    const { data } = await apiClient.post('/service-categories', { name })
+    return data.data
+  },
+  createVenueCategory: async (name: string): Promise<Category> => {
+    const { data } = await apiClient.post('/venue-categories', { name })
+    return data.data
+  },
 }

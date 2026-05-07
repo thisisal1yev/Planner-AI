@@ -49,3 +49,7 @@ export const analyticsKeys = {
   dashboard: () => ['dashboard'] as const,
   adminDashboard: () => ['admin-dashboard'] as const,
 }
+
+export const cityKeys = {
+  list: () => ['cities'] as const,
+}

@@ -71,4 +71,8 @@ export const venuesApi = {
     const { data } = await apiClient.get('/venues/characteristics')
     return data.data
   },
+  createCharacteristic: async (name: string): Promise<VenueCharacteristic> => {
+    const { data } = await apiClient.post('/venues/characteristics', { name })
+    return data.data
+  },
 }

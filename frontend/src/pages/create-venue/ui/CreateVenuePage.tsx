@@ -7,13 +7,13 @@ import type { CreateVenueDto } from '@entities/venue'
 import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
-import { Combobox } from '@shared/ui/Combobox'
+import { ChipSelect } from '@shared/ui/ChipSelect'
+import { MultiChipSelect } from '@shared/ui/MultiChipSelect'
 import { ImageDropZone } from '@shared/ui/ImageDropZone'
-import { venueKeys, categoryKeys } from '@shared/api/queryKeys'
+import { venueKeys, categoryKeys, cityKeys } from '@shared/api/queryKeys'
 import { categoriesApi } from '@shared/api/categoriesApi'
-import { UZBEK_CITIES } from '@shared/lib/uzbekCities'
+import { citiesApi } from '@shared/api/citiesApi'
 import { ArrowLeft, Building2, MapPin, LayoutGrid, Upload, SlidersHorizontal } from 'lucide-react'
-import { cn } from '@/shared/lib/utils'
 
 function SectionCard({
   step,
@@ -61,16 +61,15 @@ export function CreateVenuePage() {
     queryFn: categoriesApi.listVenueCategories,
   })
 
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
+  })
+
   const { data: characteristics = [] } = useQuery({
     queryKey: venueKeys.characteristics(),
     queryFn: venuesApi.listCharacteristics,
   })
-
-  function toggleCharacteristic(id: string) {
-    setSelectedCharacteristicIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-    )
-  }
 
   const mutation = useMutation({
     mutationFn: venuesApi.create,
@@ -100,7 +99,7 @@ export function CreateVenuePage() {
 
       <form
         onSubmit={handleSubmit((data) =>
-          mutation.mutate({ ...data, imageUrls, characteristicIds: selectedCharacteristicIds }),
+          mutation.mutate({ ...data, imageUrls, characteristicIds: selectedCharacteristicIds })
         )}
         className="flex flex-col gap-5"
       >
@@ -120,13 +119,18 @@ export function CreateVenuePage() {
             control={control}
             rules={{ required: 'Majburiy maydon' }}
             render={({ field }) => (
-              <Combobox
+              <ChipSelect
                 label="Turkum"
                 options={categoryOptions}
                 value={field.value ?? ''}
                 onChange={field.onChange}
                 error={errors.categoryId?.message}
                 placeholder="Turkumni tanlang..."
+                onCreateOption={async (name) => {
+                  const cat = await categoriesApi.createVenueCategory(name)
+                  queryClient.invalidateQueries({ queryKey: categoryKeys.venueCategories() })
+                  return { value: cat.id, label: cat.name }
+                }}
               />
             )}
           />
@@ -149,13 +153,19 @@ export function CreateVenuePage() {
               control={control}
               rules={{ required: 'Majburiy maydon' }}
               render={({ field }) => (
-                <Combobox
+                <ChipSelect
                   label="Shahar"
-                  options={UZBEK_CITIES}
+                  options={cities}
                   value={field.value ?? ''}
                   onChange={field.onChange}
                   error={errors.city?.message}
                   placeholder="Shaharni tanlang..."
+                  popularCount={5}
+                  onCreateOption={async (name) => {
+                    const opt = await citiesApi.createCity(name)
+                    queryClient.invalidateQueries({ queryKey: cityKeys.list() })
+                    return opt
+                  }}
                 />
               )}
             />
@@ -222,42 +232,18 @@ export function CreateVenuePage() {
           icon={<SlidersHorizontal className="h-4 w-4 text-sky-500" />}
           title="Xususiyatlar"
         >
-          {characteristics.length === 0 ? (
-            <p className="text-muted-foreground text-sm">Xususiyatlar mavjud emas</p>
-          ) : (
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {characteristics.map((c) => {
-                const checked = selectedCharacteristicIds.includes(c.id)
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => toggleCharacteristic(c.id)}
-                    className={cn(
-                      'flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors',
-                      checked
-                        ? 'border-primary/30 bg-primary/8 text-primary font-medium'
-                        : 'border-border text-muted-foreground hover:border-border/80 hover:text-foreground',
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors',
-                        checked ? 'border-primary bg-primary' : 'border-input',
-                      )}
-                    >
-                      {checked && (
-                        <svg className="h-2.5 w-2.5 text-white" viewBox="0 0 10 10" fill="none">
-                          <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                    </div>
-                    {c.name}
-                  </button>
-                )
-              })}
-            </div>
-          )}
+          <MultiChipSelect
+            options={characteristics.map((c) => ({ value: c.id, label: c.name }))}
+            value={selectedCharacteristicIds}
+            onChange={setSelectedCharacteristicIds}
+            placeholder="Xususiyat qidiring yoki qo'shing..."
+            popularCount={5}
+            onCreateOption={async (name) => {
+              const c = await venuesApi.createCharacteristic(name)
+              queryClient.invalidateQueries({ queryKey: venueKeys.characteristics() })
+              return { value: c.id, label: c.name }
+            }}
+          />
         </SectionCard>
 
         <SectionCard step={5} icon={<Upload className="h-4 w-4 text-violet-500" />} title="Rasmlar">

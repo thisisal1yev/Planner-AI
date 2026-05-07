@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, Link } from 'react-router'
 import { eventsApi } from '@entities/event'
 import { Input } from '@shared/ui/Input'
-import { Select } from '@shared/ui/Select'
+import { ChipSelect } from '@shared/ui/ChipSelect'
 import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
 import { ImageDropZone } from '@shared/ui/ImageDropZone'
 import type { CreateEventDto } from '@entities/event'
-import { eventKeys, categoryKeys } from '@shared/api/queryKeys'
+import { eventKeys, categoryKeys, cityKeys } from '@shared/api/queryKeys'
 import { categoriesApi } from '@shared/api/categoriesApi'
+import { citiesApi } from '@shared/api/citiesApi'
 import { ArrowLeft, CalendarDays, Info, Ticket, ImageIcon } from 'lucide-react'
 
 type CreateEventFormValues = Omit<CreateEventDto, 'bannerUrls' | 'ticketTiers'>
@@ -60,8 +61,14 @@ export function CreateEventPage() {
     queryFn: categoriesApi.listEventCategories,
   })
 
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
+  })
+
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateEventFormValues>()
@@ -118,16 +125,46 @@ export function CreateEventPage() {
             {...register('description')}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Select
-              label="Kategoriya"
-              options={categories.map((c) => ({ value: c.id, label: c.name }))}
-              {...register('categoryId', { required: true })}
+            <Controller
+              name="categoryId"
+              control={control}
+              rules={{ required: 'Majburiy maydon' }}
+              render={({ field }) => (
+                <ChipSelect
+                  label="Kategoriya"
+                  options={categories.map((c) => ({ value: c.id, label: c.name }))}
+                  value={field.value ?? ''}
+                  onChange={field.onChange}
+                  error={errors.categoryId?.message}
+                  placeholder="Kategoriyani tanlang..."
+                  onCreateOption={async (name) => {
+                    const cat = await categoriesApi.createEventCategory(name)
+                    queryClient.invalidateQueries({ queryKey: categoryKeys.eventCategories() })
+                    return { value: cat.id, label: cat.name }
+                  }}
+                />
+              )}
             />
-            <Input
-              label="Shahar"
-              placeholder="Toshkent"
-              error={errors.city?.message}
-              {...register('city', { required: 'Majburiy maydon' })}
+            <Controller
+              name="city"
+              control={control}
+              rules={{ required: 'Majburiy maydon' }}
+              render={({ field }) => (
+                <ChipSelect
+                  label="Shahar"
+                  options={cities}
+                  value={field.value ?? ''}
+                  onChange={field.onChange}
+                  error={errors.city?.message}
+                  placeholder="Shaharni tanlang..."
+                  popularCount={5}
+                  onCreateOption={async (name) => {
+                    const opt = await citiesApi.createCity(name)
+                    queryClient.invalidateQueries({ queryKey: cityKeys.list() })
+                    return opt
+                  }}
+                />
+              )}
             />
             <Input
               label="Sig'imi"

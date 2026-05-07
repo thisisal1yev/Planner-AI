@@ -7,11 +7,11 @@ import type { CreateServiceDto } from '@entities/service'
 import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
-import { Combobox } from '@shared/ui/Combobox'
+import { ChipSelect } from '@shared/ui/ChipSelect'
 import { ImageDropZone } from '@shared/ui/ImageDropZone'
-import { serviceKeys, categoryKeys } from '@shared/api/queryKeys'
+import { serviceKeys, categoryKeys, cityKeys } from '@shared/api/queryKeys'
 import { categoriesApi } from '@shared/api/categoriesApi'
-import { UZBEK_CITIES } from '@shared/lib/uzbekCities'
+import { citiesApi } from '@shared/api/citiesApi'
 import { ArrowLeft, Wrench, MapPin, Upload } from 'lucide-react'
 
 function SectionCard({
@@ -57,6 +57,11 @@ export function CreateServicePage() {
   const { data: categories = [] } = useQuery({
     queryKey: categoryKeys.serviceCategories(),
     queryFn: categoriesApi.listServiceCategories,
+  })
+
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
   })
 
   const mutation = useMutation({
@@ -105,13 +110,18 @@ export function CreateServicePage() {
             control={control}
             rules={{ required: 'Majburiy maydon' }}
             render={({ field }) => (
-              <Combobox
+              <ChipSelect
                 label="Turkum"
                 options={categoryOptions}
                 value={field.value ?? ''}
                 onChange={field.onChange}
                 error={errors.categoryId?.message}
                 placeholder="Turkumni tanlang..."
+                onCreateOption={async (name) => {
+                  const cat = await categoriesApi.createServiceCategory(name)
+                  queryClient.invalidateQueries({ queryKey: categoryKeys.serviceCategories() })
+                  return { value: cat.id, label: cat.name }
+                }}
               />
             )}
           />
@@ -134,13 +144,19 @@ export function CreateServicePage() {
               control={control}
               rules={{ required: 'Majburiy maydon' }}
               render={({ field }) => (
-                <Combobox
+                <ChipSelect
                   label="Shahar"
-                  options={UZBEK_CITIES}
+                  options={cities}
                   value={field.value ?? ''}
                   onChange={field.onChange}
                   error={errors.city?.message}
                   placeholder="Shaharni tanlang..."
+                  popularCount={5}
+                  onCreateOption={async (name) => {
+                    const opt = await citiesApi.createCity(name)
+                    queryClient.invalidateQueries({ queryKey: cityKeys.list() })
+                    return opt
+                  }}
                 />
               )}
             />
