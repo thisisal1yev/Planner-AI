@@ -13,7 +13,7 @@ import { cn } from '@shared/lib/utils'
 const STATS = [
   { v: '500+', l: 'Tadbirlar' },
   { v: '120+', l: 'Maydonlar' },
-  { v: '80+', l: "Ta'minotchilar" },
+  { v: '80+', l: 'Xizmatlar' },
   { v: '10K+', l: 'Ishtirokchilar' },
 ]
 
@@ -177,17 +177,17 @@ export function HomePage() {
         {/* top line */}
         <div className="absolute top-0 right-0 left-0 h-px bg-[linear-gradient(90deg,transparent,#4c8ca7,transparent)] opacity-35" />
 
-        <div className="lp-spin pointer-events-none absolute top-[-90px] right-[-90px] z-0">
+        <div className="lp-spin pointer-events-none absolute -top-22.5 -right-22.5 z-0">
           <Ornament size={480} op={0.1} />
         </div>
 
-        <div className="lp-float pointer-events-none absolute bottom-[-70px] left-[-110px] z-0">
+        <div className="lp-float pointer-events-none absolute -bottom-17.5 -left-27.5 z-0">
           <Ornament size={300} op={0.06} />
         </div>
 
         <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-28 text-center">
           {/* Badge */}
-          <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
+          <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-4.5 py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
             <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
             O'zbekistondagi №1 tadbirlar marketi
           </div>
@@ -220,16 +220,16 @@ export function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="mx-auto grid max-w-[580px] animate-[lp-up_0.75s_ease-out_forwards] grid-cols-2 gap-3 opacity-0 [animation-delay:0.64s] sm:grid-cols-4">
+          <div className="mx-auto grid max-w-145 animate-[lp-up_0.75s_ease-out_forwards] grid-cols-2 gap-3 opacity-0 [animation-delay:0.64s] sm:grid-cols-4">
             {STATS.map((s) => (
               <div
                 key={s.l}
-                className="bg-primary/4 border-primary/15 rounded-xl border px-3 py-[18px]"
+                className="bg-primary/4 border-primary/15 rounded-xl border px-3 py-4.5"
               >
                 <div className="text-primary-light font-serif text-3xl leading-none font-bold">
                   {s.v}
                 </div>
-                <div className="text-slate mt-[5px] text-xs tracking-[0.04em]">{s.l}</div>
+                <div className="text-slate mt-1.25 text-xs tracking-[0.04em]">{s.l}</div>
               </div>
             ))}
           </div>
@@ -240,7 +240,7 @@ export function HomePage() {
       </section>
 
       {/* ════════════════════════════════ MARQUEE ════════════════════════════ */}
-      <div className="border-primary/15 bg-primary/2.5 overflow-hidden border-y py-[13px]">
+      <div className="border-primary/15 bg-primary/2.5 overflow-hidden border-y py-3.25">
         <div className="lp-mq">
           {[...MQ, ...MQ, ...MQ, ...MQ].map((item, i) => (
             <span
@@ -345,7 +345,7 @@ export function HomePage() {
                 </div>
 
                 {i < 2 && (
-                  <div className="absolute top-8 right-[-28px] z-10 hidden text-[22px] text-[rgba(76,140,167,0.15)] md:block">
+                  <div className="absolute top-8 -right-7 z-10 hidden text-[22px] text-[rgba(76,140,167,0.15)] md:block">
                     →
                   </div>
                 )}
@@ -415,9 +415,9 @@ export function HomePage() {
             {FEATS.map((f) => (
               <div
                 key={f.t}
-                className="card-hover bg-primary/2.5 border-primary/15 rounded-2xl border px-[22px] py-7"
+                className="card-hover bg-primary/2.5 border-primary/15 rounded-2xl border px-5.5 py-7"
               >
-                <div className="bg-primary/6 border-primary/15 mb-[18px] inline-flex h-13 w-13 items-center justify-center rounded-xl border text-[26px]">
+                <div className="bg-primary/6 border-primary/15 mb-4.5 inline-flex h-13 w-13 items-center justify-center rounded-xl border text-[26px]">
                   {f.e}
                 </div>
                 <h3 className="dark:text-cream mb-2 text-base font-semibold text-gray-900">
@@ -459,14 +459,12 @@ export function HomePage() {
                 )}
               >
                 {p.hot && (
-                  <div className="bg-primary absolute top-[-13px] left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[11px] font-bold tracking-[0.09em] whitespace-nowrap text-[#0C1520] uppercase">
+                  <div className="bg-primary absolute -top-3.25 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[11px] font-bold tracking-[0.09em] whitespace-nowrap text-[#0C1520] uppercase">
                     Eng mashhur
                   </div>
                 )}
 
-                <p className="text-slate mb-2.5 text-[11px] tracking-[0.12em] uppercase">
-                  {p.n}
-                </p>
+                <p className="text-slate mb-2.5 text-[11px] tracking-[0.12em] uppercase">{p.n}</p>
                 <div className="mb-1 flex items-baseline gap-1">
                   <span className="text-primary font-serif text-[38px] leading-none font-bold">
                     {p.p}
@@ -482,9 +480,7 @@ export function HomePage() {
                       key={f}
                       className="dark:text-cream flex items-start gap-2.5 text-sm text-gray-700"
                     >
-                      <span className="text-primary mt-0.5 shrink-0 text-xs font-bold">
-                        ✓
-                      </span>
+                      <span className="text-primary mt-0.5 shrink-0 text-xs font-bold">✓</span>
                       {f}
                     </li>
                   ))}
@@ -523,9 +519,13 @@ export function HomePage() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="flex flex-col gap-3.5">
               {[
-                { ic: '📍', t: 'Manzil', v: "Toshkent, Amir Temur ko'chasi, 107B" },
-                { ic: '📞', t: 'Telefon', v: '+998 71 200 00 00' },
-                { ic: '✉️', t: 'Email', v: 'hello@plannerai.uz' },
+                {
+                  ic: '📍',
+                  t: 'Manzil',
+                  v: "Farg'ona viloyati, Farg'ona ko'chasi 86 uy, Startup Markaz",
+                },
+                { ic: '📞', t: 'Telefon', v: '+998 94 991 96 69' },
+                { ic: '✉️', t: 'Email', v: 'naymanbayevjavohir400@gmail.com' },
                 { ic: '🕐', t: 'Ish vaqti', v: 'Du–Ju, 9:00–18:00' },
               ].map((x) => (
                 <div
@@ -535,7 +535,7 @@ export function HomePage() {
                   <span className="shrink-0 text-[22px]">{x.ic}</span>
 
                   <div>
-                    <p className="text-primary-light mb-[3px] text-xs font-semibold tracking-[0.06em] uppercase">
+                    <p className="text-primary-light mb-0.75 text-xs font-semibold tracking-[0.06em] uppercase">
                       {x.t}
                     </p>
 
@@ -544,31 +544,33 @@ export function HomePage() {
                 </div>
               ))}
             </div>
+
             <form className="bg-primary/2.5 border-primary/15 flex flex-col gap-4 rounded-2xl border px-6 py-7">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
+                  <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                     Ism
                   </label>
                   <input className="input-cls" type="text" placeholder="Ismingiz" />
                 </div>
 
                 <div>
-                  <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
+                  <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                     Email
                   </label>
                   <input className="input-cls" type="email" placeholder="email@example.com" />
                 </div>
               </div>
+
               <div>
-                <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
+                <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                   Mavzu
                 </label>
                 <input className="input-cls" type="text" placeholder="Qanday yordam bera olamiz?" />
               </div>
 
               <div>
-                <label className="text-primary mb-[7px] block text-[11px] tracking-widest uppercase">
+                <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                   Xabar
                 </label>
 
@@ -591,11 +593,11 @@ export function HomePage() {
       <section className="dark:bg-navy bg-white px-6 py-20">
         <div className="mx-auto max-w-275">
           <div className="lp-noise border-primary/[0.28] relative overflow-hidden rounded-3xl border bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(76,140,167,0.07),transparent_70%)] px-[clamp(24px,5vw,80px)] py-[clamp(48px,8vw,88px)] text-center">
-            <div className="pointer-events-none absolute top-[-30px] right-[-30px]">
+            <div className="pointer-events-none absolute -top-7.5 -right-7.5">
               <Ornament size={200} op={1} />
             </div>
 
-            <div className="pointer-events-none absolute bottom-[-30px] left-[-30px]">
+            <div className="pointer-events-none absolute -bottom-7.5 -left-7.5">
               <Ornament size={160} op={1} />
             </div>
 
