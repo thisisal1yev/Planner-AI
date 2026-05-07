@@ -420,3 +420,9 @@ model Volunteer {
   @@index([userId, status])
   @@index([eventId, status])
 }
+
+model City {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}

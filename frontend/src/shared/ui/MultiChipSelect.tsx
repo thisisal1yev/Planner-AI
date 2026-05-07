@@ -125,6 +125,12 @@ export function MultiChipSelect({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setOpen(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Backspace' && query === '' && value.length > 0) {
+              e.preventDefault()
+              onChange(value.slice(0, -1))
+            }
+          }}
           disabled={disabled}
           autoComplete="off"
         />

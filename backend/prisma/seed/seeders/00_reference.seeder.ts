@@ -6,9 +6,13 @@ import {
   EVENT_CATEGORIES,
   VOLUNTEER_SKILLS,
   VENUE_CHARACTERISTICS,
+  UZBEK_CITIES,
 } from '../fixtures/reference.fixture';
 
-export async function seedReference(prisma: PrismaClient, registry: SeedRegistry): Promise<void> {
+export async function seedReference(
+  prisma: PrismaClient,
+  registry: SeedRegistry,
+): Promise<void> {
   for (const name of VENUE_CATEGORIES) {
     const c = await prisma.venueCategory.create({ data: { name } });
     registry.setVenueCategory(name, c.id);
@@ -34,5 +38,11 @@ export async function seedReference(prisma: PrismaClient, registry: SeedRegistry
     registry.setVenueCharacteristic(name, s.id);
   }
 
-  console.log('✅ Reference data seeded');
+  for (const name of UZBEK_CITIES) {
+    await prisma.city.create({ data: { name } });
+  }
+
+  console.log(
+    '✅ Reference data seeded (categories, skills, characteristics, cities)',
+  );
 }

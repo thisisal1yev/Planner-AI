@@ -145,19 +145,19 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-block cursor-pointer rounded-md font-semibold tracking-wide py-4 px-8 bg-primary text-white transition-colors duration-300 hover:bg-primary-light;
+    @apply bg-primary hover:bg-primary-light inline-block cursor-pointer rounded-md px-8 py-4 font-semibold tracking-wide text-white transition-colors duration-300;
   }
 
   .btn-outline {
-    @apply inline-block cursor-pointer rounded-lg font-medium tracking-wide py-4 px-8 bg-transparent text-gray-900 dark:text-cream border border-primary transition-colors duration-300 hover:text-primary-light;
+    @apply dark:text-cream border-primary hover:text-primary-light inline-block cursor-pointer rounded-lg border bg-transparent px-8 py-4 font-medium tracking-wide text-gray-900 transition-colors duration-300;
   }
 
   .card-hover {
-    @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:translate-y-[-5px] hover:shadow-[0_20px_48px_rgba(0,0,0,0.1),0_0_0_1px_rgba(76,140,167,0.2)] dark:hover:shadow-[0_20px_48px_rgba(0,0,0,0.5),0_0_0_1px_rgba(76,140,167,0.25)];
+    @apply transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.25 hover:shadow-[0_20px_48px_rgba(0,0,0,0.1),0_0_0_1px_rgba(76,140,167,0.2)] dark:hover:shadow-[0_20px_48px_rgba(0,0,0,0.5),0_0_0_1px_rgba(76,140,167,0.25)];
   }
 
   .input-cls {
-    @apply box-border w-full rounded-lg text-sm outline-none py-[10px] px-[14px] bg-white border border-gray-200 text-gray-900 dark:bg-white/3 dark:border-primary/15 dark:text-cream transition-[border-color] duration-200 focus:border-primary/50 placeholder:text-gray-400 dark:placeholder:text-slate;
+    @apply dark:border-primary/15 dark:text-cream focus:border-primary/50 dark:placeholder:text-slate box-border w-full rounded-lg border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 transition-[border-color] duration-200 outline-none placeholder:text-gray-400 dark:bg-white/3;
   }
 }
 
@@ -225,20 +225,38 @@
 }
 
 @keyframes lp-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes feedback-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ─── Ornament & marquee animation helpers ────────── */
 
-.lp-spin  { animation: lp-spin    18s linear      infinite; }
-.lp-float { animation: lp-float    6s ease-in-out infinite; }
-.lp-mq    { display: flex; white-space: nowrap; animation: lp-marquee 24s linear infinite; }
+.lp-spin {
+  animation: lp-spin 18s linear infinite;
+}
+.lp-float {
+  animation: lp-float 6s ease-in-out infinite;
+}
+.lp-mq {
+  display: flex;
+  white-space: nowrap;
+  animation: lp-marquee 24s linear infinite;
+}
 
 /* ─── Global pseudo-element ────────────── */
 

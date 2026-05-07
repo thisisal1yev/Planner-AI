@@ -39,6 +39,7 @@ async function up() {
 async function down() {
   await prisma.$executeRawUnsafe(`
     TRUNCATE TABLE
+      "City",
       "RatingStats",
       "Review",
       "Volunteer",

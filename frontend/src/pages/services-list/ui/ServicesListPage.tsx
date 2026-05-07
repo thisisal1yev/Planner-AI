@@ -9,9 +9,9 @@ import { EmptyState } from '@shared/ui/EmptyState'
 import { Spinner } from '@shared/ui/Spinner'
 import { Button } from '@shared/ui/Button'
 import { Input } from '@shared/ui/Input'
-import { UZBEK_CITIES } from '@shared/lib/constants'
 import { categoriesApi } from '@shared/api/categoriesApi'
-import { categoryKeys } from '@shared/api/queryKeys'
+import { citiesApi } from '@shared/api/citiesApi'
+import { categoryKeys, cityKeys } from '@shared/api/queryKeys'
 
 export function ServicesListPage() {
   const [category, setCategory] = useState('')
@@ -23,6 +23,11 @@ export function ServicesListPage() {
     queryKey: categoryKeys.serviceCategories(),
     queryFn: categoriesApi.listServiceCategories,
     staleTime: Infinity,
+  })
+
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
   })
 
   const hasFilters = !!category || !!city || !!maxPrice
@@ -121,9 +126,9 @@ export function ServicesListPage() {
               className="border-input bg-background focus-visible:border-ring text-foreground h-9 rounded-lg border px-3 text-sm transition-colors outline-none"
             >
               <option value="">Barcha shaharlar</option>
-              {UZBEK_CITIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+              {cities.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
                 </option>
               ))}
             </select>

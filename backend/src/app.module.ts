@@ -8,6 +8,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseTransformInterceptor } from './common/interceptors/response-transform.interceptor';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CitiesModule } from './cities/cities.module';
 import { AuthModule } from './auth/auth.module';
 import { EventsModule } from './events/events.module';
 import { PaymentsModule } from './payments/payments.module';
@@ -34,6 +35,7 @@ import { PrismaModule } from './prisma/prisma.module';
     ReviewsModule,
     AnalyticsModule,
     CategoriesModule,
+    CitiesModule,
   ],
   providers: [
     // Global exception filter

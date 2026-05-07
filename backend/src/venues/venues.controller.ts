@@ -42,6 +42,12 @@ export class VenuesController {
     return this.venuesService.listCharacteristics();
   }
 
+  @Post('characteristics')
+  @ApiOperation({ summary: 'Find or create a venue characteristic' })
+  createCharacteristic(@Body() dto: { name: string }) {
+    return this.venuesService.findOrCreateCharacteristic(dto.name);
+  }
+
   @Get()
   @Public()
   @ApiOperation({ summary: 'List venues with filters' })

@@ -9,9 +9,9 @@ import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
 import { Combobox } from '@shared/ui/Combobox'
 import { ImageDropZone } from '@shared/ui/ImageDropZone'
-import { serviceKeys, categoryKeys } from '@shared/api/queryKeys'
+import { serviceKeys, categoryKeys, cityKeys } from '@shared/api/queryKeys'
 import { categoriesApi } from '@shared/api/categoriesApi'
-import { UZBEK_CITIES } from '@shared/lib/uzbekCities'
+import { citiesApi } from '@shared/api/citiesApi'
 import { DetailPageSkeleton } from '@shared/ui/DetailPageSkeleton'
 import { ArrowLeft, Wrench, MapPin, Upload } from 'lucide-react'
 
@@ -59,6 +59,11 @@ export function EditServicePage() {
   const { data: categories = [] } = useQuery({
     queryKey: categoryKeys.serviceCategories(),
     queryFn: categoriesApi.listServiceCategories,
+  })
+
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
   })
 
   const {
@@ -154,7 +159,7 @@ export function EditServicePage() {
               render={({ field }) => (
                 <Combobox
                   label="Shahar"
-                  options={UZBEK_CITIES}
+                  options={cities}
                   value={field.value ?? ''}
                   onChange={field.onChange}
                   error={errors.city?.message}

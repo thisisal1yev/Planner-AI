@@ -41,6 +41,15 @@ export class VenuesService {
     });
   }
 
+  findOrCreateCharacteristic(name: string) {
+    const normalized = name.trim();
+    return this.prisma.venueCharacteristic.upsert({
+      where: { name: normalized },
+      update: {},
+      create: { name: normalized },
+    });
+  }
+
   /**
    * Returns paginated list of venues with optional filters
    */

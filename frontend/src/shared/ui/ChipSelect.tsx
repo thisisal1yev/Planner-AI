@@ -98,17 +98,32 @@ export function ChipSelect({
         )}
       >
         {selectedOption ? (
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-            {selectedOption.label}
+          <>
+            <span
+              tabIndex={0}
+              className="flex-1 cursor-default select-none text-sm text-foreground outline-none"
+              onMouseDown={() => { setOpen(true); setTimeout(() => inputRef.current?.focus(), 0) }}
+              onKeyDown={(e) => {
+                if (e.key === 'Backspace' || e.key === 'Delete') {
+                  e.preventDefault()
+                  onChange('')
+                  setOpen(true)
+                  setQuery('')
+                  setTimeout(() => inputRef.current?.focus(), 0)
+                }
+              }}
+            >
+              {selectedOption.label}
+            </span>
             <button
               type="button"
               aria-label="Tanlovni olib tashlash"
-              className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-primary/20"
+              className="ml-1 flex h-4 w-4 shrink-0 items-center justify-center rounded text-muted-foreground transition-colors hover:text-foreground"
               onMouseDown={handleClearChip}
             >
-              <X className="h-2.5 w-2.5" />
+              <X className="h-3 w-3" />
             </button>
-          </span>
+          </>
         ) : (
           <input
             ref={inputRef}

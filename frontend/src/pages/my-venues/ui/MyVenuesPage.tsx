@@ -7,13 +7,20 @@ import { useIntersectionObserver } from '@shared/hooks/useIntersectionObserver'
 import { CardSkeleton } from '@shared/ui/CardSkeleton'
 import { EmptyState } from '@shared/ui/EmptyState'
 import { Spinner } from '@shared/ui/Spinner'
-import { UZBEK_CITIES } from '@shared/lib/constants'
+import { useQuery } from '@tanstack/react-query'
+import { citiesApi } from '@shared/api/citiesApi'
+import { cityKeys } from '@shared/api/queryKeys'
 
 export function MyVenuesPage() {
   const [city, setCity] = useState('')
   const [minCapacity, setMinCapacity] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
   const [showAdvanced, setShowAdvanced] = useState(false)
+
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
+  })
 
   const hasAdvancedFilters = !!minCapacity || !!maxPrice
   const hasFilters = !!city || hasAdvancedFilters
@@ -74,7 +81,7 @@ export function MyVenuesPage() {
       <div className="flex flex-wrap items-center gap-2">
         {[
           { value: '', label: 'Barcha shaharlar' },
-          ...UZBEK_CITIES.map((c) => ({ value: c, label: c })),
+          ...cities,
         ].map((c) => (
           <button
             key={c.value}

@@ -276,7 +276,7 @@ export function HomePage() {
               <Link
                 key={c.l}
                 to={c.to}
-                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-2.5 rounded-xl border bg-gray-50 px-2.5 py-[22px] no-underline transition-all duration-200 hover:translate-y-[-3px] dark:bg-white/[0.018]"
+                className="border-primary/15 hover:bg-primary/10 hover:border-primary/45 flex flex-col items-center gap-2.5 rounded-xl border bg-gray-50 px-2.5 py-5.5 no-underline transition-all duration-200 hover:-translate-y-0.75 dark:bg-white/[0.018]"
               >
                 <span className="text-[26px]">{c.e}</span>
                 <span className="dark:text-cream text-center text-xs leading-[1.3] font-medium text-gray-900">

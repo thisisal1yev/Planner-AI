@@ -9,8 +9,8 @@ import { Button } from '@shared/ui/Button'
 import { Textarea } from '@shared/ui/Textarea'
 import { Combobox } from '@shared/ui/Combobox'
 import { ImageDropZone } from '@shared/ui/ImageDropZone'
-import { venueKeys } from '@shared/api/queryKeys'
-import { UZBEK_CITIES } from '@shared/lib/uzbekCities'
+import { venueKeys, cityKeys } from '@shared/api/queryKeys'
+import { citiesApi } from '@shared/api/citiesApi'
 import { DetailPageSkeleton } from '@shared/ui/DetailPageSkeleton'
 import { ArrowLeft, Building2, MapPin, LayoutGrid, Upload } from 'lucide-react'
 
@@ -53,6 +53,11 @@ export function EditVenuePage() {
     queryKey: venueKeys.detail(id!),
     queryFn: () => venuesApi.get(id!),
     enabled: !!id,
+  })
+
+  const { data: cities = [] } = useQuery({
+    queryKey: cityKeys.list(),
+    queryFn: citiesApi.listCities,
   })
 
   const {
@@ -133,7 +138,7 @@ export function EditVenuePage() {
               render={({ field }) => (
                 <Combobox
                   label="Shahar"
-                  options={UZBEK_CITIES}
+                  options={cities}
                   value={field.value ?? ''}
                   onChange={field.onChange}
                   error={errors.city?.message}
