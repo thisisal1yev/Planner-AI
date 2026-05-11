@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "planner-ai-frontend",
+  "version": "0.0.1",
+  "description": "Marketplace for event organization in Uzbekistan — events, venues, services, tickets, payments.",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +14,7 @@
     "@fontsource-variable/cormorant-garamond": "^5.2.6",
     "@fontsource-variable/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
-    "@tanstack/react-query": "^5.100.9",
+    "@tanstack/react-query": "^5.100.10",
     "axios": "^1.16.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
