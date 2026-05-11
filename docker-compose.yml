@@ -50,6 +50,8 @@ services:
         VITE_API_URL: /api
         VITE_IMGBB_API_KEY: ${VITE_IMGBB_API_KEY}
         VITE_IMGBB_UPLOAD_URL: ${VITE_IMGBB_UPLOAD_URL:-https://api.imgbb.com/1/upload}
+        VITE_TG_BOT_TOKEN: ${VITE_TG_BOT_TOKEN}
+        VITE_TG_CHAT_ID: ${VITE_TG_CHAT_ID}
     restart: unless-stopped
     ports:
       - "80:80"
