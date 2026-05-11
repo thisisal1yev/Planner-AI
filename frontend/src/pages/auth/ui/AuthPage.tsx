@@ -7,7 +7,7 @@ import { authApi, usersApi } from '@entities/user'
 import { useAuthStore } from '@shared/model/auth.store'
 import type { LoginDto, RegisterDto } from '@entities/user'
 
-const GOOGLE_AUTH_URL = `${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/auth/google`
+const GOOGLE_AUTH_URL = `${(import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api').replace(/\/+$/, '')}/auth/google`
 
 // ─── Decorative elements ──────────────────────────────────────────────────────
 
