@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import { eventsApi } from '@entities/event'
 import { venuesApi } from '@entities/venue'
@@ -7,6 +8,33 @@ import { VenueCard } from '@entities/venue'
 import { Spinner } from '@shared/ui/Spinner'
 import { eventKeys, venueKeys } from '@shared/api/queryKeys'
 import { cn } from '@shared/lib/utils'
+
+// ─── Telegram contact ─────────────────────────────────────────────────────────
+
+type ContactForm = { name: string; email: string; subject: string; message: string }
+
+const TG_TOKEN = import.meta.env.VITE_TG_BOT_TOKEN
+const TG_CHAT  = import.meta.env.VITE_TG_CHAT_ID
+
+async function sendToTelegram(data: ContactForm) {
+  const text =
+    `📬 <b>Yangi xabar</b>\n\n` +
+    `👤 <b>Ism:</b> ${data.name}\n` +
+    `✉️ <b>Email:</b> ${data.email}\n` +
+    `📌 <b>Mavzu:</b> ${data.subject}\n\n` +
+    `💬 ${data.message}`
+  const ids = String(TG_CHAT).split(',').map((s) => s.trim())
+  const results = await Promise.all(
+    ids.map((chat_id) =>
+      fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id, text, parse_mode: 'HTML' }),
+      }),
+    ),
+  )
+  if (results.some((r) => !r.ok)) throw new Error('Telegram error')
+}
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -161,6 +189,9 @@ function Label({ text }: { text: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function HomePage() {
+  const { register, handleSubmit, reset } = useForm<ContactForm>()
+  const contact = useMutation({ mutationFn: sendToTelegram, onSuccess: () => reset() })
+
   const { data: eventsData, isLoading: eventsLoading } = useQuery({
     queryKey: eventKeys.list({ status: 'PUBLISHED', limit: 3 }),
     queryFn: () => eventsApi.list({ status: 'PUBLISHED', limit: 3 }),
@@ -545,20 +576,33 @@ export function HomePage() {
               ))}
             </div>
 
-            <form className="bg-primary/2.5 border-primary/15 flex flex-col gap-4 rounded-2xl border px-6 py-7">
+            <form
+              onSubmit={handleSubmit((data) => contact.mutate(data))}
+              className="bg-primary/2.5 border-primary/15 flex flex-col gap-4 rounded-2xl border px-6 py-7"
+            >
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                     Ism
                   </label>
-                  <input className="input-cls" type="text" placeholder="Ismingiz" />
+                  <input
+                    className="input-cls"
+                    type="text"
+                    placeholder="Ismingiz"
+                    {...register('name', { required: true })}
+                  />
                 </div>
 
                 <div>
                   <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                     Email
                   </label>
-                  <input className="input-cls" type="email" placeholder="email@example.com" />
+                  <input
+                    className="input-cls"
+                    type="email"
+                    placeholder="email@example.com"
+                    {...register('email', { required: true })}
+                  />
                 </div>
               </div>
 
@@ -566,24 +610,44 @@ export function HomePage() {
                 <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                   Mavzu
                 </label>
-                <input className="input-cls" type="text" placeholder="Qanday yordam bera olamiz?" />
+                <input
+                  className="input-cls"
+                  type="text"
+                  placeholder="Qanday yordam bera olamiz?"
+                  {...register('subject', { required: true })}
+                />
               </div>
 
               <div>
                 <label className="text-primary mb-1.75 block text-[11px] tracking-widest uppercase">
                   Xabar
                 </label>
-
                 <textarea
                   className="input-cls resize-none"
                   rows={4}
                   placeholder="Savolingizni tasvirlab bering..."
+                  {...register('message', { required: true })}
                 />
               </div>
 
-              <button type="submit" className="btn-primary w-full text-center">
-                Xabar yuborish
+              <button
+                type="submit"
+                disabled={contact.isPending}
+                className="btn-primary w-full text-center disabled:opacity-60"
+              >
+                {contact.isPending ? 'Yuborilmoqda...' : 'Xabar yuborish'}
               </button>
+
+              {contact.isSuccess && (
+                <p className="text-center text-sm text-green-500">
+                  Xabar yuborildi! Tez orada bog'lanamiz.
+                </p>
+              )}
+              {contact.isError && (
+                <p className="text-destructive text-center text-sm">
+                  Xatolik yuz berdi. Keyinroq urinib ko'ring.
+                </p>
+              )}
             </form>
           </div>
         </div>
