@@ -3,6 +3,11 @@ import { hashSync } from 'bcrypt';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../generated/prisma/client';
 import { Role } from '../../generated/prisma/enums';
+import {
+  EVENT_CATEGORIES,
+  VENUE_CATEGORIES,
+  SERVICE_CATEGORIES,
+} from './fixtures/reference.fixture';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -21,22 +26,38 @@ async function main() {
   const existing = await prisma.user.findFirst({ where: { role: Role.ADMIN } });
   if (existing) {
     console.log(`ℹ️  Admin already exists (${existing.email}), skipping`);
-    return;
+  } else {
+    const admin = await prisma.user.create({
+      data: {
+        email,
+        firstName,
+        lastName,
+        role: Role.ADMIN,
+        passwordHash: hashSync(password, 10),
+        isVerified: true,
+        isActive: true,
+      },
+    });
+    console.log(`Admin created: ${admin.email}`);
   }
 
-  const admin = await prisma.user.create({
-    data: {
-      email,
-      firstName,
-      lastName,
-      role: Role.ADMIN,
-      passwordHash: hashSync(password, 10),
-      isVerified: true,
-      isActive: true,
-    },
-  });
-
-  console.log(`Admin created: ${admin.email}`);
+  const [ec, vc, sc] = await Promise.all([
+    prisma.eventCategory.createMany({
+      data: EVENT_CATEGORIES.map((name) => ({ name })),
+      skipDuplicates: true,
+    }),
+    prisma.venueCategory.createMany({
+      data: VENUE_CATEGORIES.map((name) => ({ name })),
+      skipDuplicates: true,
+    }),
+    prisma.serviceCategory.createMany({
+      data: SERVICE_CATEGORIES.map((name) => ({ name })),
+      skipDuplicates: true,
+    }),
+  ]);
+  console.log(
+    `Categories seeded: ${ec.count} event, ${vc.count} venue, ${sc.count} service`,
+  );
 }
 
 main()
