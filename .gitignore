@@ -1,0 +1,4 @@
+# Environment variables
+.env.docker
+.env.*
+!.env.docker.example

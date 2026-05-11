@@ -10,6 +10,9 @@ async function bootstrap() {
   // Global validation pipe
   app.useGlobalPipes(globalValidationPipe);
 
+  // Global API prefix
+  app.setGlobalPrefix('api');
+
   // CORS
   const configService = app.get(ConfigService);
   const corsOrigin = configService.get<string>('CORS_URL', 'http://localhost:5173');

@@ -165,6 +165,81 @@ cd frontend && bun run dev
 
 ---
 
+## Docker Deployment (VPS)
+
+### Architecture
+
+```
+VPS port :80  (nginx inside frontend container)
+  /           →  React SPA (static files)
+  /api/*      →  NestJS backend (internal Docker network, not exposed)
+  /api/docs   →  Swagger UI
+
+Docker internal network:
+  frontend:80   ←  only port exposed to host
+  backend:3000  ←  internal only
+  db:5432       ←  internal only, persistent volume
+```
+
+### Prerequisites
+
+- Docker v24+
+- Docker Compose v2+ (`docker compose` not `docker-compose`)
+
+### Setup
+
+```bash
+# 1. Copy the env template and fill in your secrets
+cp .env.docker.example .env.docker
+# Edit .env.docker — at minimum set:
+#   POSTGRES_PASSWORD, JWT_SECRET, JWT_REFRESH_SECRET,
+#   CORS_URL (your domain), VITE_IMGBB_API_KEY
+
+# 2. Build images and start all services
+docker compose --env-file .env.docker up -d --build
+
+# 3. Check everything is running
+docker compose ps
+docker compose logs backend -f
+```
+
+App is available at `http://your-server-ip` or your domain.
+
+### Services
+
+| Service | Internal port | Exposed to host |
+|---------|--------------|-----------------|
+| Frontend (nginx) | 80 | :80 |
+| Backend (NestJS) | 3000 | — |
+| Database (PostgreSQL) | 5432 | — |
+| Swagger UI | — | `/api/docs` |
+
+### Common Commands
+
+```bash
+# Rebuild & restart after code changes
+docker compose --env-file .env.docker up -d --build
+
+# View logs
+docker compose logs backend -f
+docker compose logs frontend -f
+
+# Shell into a container
+docker compose exec backend sh
+
+# Stop everything
+docker compose --env-file .env.docker down
+
+# Stop and delete DB data (full reset)
+docker compose --env-file .env.docker down -v
+```
+
+### HTTPS / SSL
+
+To enable HTTPS, install Nginx and Certbot on the **host** machine and reverse-proxy to `localhost:80`. Alternatively, put the server behind Cloudflare (free SSL proxy).
+
+---
+
 ## Role-Based Access
 
 | Role | Permissions |
