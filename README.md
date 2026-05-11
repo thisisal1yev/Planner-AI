@@ -17,15 +17,15 @@ A full-stack platform connecting event organizers with venues, service providers
 | Area | Capabilities |
 |------|-------------|
 | **Events** | Create, publish, edit, cancel · Category-based classification · VIP / Standard / Free ticket tiers · Capacity tracking · Analytics |
-| **Venues (Squares)** | Search by category and characteristics · Real-time availability · Bookings · Boost promotions · Quality badges |
+| **Venues** | Search by category and characteristics · Real-time availability · Bookings · Boost promotions · Quality badges |
 | **Services** | Vendor marketplace · Category-based · Service badges · Boost promotions |
 | **Tickets** | QR code generation · Mobile validation · Tiered pricing · Purchase history |
 | **Payments** | Click integration · Payme integration · Payment history |
 | **Users** | Roles: Organizer, Participant, Admin, Vendor, Volunteer · JWT auth · Profile management |
 | **Reviews** | Rate events, venues, services · Verified participant reviews · Pre-aggregated rating stats |
 | **Analytics** | Ticket sales · Revenue tracking · Excel export |
-| **Boosts** | Paid promotion for squares and services |
-| **Badges** | Quality and achievement badges for squares and services |
+| **Boosts** | Paid promotion for venues and services |
+| **Badges** | Quality and achievement badges for venues and services |
 
 ---
 
@@ -35,11 +35,8 @@ A full-stack platform connecting event organizers with venues, service providers
 - **NestJS v11** — framework
 - **Prisma v7.8** — ORM
 - **PostgreSQL 17+** — database
-- **Passport + JWT** — authentication
+- **Passport + JWT + Google OAuth 2.0** — authentication
 - **Click / Payme** — payment providers
-- **Nodemailer** — email delivery
-- **QRCode** — ticket QR generation
-- **ExcelJS** — analytics export
 - **Swagger** — API docs
 
 ### Frontend
@@ -50,6 +47,9 @@ A full-stack platform connecting event organizers with venues, service providers
 - **Zustand v5** — client state
 - **React Router v7** — routing
 - **React Hook Form v7** — forms
+- **Axios v1** — HTTP client
+- **Lucide React** — icons
+- **Recharts v3.8** — data visualization
 - **shadcn/ui** — UI primitives
 
 ---

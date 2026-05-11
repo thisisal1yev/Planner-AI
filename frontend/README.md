@@ -22,6 +22,9 @@ React SPA for the Event Organization Marketplace.
 | React Router | v7 | Client-side routing |
 | React Hook Form | v7 | Form handling |
 | Axios | v1 | HTTP client with interceptors |
+| Lucide React | v0.577 | Icon library |
+| Recharts | v3.8 | Data visualization |
+| Swiper | v12 | Carousel / slider |
 | shadcn/ui | — | UI component primitives |
 
 ---

@@ -20,11 +20,7 @@ NestJS REST API for the Event Organization Marketplace.
 | Passport + JWT | — | Authentication |
 | bcrypt | v6 | Password hashing |
 | Swagger | — | API documentation |
-| Nodemailer | v8 | Email delivery |
-| Multer | v2 | File uploads |
-| ExcelJS | v4 | Analytics export |
-| QRCode | v1.5 | Ticket QR generation |
-| cache-manager | v7 | Response caching |
+| Google OAuth 2.0 | — | Social login (passport-google-oauth20) |
 | class-validator | v0.15 | DTO validation |
 
 ---
@@ -161,20 +157,9 @@ module/
     └── update-*.dto.ts
 ```
 
-### NestJS Decorators
+### Role-Based Access Control
 
-NestJS requires `emitDecoratorMetadata` and `experimentalDecorators` in `tsconfig.json` for decorators like `@Module`, `@Controller`, `@Injectable`, `@UseGuards` to work:
-
-```json
-{
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
-}
-```
-
-Role-based access control with `@Roles` + `RolesGuard`:
+`@Roles` + `RolesGuard`:
 
 ```typescript
 @Post()
@@ -254,19 +239,19 @@ createEvent(@Body() dto: CreateEventDto) { ... }
 | **Event** | Events with status, capacity, dates |
 | **EventCategory** | Reference table for event categories |
 | **Ticket / TicketTier** | QR tickets with pricing tiers |
-| **Square** | Venues (площадки) with category, characteristics, geo, capacity |
-| **SquareCategory** | Category reference for squares |
-| **SquareCharacteristic** | Feature tags (Wi-Fi, parking, stage…) per square |
+| **Venue** | Venue with category, characteristics, geo, capacity |
+| **VenueCategory** | Category reference for venues |
+| **VenueCharacteristic** | Feature tags (Wi-Fi, parking, stage…) per venue |
 | **Service** | Event services by category |
 | **ServiceCategory** | Category reference for services |
 | **EventService** | Services linked to events |
-| **Booking** | Square reservations |
+| **Booking** | Venue reservations |
 | **Payment** | Click / Payme payment records |
-| **Boost** | Paid promotion records for squares and services |
+| **Boost** | Paid promotion records for venues and services |
 | **Badge** | Quality / achievement badges |
-| **SquareBadge / ServiceBadge** | Badge assignments to squares and services |
+| **VenueBadge / ServiceBadge** | Badge assignments to venues and services |
 | **RatingStats** | Pre-aggregated rating counters (avg, count, 1–5 stars) |
-| **Review** | Ratings for events, squares, services |
+| **Review** | Ratings for events, venues, services |
 | **Volunteer** | Volunteer applications with skills |
 | **VolunteerSkill** | Skill tags for volunteers |
 
@@ -327,12 +312,12 @@ CORS_ORIGIN=http://localhost:5173
 | **Users** | `GET /users/me` · `PATCH /users/me` · `GET /users` (admin) · `GET /users/:id` |
 | **Events** | `GET /events` · `POST /events` · `GET /events/my` · `GET /events/:id` · `PATCH /events/:id` · `PATCH /events/:id/publish` · `DELETE /events/:id` |
 | **Categories** | `GET /event-categories` · `GET /service-categories` · `GET /venue-categories` (all public) |
-| **Venues (Squares)** | `GET /venues` · `POST /venues` · `GET /venues/:id` · `PATCH /venues/:id` · `POST /venues/:id/book` · `GET /venues/:id/availability` |
+| **Venues** | `GET /venues` · `POST /venues` · `GET /venues/:id` · `PATCH /venues/:id` · `POST /venues/:id/book` · `GET /venues/:id/availability` |
 | **Services** | `GET /services` · `POST /services` · `GET /services/:id` · `PATCH /services/:id` · `POST /events/:id/services` · `DELETE /events/:id/services/:sid` |
 | **Tickets** | `POST /events/:id/tickets/purchase` · `GET /tickets/my` · `GET /tickets/:id` · `POST /tickets/validate` |
 | **Payments** | `POST /payments/click/webhook` · `POST /payments/payme/webhook` |
 | **Volunteers** | `POST /events/:id/volunteers/apply` · `GET /volunteers/my` · `PATCH /events/:id/volunteers/:appId` |
-| **Reviews** | `POST /reviews` · `GET /events/:id/reviews` · `GET /venues/:id/reviews` · `GET /squares/:id/reviews` · `GET /services/:id/reviews` |
+| **Reviews** | `POST /reviews` · `GET /events/:id/reviews` · `GET /venues/:id/reviews` · `GET /services/:id/reviews` |
 | **Analytics** | `GET /analytics/dashboard` · `GET /analytics/admin` · `GET /analytics/events/:id` |
 
 Full interactive docs at **http://localhost:3000/api/docs**.
