@@ -7,7 +7,7 @@ import { authApi, usersApi } from '@entities/user'
 import { useAuthStore } from '@shared/model/auth.store'
 import type { LoginDto, RegisterDto } from '@entities/user'
 
-const GOOGLE_AUTH_URL = `${(import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api').replace(/\/+$/, '')}/auth/google`
+const GOOGLE_AUTH_URL = import.meta.env.VITE_API_URL + '/auth/google'
 
 // ─── Decorative elements ──────────────────────────────────────────────────────
 
@@ -91,7 +91,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-gray-500 dark:text-slate text-xs font-semibold tracking-widest uppercase">
+      <label className="dark:text-slate text-xs font-semibold tracking-widest text-gray-500 uppercase">
         {label}
       </label>
 
@@ -143,12 +143,12 @@ function SignInForm() {
     <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="flex flex-col gap-4">
       <Field label="Email" error={errors.email?.message}>
         <div className="relative">
-          <Mail className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
+          <Mail className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
 
           <input
             type="email"
             placeholder="name@example.com"
-            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
             {...register('email', { required: 'Majburiy maydon' })}
           />
         </div>
@@ -169,12 +169,12 @@ function SignInForm() {
         </div>
 
         <label className="relative">
-          <Lock className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+          <Lock className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
 
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
-            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
+            className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-10 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
             {...register('password', {
               required: 'Majburiy maydon',
               minLength: { value: 8, message: 'Min. 8 belgi' },
@@ -184,7 +184,7 @@ function SignInForm() {
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            className="text-gray-400 hover:text-gray-500 dark:text-slate/25 dark:hover:text-slate/55 absolute top-1/2 right-3 -translate-y-1/2 transition-colors"
+            className="dark:text-slate/25 dark:hover:text-slate/55 absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-500"
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -252,11 +252,11 @@ function CreateAccountForm() {
       <div className="grid grid-cols-2 gap-3">
         <Field label="Ism" error={errors.firstName?.message}>
           <div className="relative">
-            <User className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
+            <User className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
 
             <input
               placeholder="Ali"
-              className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+              className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
               {...register('firstName', { required: 'Majburiy' })}
             />
           </div>
@@ -264,11 +264,11 @@ function CreateAccountForm() {
 
         <Field label="Familiya" error={errors.lastName?.message}>
           <div className="relative">
-            <User className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
+            <User className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
 
             <input
               placeholder="Aliyev"
-              className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+              className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
               {...register('lastName', { required: 'Majburiy' })}
             />
           </div>
@@ -277,12 +277,12 @@ function CreateAccountForm() {
 
       <Field label="Email" error={errors.email?.message}>
         <div className="relative">
-          <Mail className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
+          <Mail className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
 
           <input
             type="email"
             placeholder="name@example.com"
-            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
             {...register('email', { required: 'Majburiy maydon' })}
           />
         </div>
@@ -290,12 +290,12 @@ function CreateAccountForm() {
 
       <Field label="Telefon" error={errors.phone?.message}>
         <div className="relative">
-          <Phone className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
+          <Phone className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
 
           <input
             type="tel"
             placeholder="+998901234567"
-            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-3 pl-9"
+            className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-3 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
             {...register('phone', {
               required: 'Majburiy maydon',
               pattern: { value: /^\+998\d{9}$/, message: 'Format: +998901234567' },
@@ -305,17 +305,17 @@ function CreateAccountForm() {
       </Field>
 
       <div className="flex flex-col gap-1.5">
-        <label className="text-gray-500 dark:text-slate text-[11px] font-semibold tracking-widest uppercase">
+        <label className="dark:text-slate text-[11px] font-semibold tracking-widest text-gray-500 uppercase">
           Parol
         </label>
 
         <div className="relative">
-          <Lock className="text-gray-400 dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-[15px] w-[15px] -translate-y-1/2" />
-          
+          <Lock className="dark:text-slate/25 pointer-events-none absolute top-1/2 left-3 h-3.75 w-3.75 -translate-y-1/2 text-gray-400" />
+
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
-            className="w-full h-11 rounded-lg bg-white dark:bg-[rgba(15,25,37,0.6)] border border-gray-200 dark:border-white/8 text-sm text-gray-900 dark:text-cream placeholder:text-gray-400 dark:placeholder:text-slate/22 transition-[border-color,box-shadow] duration-200 focus:outline-none focus:border-primary/50 dark:focus:border-primary/40 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] pr-10 pl-9"
+            className="dark:text-cream dark:placeholder:text-slate/22 focus:border-primary/50 dark:focus:border-primary/40 h-11 w-full rounded-lg border border-gray-200 bg-white pr-10 pl-9 text-sm text-gray-900 transition-[border-color,box-shadow] duration-200 placeholder:text-gray-400 focus:shadow-[0_0_0_3px_rgba(76,140,167,0.07)] focus:outline-none dark:border-white/8 dark:bg-[rgba(15,25,37,0.6)]"
             {...register('password', {
               required: 'Majburiy maydon',
               minLength: { value: 8, message: 'Min. 8 belgi' },
@@ -325,7 +325,7 @@ function CreateAccountForm() {
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            className="text-gray-400 hover:text-gray-500 dark:text-slate/25 dark:hover:text-slate/55 absolute top-1/2 right-3 -translate-y-1/2 transition-colors"
+            className="dark:text-slate/25 dark:hover:text-slate/55 absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-500"
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -342,7 +342,7 @@ function CreateAccountForm() {
       {/* Role selector — card style */}
       <input type="hidden" {...register('role')} />
       <div className="flex flex-col gap-1.5">
-        <label className="text-gray-500 dark:text-slate text-[11px] font-semibold tracking-widest uppercase">
+        <label className="dark:text-slate text-[11px] font-semibold tracking-widest text-gray-500 uppercase">
           Ro'l
         </label>
 
@@ -372,7 +372,7 @@ function CreateAccountForm() {
                 }`}
               >
                 <p
-                  className={`mb-1 text-xs leading-none font-semibold ${active ? 'text-primary' : 'text-gray-600 dark:text-cream/70'}`}
+                  className={`mb-1 text-xs leading-none font-semibold ${active ? 'text-primary' : 'dark:text-cream/70 text-gray-600'}`}
                 >
                   {label}
                 </p>
@@ -412,9 +412,9 @@ export function AuthPage() {
   const [tab, setTab] = useState<Tab>(location.pathname === '/register' ? 'register' : 'signin')
 
   return (
-    <div className="bg-gray-50 dark:bg-navy flex min-h-screen">
+    <div className="dark:bg-navy flex min-h-screen bg-gray-50">
       {/* ── Left decorative panel ── */}
-      <div className="bg-white dark:bg-navy-dark relative hidden flex-col justify-between overflow-hidden p-12 lg:flex lg:w-[46%]">
+      <div className="dark:bg-navy-dark relative hidden flex-col justify-between overflow-hidden bg-white p-12 lg:flex lg:w-[46%]">
         <TilePattern />
 
         {/* Radial primary glow */}
@@ -434,7 +434,9 @@ export function AuthPage() {
 
         {/* Logo */}
         <Link to={'/'} className="relative z-10 flex items-center">
-          <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
+          <span className="dark:text-cream text-xl font-bold tracking-[-0.01em] text-gray-900">
+            Planner
+          </span>
 
           <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
         </Link>
@@ -442,17 +444,15 @@ export function AuthPage() {
         {/* Center content */}
         <div className="relative z-10 flex flex-col gap-6">
           <div>
-            <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-[18px] py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
+            <div className="text-primary-light border-primary/15 bg-primary/6 mb-8 inline-flex animate-[lp-up_0.75s_ease-out_forwards] items-center gap-2 rounded-full border px-4.5 py-1.5 text-xs tracking-widest uppercase opacity-0 [animation-delay:0.08s]">
               <span className="bg-primary h-1.5 w-1.5 shrink-0 rounded-full" />
               O'zbekistondagi №1 tadbirlar marketi
             </div>
 
-            <h1 className="text-gray-900 dark:text-cream mb-5 font-serif text-[clamp(88px,4.5vw,56px)] font-bold leading-none tracking-[-0.015em]">
+            <h1 className="dark:text-cream mb-5 font-serif text-[clamp(88px,4.5vw,56px)] leading-none font-bold tracking-[-0.015em] text-gray-900">
               Tadbirlarni&nbsp;
               <br className="block 2xl:hidden" />
-              <em className="font-serif text-primary italic">
-                muammosiz
-              </em>
+              <em className="text-primary font-serif italic">muammosiz</em>
               <br />
               tashkil eting.
             </h1>
@@ -467,7 +467,7 @@ export function AuthPage() {
           <div className="grid grid-cols-3 gap-2.5">
             {AUTH_STATS.map((s) => (
               <div key={s.l} className="border-primary/10 bg-primary/3 rounded-xl border p-3.5">
-                <div className="text-primary mb-1.5 font-serif text-[26px] font-bold leading-none">
+                <div className="text-primary mb-1.5 font-serif text-[26px] leading-none font-bold">
                   {s.v}
                 </div>
 
@@ -482,7 +482,7 @@ export function AuthPage() {
               {AVATAR_COLORS.map((bgCls, i) => (
                 <div
                   key={i}
-                  className={`border-white dark:border-navy-dark text-navy flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-[11px] font-bold ${bgCls}`}
+                  className={`dark:border-navy-dark text-navy flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-white text-[11px] font-bold ${bgCls}`}
                 >
                   {String.fromCharCode(65 + i)}
                 </div>
@@ -505,7 +505,9 @@ export function AuthPage() {
         <div className="w-full max-w-100">
           {/* Mobile logo */}
           <h1 className="mb-8 flex items-center lg:hidden">
-            <span className="text-gray-900 dark:text-cream text-lg font-bold tracking-[-0.01em]">Planner</span>
+            <span className="dark:text-cream text-lg font-bold tracking-[-0.01em] text-gray-900">
+              Planner
+            </span>
 
             <span className="text-primary text-lg font-bold tracking-[-0.01em]">&nbsp;AI</span>
           </h1>
@@ -519,17 +521,19 @@ export function AuthPage() {
               {tab === 'signin' ? 'Xush kelibsiz' : 'Yangi akkaunt'}
             </p>
 
-            <h2 className="text-gray-900 dark:text-cream font-serif text-[clamp(28px,5vw,34px)] font-bold leading-[1.08]">
+            <h2 className="dark:text-cream font-serif text-[clamp(28px,5vw,34px)] leading-[1.08] font-bold text-gray-900">
               {tab === 'signin' ? 'Akkauntingizga kirish' : "Ro'yxatdan o'tish"}
             </h2>
           </div>
 
           {/* Tab switcher */}
-          <div className="relative mb-7 flex animate-[auth-up_0.5s_ease-out_forwards] border-b border-gray-200 dark:border-white/7 opacity-0 [animation-delay:0.05s]">
+          <div className="relative mb-7 flex animate-[auth-up_0.5s_ease-out_forwards] border-b border-gray-200 opacity-0 [animation-delay:0.05s] dark:border-white/7">
             <button
               onClick={() => setTab('signin')}
               className={`flex-1 pb-3 text-[13px] font-medium transition-colors duration-200 ${
-                tab === 'signin' ? 'text-gray-900 dark:text-cream' : 'text-gray-400 hover:text-gray-600 dark:text-cream/32 dark:hover:text-cream/60'
+                tab === 'signin'
+                  ? 'dark:text-cream text-gray-900'
+                  : 'dark:text-cream/32 dark:hover:text-cream/60 text-gray-400 hover:text-gray-600'
               }`}
             >
               Kirish
@@ -538,7 +542,9 @@ export function AuthPage() {
             <button
               onClick={() => setTab('register')}
               className={`flex-1 pb-3 text-[13px] font-medium transition-colors duration-200 ${
-                tab === 'register' ? 'text-gray-900 dark:text-cream' : 'text-gray-400 hover:text-gray-600 dark:text-cream/32 dark:hover:text-cream/60'
+                tab === 'register'
+                  ? 'dark:text-cream text-gray-900'
+                  : 'dark:text-cream/32 dark:hover:text-cream/60 text-gray-400 hover:text-gray-600'
               }`}
             >
               Ro'yxatdan o'tish
@@ -575,7 +581,7 @@ export function AuthPage() {
             onClick={() => {
               window.location.href = GOOGLE_AUTH_URL
             }}
-            className="text-slate hover:border-primary hover:bg-primary/10 group flex h-11 w-full animate-[auth-up_0.5s_ease-out_forwards] items-center justify-center gap-2.5 rounded-lg border border-gray-200 dark:border-white/8 text-[13px] font-medium opacity-0 transition-[color,border-color,background] duration-300 [animation-delay:0.3s]"
+            className="text-slate hover:border-primary hover:bg-primary/10 group flex h-11 w-full animate-[auth-up_0.5s_ease-out_forwards] items-center justify-center gap-2.5 rounded-lg border border-gray-200 text-[13px] font-medium opacity-0 transition-[color,border-color,background] duration-300 [animation-delay:0.3s] dark:border-white/8"
           >
             <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
               <path
@@ -606,14 +612,14 @@ export function AuthPage() {
             Davom etish orqali&nbsp;
             <Link
               to="/terms"
-              className="hover:text-primary decoration-gray-300 dark:decoration-cream/20 hover:decoration-primary/50 underline underline-offset-2 transition-colors"
+              className="hover:text-primary dark:decoration-cream/20 hover:decoration-primary/50 underline decoration-gray-300 underline-offset-2 transition-colors"
             >
               Foydalanish shartlari
             </Link>
             &nbsp; va&nbsp;
             <Link
               to="/privacy"
-              className="hover:text-primary decoration-gray-300 dark:decoration-cream/20 hover:decoration-primary/50 underline underline-offset-2 transition-colors"
+              className="hover:text-primary dark:decoration-cream/20 hover:decoration-primary/50 underline decoration-gray-300 underline-offset-2 transition-colors"
             >
               Maxfiylik siyosati
             </Link>
