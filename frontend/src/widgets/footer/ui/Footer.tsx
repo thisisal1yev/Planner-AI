@@ -51,7 +51,7 @@ const COLS = [
     title: 'Kompaniya',
     links: [
       { label: 'Biz haqimizda', to: '/about' },
-      { label: 'Blog', to: '/blog' },
+      { label: 'Hamkorlar', to: '/partners' },
       { label: 'Maxfiylik siyosati', to: '/privacy' },
       { label: 'Foydalanish shartlari', to: '/terms' },
     ],

@@ -8,7 +8,7 @@ import { ServicesListPage } from '@pages/services-list'
 import { ServiceDetailPage } from '@pages/service-detail'
 import { AuthPage } from '@pages/auth'
 import { AboutPage } from '@pages/about'
-import { BlogPage } from '@pages/blog'
+import { PartnersPage } from '@pages/partners'
 import { PrivacyPage } from '@pages/privacy'
 import { TermsPage } from '@pages/terms'
 
@@ -23,7 +23,7 @@ export const publicRoutes: RouteObject[] = [
   { path: '/services', element: <ServicesListPage /> },
   { path: '/services/:id', element: <ServiceDetailPage /> },
   { path: '/about', element: <AboutPage /> },
-  { path: '/blog', element: <BlogPage /> },
+  { path: '/partners', element: <PartnersPage /> },
   { path: '/privacy', element: <PrivacyPage /> },
   { path: '/terms', element: <TermsPage /> },
 ]
