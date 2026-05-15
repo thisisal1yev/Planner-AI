@@ -11,7 +11,7 @@ interface ThemeState {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: 'dark',
       toggle: () => set((s) => ({ theme: s.theme === 'light' ? 'dark' : 'light' })),
     }),
     { name: 'planner-theme' },

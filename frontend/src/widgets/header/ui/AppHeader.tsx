@@ -45,48 +45,48 @@ function UserMenu() {
   return (
     <div ref={ref} className="relative">
       <button
-        className="rounded-full transition-shadow outline-none focus:shadow-[0_0_0_2px_rgba(76,140,167,0.4)]"
+        data-cursor-hover
+        className="rounded-full transition-shadow outline-none focus:shadow-[0_0_0_3px_rgba(139,92,246,0.4)]"
         onClick={() => setOpen((v) => !v)}
       >
         {user.avatarUrl ? (
           <img
             src={user.avatarUrl}
             alt={user.firstName}
-            className="border-primary/35 h-8 w-8 rounded-full border-2 object-cover"
+            className="h-9 w-9 rounded-full border-2 border-aurora-violet/40 object-cover"
           />
         ) : (
-          <div className="from-primary to-primary-dark text-navy flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br text-xs font-bold">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-aurora-violet to-aurora-pink text-xs font-bold text-white shadow-lg">
             {initials}
           </div>
         )}
       </button>
 
       {open && (
-        <div className="hdr-menu border-primary/18 absolute right-0 z-50 mt-2.5 w-57 overflow-hidden rounded-xl border bg-white dark:bg-[rgba(15,25,37,0.97)] shadow-[0_16px_48px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
-          <div className="border-b-primary/12 flex items-center gap-3 border-b px-4 py-3.5">
+        <div className="absolute right-0 z-50 mt-2.5 w-60 overflow-hidden rounded-2xl border border-white/10 bg-navy-2/95 shadow-[0_24px_64px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+          <div className="flex items-center gap-3 border-b border-white/8 px-4 py-4">
             {user.avatarUrl ? (
               <img
                 src={user.avatarUrl}
                 alt={user.firstName}
-                className="h-9 w-9 rounded-full object-cover"
+                className="h-10 w-10 rounded-full object-cover"
               />
             ) : (
-              <div className="from-primary to-primary-dark text-navy flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br text-xs font-bold">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-aurora-violet to-aurora-pink text-xs font-bold text-white">
                 {initials}
               </div>
             )}
             <div className="min-w-0">
-              <p className="text-gray-900 dark:text-cream overflow-hidden text-sm font-semibold text-ellipsis whitespace-nowrap">
+              <p className="overflow-hidden text-sm font-semibold text-white text-ellipsis whitespace-nowrap">
                 {user.firstName} {user.lastName}
               </p>
-
-              <p className="text-gray-500 dark:text-cream/45 overflow-hidden text-xs text-ellipsis whitespace-nowrap">
+              <p className="overflow-hidden text-xs text-white/45 text-ellipsis whitespace-nowrap">
                 {user.email}
               </p>
             </div>
           </div>
 
-          <div className="py-1.5">
+          <div className="py-2">
             {[
               { to: dashboardHref, label: 'Boshqaruv paneli', Icon: Home },
               { to: '/profile', label: 'Profil', Icon: User },
@@ -95,22 +95,22 @@ function UserMenu() {
                 key={to}
                 to={to}
                 onClick={() => setOpen(false)}
-                className="text-gray-600 hover:text-primary hover:bg-primary/7 dark:text-cream/70 dark:hover:text-primary-light flex items-center gap-2.5 px-4 py-[9px] text-sm transition-[color,background] duration-150"
+                data-cursor-hover
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 transition-[color,background] duration-150 hover:bg-aurora-violet/10 hover:text-white"
               >
-                <Icon className="h-[15px] w-[15px] shrink-0 opacity-50" strokeWidth={1.5} />
-                
+                <Icon className="h-4 w-4 shrink-0 opacity-50" strokeWidth={1.5} />
                 <span>{label}</span>
               </Link>
             ))}
           </div>
 
-          <div className="border-t-primary/12 border-t py-1.5">
+          <div className="border-t border-white/8 py-2">
             <button
               onClick={handleLogout}
-              className="flex w-full cursor-pointer items-center gap-2.5 border-none bg-transparent px-4 py-[9px] text-sm text-red-400/80 transition-[color,background] duration-150 hover:bg-red-500/7 hover:text-red-500"
+              data-cursor-hover
+              className="flex w-full cursor-pointer items-center gap-2.5 border-none bg-transparent px-4 py-2.5 text-sm text-red-400/80 transition-[color,background] duration-150 hover:bg-red-500/10 hover:text-red-400"
             >
-              <LogOut className="h-[15px] w-[15px] shrink-0 opacity-70" strokeWidth={1.5} />
-
+              <LogOut className="h-4 w-4 shrink-0 opacity-70" strokeWidth={1.5} />
               <span>Chiqish</span>
             </button>
           </div>
@@ -122,55 +122,69 @@ function UserMenu() {
 
 export function AppHeader() {
   const user = useAuthStore((s) => s.user)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <>
-      <header className="bg-white/95 dark:bg-navy-header sticky top-0 z-40 w-full border-b border-gray-200 dark:border-white/8 backdrop-blur-md">
-        <div className="mx-auto flex h-15 max-w-7xl items-center justify-between gap-8 px-6">
-          <Link to={'/'} className="relative z-10 flex items-center">
-            <span className="text-gray-900 dark:text-cream text-xl font-bold tracking-[-0.01em]">Planner</span>
+    <header
+      data-aurora-overlay="true"
+      className={`sticky top-0 z-40 w-full border-b transition-all duration-500 ${
+        scrolled
+          ? 'border-white/10 bg-navy/80 backdrop-blur-xl'
+          : 'border-transparent bg-transparent backdrop-blur-md'
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-[1800px] items-center justify-between gap-8 px-[clamp(24px,5vw,80px)]">
+        <Link to={'/'} data-cursor-hover className="relative z-10 flex items-center">
+          <span className="font-serif text-2xl font-bold tracking-tight text-white">Planner</span>
+          <span className="ml-1 font-serif text-2xl font-bold tracking-tight text-aurora">AI</span>
+        </Link>
 
-            <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
-          </Link>
+        <div className="flex items-center justify-between gap-6">
+          <nav className="hidden gap-8 md:flex">
+            {NAV.map(({ label, href }) => (
+              <a
+                key={href}
+                href={href}
+                data-cursor-hover
+                className="group relative pb-0.5 text-sm text-white/65 transition-colors duration-200 hover:text-white"
+              >
+                {label}
+                <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-aurora-violet to-aurora-pink transition-[width] duration-300 ease-in-out group-hover:w-full" />
+              </a>
+            ))}
+          </nav>
 
-          <div className="flex items-center justify-between gap-5">
-            <nav className="hidden gap-8 md:flex">
-              {NAV.map(({ label, href }) => (
-                <a
-                  key={href}
-                  href={href}
-                  className="group text-gray-700 hover:text-primary dark:text-cream dark:hover:text-primary-light relative pb-0.5 text-sm transition-colors duration-200"
+          <div className="flex shrink-0 items-center gap-2.5">
+            {user ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  data-cursor-hover
+                  className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/85 backdrop-blur-md transition-all duration-300 hover:border-white/35 hover:bg-white/5"
                 >
-                  {label}
-                  <span className="bg-primary-light absolute -bottom-0.5 left-0 h-px w-0 transition-[width] duration-250 ease-in-out group-hover:w-full" />
-                </a>
-              ))}
-            </nav>
+                  Kirish
+                </Link>
 
-            <div className="flex shrink-0 items-center gap-2.5">
-              {user ? (
-                <UserMenu />
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="text-gray-700 hover:text-primary dark:text-cream dark:hover:text-primary-light rounded-xl border border-gray-200 dark:border-cream/20 hover:border-primary/55 px-4 py-2 text-sm font-medium transition-colors duration-300"
-                  >
-                    Kirish
-                  </Link>
-
-                  <Link
-                    to="/register"
-                    className="text-navy bg-primary hover:bg-primary-light rounded-xl bg-linear-to-br px-5 py-2 text-sm font-semibold transition-colors duration-300"
-                  >
-                    Boshlash
-                  </Link>
-                </>
-              )}
-            </div>
+                <Link
+                  to="/register"
+                  data-cursor-hover
+                  className="rounded-full bg-gradient-to-r from-aurora-violet via-aurora-pink to-aurora-orange px-5 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(236,72,153,0.6)] transition-all duration-300 hover:shadow-[0_14px_36px_-8px_rgba(236,72,153,0.8)]"
+                >
+                  Boshlash
+                </Link>
+              </>
+            )}
           </div>
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   )
 }

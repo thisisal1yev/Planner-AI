@@ -1,7 +1,5 @@
 import { Link } from 'react-router'
 
-// ─── Social icons ─────────────────────────────────────────────────────────────
-
 function IconTelegram() {
   return (
     <svg className="size-4" viewBox="0 0 24 24" fill="currentColor">
@@ -25,8 +23,6 @@ function IconYoutube() {
     </svg>
   )
 }
-
-// ─── Data ─────────────────────────────────────────────────────────────────────
 
 const COLS = [
   {
@@ -59,50 +55,34 @@ const COLS = [
 ]
 
 const SOCIALS = [
-  {
-    label: 'Telegram',
-    icon: <IconTelegram />,
-    href: 'https://t.me/thisisaliyev',
-  },
-  {
-    label: 'Instagram',
-    icon: <IconInstagram />,
-    href: 'https://instagram.com/thisisaliyev.a',
-  },
-  {
-    label: 'YouTube',
-    icon: <IconYoutube />,
-    href: 'https://youtube.com/@thisisaliyev',
-  },
+  { label: 'Telegram', icon: <IconTelegram />, href: 'https://t.me/thisisaliyev' },
+  { label: 'Instagram', icon: <IconInstagram />, href: 'https://instagram.com/thisisaliyev.a' },
+  { label: 'YouTube', icon: <IconYoutube />, href: 'https://youtube.com/@thisisaliyev' },
 ]
-
-// ─── Component ─────────────────────────────────────────────────────────────────
 
 export function Footer() {
   return (
-    <footer className="dark:bg-navy-dark border-t-primary/13 border-t bg-gray-100">
-      <div className="via-primary/35 h-px bg-linear-to-r from-transparent to-transparent" />
+    <footer className="relative overflow-hidden border-t border-white/8 bg-navy">
+      <div className="h-px bg-gradient-to-r from-transparent via-aurora-violet/40 to-transparent" />
 
-      <div className="mx-auto max-w-7xl px-6 pt-14 pb-9">
-        {/* Top grid */}
-        <div className="mb-12 grid grid-cols-1 gap-10 sm:grid-cols-4">
-          {/* Brand */}
-          <div className="flex flex-col gap-3.5">
-            <Link to={'/'} className="relative z-10 flex items-center">
-              <span className="dark:text-cream text-xl font-bold tracking-[-0.01em] text-gray-900">
+      <div className="mx-auto max-w-[1800px] px-[clamp(24px,5vw,80px)] pt-16 pb-10">
+        <div className="mb-14 grid grid-cols-1 gap-12 sm:grid-cols-4">
+          <div className="flex flex-col gap-4">
+            <Link to={'/'} data-cursor-hover className="relative z-10 flex items-center">
+              <span className="font-serif text-2xl font-bold tracking-tight text-white">
                 Planner
               </span>
-
-              <span className="text-primary text-xl font-bold tracking-[-0.01em]">&nbsp;AI</span>
+              <span className="ml-1 font-serif text-2xl font-bold tracking-tight text-aurora">
+                AI
+              </span>
             </Link>
 
-            <p className="text-slate max-w-55 text-[13px] leading-[1.7]">
-              O'zbekistondagi №&nbsp;1 tadbirlar marketi. Maydonlar, xizmatlar va chiptalar —
-              hammasi bir joyda.
+            <p className="max-w-[14rem] text-[13px] leading-[1.7] text-white/55">
+              O'zbekistondagi №&nbsp;1 tadbirlar marketi. Maydonlar, xizmatlar va chiptalar — hammasi
+              bir joyda.
             </p>
 
-            {/* Socials */}
-            <div className="mt-1 flex items-center gap-2">
+            <div className="mt-2 flex items-center gap-2">
               {SOCIALS.map(({ label, icon, href }) => (
                 <a
                   key={label}
@@ -110,7 +90,8 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="text-slate hover:text-primary hover:border-primary/45 hover:bg-primary/6 flex size-8 items-center justify-center rounded-lg border no-underline transition-[color,border-color,background] duration-200"
+                  data-cursor-hover
+                  className="flex size-9 items-center justify-center rounded-xl border border-white/10 text-white/50 no-underline transition-all duration-300 hover:border-aurora-violet/50 hover:bg-aurora-violet/10 hover:text-white"
                 >
                   {icon}
                 </a>
@@ -118,19 +99,18 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
           {COLS.map(({ title, links }) => (
-            <div key={title} className="flex flex-col gap-3.5">
-              <p className="text-primary text-xs font-semibold tracking-widest uppercase">
+            <div key={title} className="flex flex-col gap-4">
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-aurora-violet">
                 {title}
               </p>
-
-              <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
+              <ul className="m-0 flex list-none flex-col gap-3 p-0">
                 {links.map(({ label, to }) => (
                   <li key={label}>
                     <Link
                       to={to}
-                      className="text-slate hover:text-primary text-xs leading-none no-underline transition-colors duration-200"
+                      data-cursor-hover
+                      className="text-sm leading-none text-white/55 no-underline transition-colors duration-200 hover:text-white"
                     >
                       {label}
                     </Link>
@@ -141,9 +121,8 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t-primary/10 flex flex-wrap items-center justify-between gap-3 border-t pt-6">
-          <p className="text-slate text-xs tracking-[0.02em]">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/8 pt-7">
+          <p className="text-xs text-white/40">
             © {new Date().getFullYear()} Planner AI. Barcha huquqlar himoyalangan.
           </p>
 
@@ -155,7 +134,8 @@ export function Footer() {
               <Link
                 key={to}
                 to={to}
-                className="text-slate hover:text-primary text-xs leading-none no-underline transition-colors duration-200"
+                data-cursor-hover
+                className="text-xs leading-none text-white/40 no-underline transition-colors duration-200 hover:text-white"
               >
                 {label}
               </Link>
