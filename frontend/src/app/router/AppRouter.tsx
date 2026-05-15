@@ -12,7 +12,7 @@ import { UserLayout } from '@widgets/user-layout'
 // Public pages
 import { HomePage } from '@pages/home'
 import { AboutPage } from '@pages/about'
-import { BlogPage } from '@pages/blog'
+import { PartnersPage } from '@pages/partners'
 import { PrivacyPage } from '@pages/privacy'
 import { TermsPage } from '@pages/terms'
 
@@ -67,62 +67,279 @@ export function AppRouter() {
       <Route element={<PublicLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/partners" element={<PartnersPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
       </Route>
 
       {/* ── Auth pages ── */}
-      <Route path="/login"    element={<GuestOnly><AuthPage /></GuestOnly>} />
-      <Route path="/register" element={<GuestOnly><AuthPage /></GuestOnly>} />
+      <Route
+        path="/login"
+        element={
+          <GuestOnly>
+            <AuthPage />
+          </GuestOnly>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <GuestOnly>
+            <AuthPage />
+          </GuestOnly>
+        }
+      />
 
       {/* OAuth callback — no auth required, no layout wrapper */}
       <Route path="/auth/callback" element={<OAuthCallbackPage />} />
 
       {/* ── Admin — sidebar dashboard layout ── */}
-      <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
-        <Route path="/admin/dashboard" element={<RequireRole role="ADMIN"><AdminDashboardPage /></RequireRole>} />
-        <Route path="/admin/users"     element={<RequireRole role="ADMIN"><AdminUsersPage /></RequireRole>} />
-        <Route path="/admin/events"    element={<RequireRole role="ADMIN"><AdminEventsPage /></RequireRole>} />
-        <Route path="/admin/venues"    element={<RequireRole role="ADMIN"><AdminVenuesPage /></RequireRole>} />
+      <Route
+        element={
+          <RequireAuth>
+            <AppLayout />
+          </RequireAuth>
+        }
+      >
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireRole role="ADMIN">
+              <AdminDashboardPage />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <RequireRole role="ADMIN">
+              <AdminUsersPage />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="/admin/events"
+          element={
+            <RequireRole role="ADMIN">
+              <AdminEventsPage />
+            </RequireRole>
+          }
+        />
+        <Route
+          path="/admin/venues"
+          element={
+            <RequireRole role="ADMIN">
+              <AdminVenuesPage />
+            </RequireRole>
+          }
+        />
       </Route>
 
       {/* ── Everyone else — marketplace header layout ── */}
       <Route element={<UserLayout />}>
         {/* Public browsing (no auth required) */}
-        <Route path="/events"       element={<EventsListPage />} />
-        <Route path="/events/:id"   element={<EventDetailPage />} />
-        <Route path="/venues"       element={<VenuesListPage />} />
-        <Route path="/venues/:id"   element={<VenueDetailPage />} />
-        <Route path="/services"     element={<ServicesListPage />} />
+        <Route path="/events" element={<EventsListPage />} />
+        <Route path="/events/:id" element={<EventDetailPage />} />
+        <Route path="/venues" element={<VenuesListPage />} />
+        <Route path="/venues/:id" element={<VenueDetailPage />} />
+        <Route path="/services" element={<ServicesListPage />} />
         <Route path="/services/:id" element={<ServiceDetailPage />} />
 
         {/* Common authenticated */}
-        <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          }
+        />
 
         {/* PARTICIPANT */}
-        <Route path="/tickets"    element={<RequireAuth><RequireRole role="PARTICIPANT"><MyTicketsPage /></RequireRole></RequireAuth>} />
-        <Route path="/tickets/:id" element={<RequireAuth><RequireRole role="PARTICIPANT"><TicketDetailPage /></RequireRole></RequireAuth>} />
+        <Route
+          path="/tickets"
+          element={
+            <RequireAuth>
+              <RequireRole role="PARTICIPANT">
+                <MyTicketsPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/tickets/:id"
+          element={
+            <RequireAuth>
+              <RequireRole role="PARTICIPANT">
+                <TicketDetailPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
 
         {/* ORGANIZER */}
-        <Route path="/dashboard"                     element={<RequireAuth><RequireRole role="ORGANIZER"><OrganizerDashboardPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events"                     element={<RequireAuth><RequireRole role="ORGANIZER"><MyEventsPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/create"              element={<RequireAuth><RequireRole role="ORGANIZER"><CreateEventPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/:id"                 element={<RequireAuth><RequireRole role="ORGANIZER"><MyEventDetailPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/:id/edit"            element={<RequireAuth><RequireRole role="ORGANIZER"><EditEventPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/:id/participants"    element={<RequireAuth><RequireRole role="ORGANIZER"><EventParticipantsPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/:id/volunteers"      element={<RequireAuth><RequireRole role="ORGANIZER"><EventVolunteersPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-events/:id/services"        element={<RequireAuth><RequireRole role="ORGANIZER"><EventServicesPage /></RequireRole></RequireAuth>} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <OrganizerDashboardPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <MyEventsPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/create"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <CreateEventPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/:id"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <MyEventDetailPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/:id/edit"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <EditEventPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/:id/participants"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <EventParticipantsPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/:id/volunteers"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <EventVolunteersPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-events/:id/services"
+          element={
+            <RequireAuth>
+              <RequireRole role="ORGANIZER">
+                <EventServicesPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
 
         {/* VENDOR */}
-        <Route path="/my-venues"           element={<RequireAuth><RequireRole role="VENDOR"><MyVenuesPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-venues/create"    element={<RequireAuth><RequireRole role="VENDOR"><CreateVenuePage /></RequireRole></RequireAuth>} />
-        <Route path="/my-venues/:id"       element={<RequireAuth><RequireRole role="VENDOR"><MyVenueDetailPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-venues/:id/edit"  element={<RequireAuth><RequireRole role="VENDOR"><EditVenuePage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services"          element={<RequireAuth><RequireRole role="VENDOR"><MyServicesPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services/create"   element={<RequireAuth><RequireRole role="VENDOR"><CreateServicePage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services/:id"      element={<RequireAuth><RequireRole role="VENDOR"><MyServiceDetailPage /></RequireRole></RequireAuth>} />
-        <Route path="/my-services/:id/edit" element={<RequireAuth><RequireRole role="VENDOR"><EditServicePage /></RequireRole></RequireAuth>} />
+        <Route
+          path="/my-venues"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <MyVenuesPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-venues/create"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <CreateVenuePage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-venues/:id"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <MyVenueDetailPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-venues/:id/edit"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <EditVenuePage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-services"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <MyServicesPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-services/create"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <CreateServicePage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-services/:id"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <MyServiceDetailPage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/my-services/:id/edit"
+          element={
+            <RequireAuth>
+              <RequireRole role="VENDOR">
+                <EditServicePage />
+              </RequireRole>
+            </RequireAuth>
+          }
+        />
       </Route>
 
       <Route path="*" element={<Navigate to={isAuth ? '/events' : '/'} replace />} />

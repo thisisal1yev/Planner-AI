@@ -50,7 +50,7 @@ frontend/
     │   ├── my-events/ my-tickets/ my-venues/ my-services/
     │   ├── organizer-dashboard/ admin-dashboard/ admin-events/ admin-users/ admin-venues/
     │   ├── ticket-detail/ event-participants/ event-services/ event-volunteers/
-    │   └── auth/ login/ register/ profile/ about/ blog/ privacy/ terms/
+    │   └── auth/ login/ register/ profile/ about/ partners/ privacy/ terms/
     ├── widgets/                     # Composite UI blocks
     │   └── header/ footer/ app-layout/ auth-layout/ public-layout/ user-layout/
     ├── features/                    # User interactions & forms
